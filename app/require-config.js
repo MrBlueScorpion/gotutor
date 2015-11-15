@@ -3,6 +3,7 @@ require.config({
         angular: 'bower_components/angular/angular',
         angularRoute: 'bower_components/angular-route/angular-route',
         angularMocks: 'bower_components/angular-mocks/angular-mocks',
+        angularUiRouter: 'bower_components/angular-ui-router/release/angular-ui-router'
        // text: 'bower_components/requirejs-text/text'
     },
     shim: {
@@ -16,7 +17,10 @@ require.config({
     priority: [
         "angular"
     ],
-    deps: window.__karma__ ? allTestFiles : [],
-    callback: window.__karma__ ? window.__karma__.start : null,
-    baseUrl: window.__karma__ ? '/base/app' : '',
+    deps: ['app.main'],
+    baseUrl: '.'
+});
+
+require(['app.main'], function(app){
+    app.init();
 });

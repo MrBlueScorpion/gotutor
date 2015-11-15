@@ -1,0 +1,99 @@
+<div id="main" xmlns="http://www.w3.org/1999/html">
+    <!-- SLIDER -->
+    <section class="page-section no-padding background-img-slider">
+        <div class="container">
+
+            <div id="main-slider" class="owl-carousel owl-theme owl-loaded">
+                <!-- Slide -->
+                <div class="item page text-center">
+                    <div class="caption">
+                        <div class="container">
+                            <div class="div-table">
+                                <div class="div-cell">
+                                    <h3 class="caption-subtitle">Australia’s Largest Tutor Search Engine</h3>
+                                    <h4 class="caption-hint">You Can Find Tutors of Maths, Ielts, Science and more, Start Search Now</h4>
+
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-12">
+                                            <form action="tutors" class="location-search form-inline" method="GET" novalidate name="searchForm">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control text"
+                                                           placeholder="FIND SUBJECT"
+                                                           name="subject"
+                                                           ng-model="subject" required="required"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control text"
+                                                           placeholder="FIND LOCATION"
+                                                           name="location"
+                                                           ng-model="location"
+                                                           ng-change="getLocationSuggestion(location)"
+                                                           required="required"/>
+                                                </div>
+                                            </div>
+                                            <button class="form-control button-search" ng-disabled="searchForm.$invalid"><i
+                                                    class="fa fa-search"></i></button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /SLIDER -->
+</div>
+
+<!-- PAGE -->
+<section class="page-section">
+    <div class="container">
+
+        <div class="clear clearfix overflowed">
+            <div class="section-title pull-left" style="width: auto;">
+                    <span class="icon-inner"><span class="fa-stack"><i class="fa rhex fa-stack-2x"></i><i
+                            class="fa fa-star fa-stack-1x"></i></span></span>
+            </div>
+            <ul id="filtrable-events" class="filtrable clearfix">
+                @foreach($subjects as $subject)
+                <li class="{{$subject}} {!! $subject != 'all' ?: 'current' !!}"><a href="#" data-filter="{!! $subject == 'all' ? '*' : '.'.$subject !!}">{{$subject}}</a></li>
+                @endforeach
+            </ul>
+        </div>
+        <div class="row thumbnails events vertical isotope isotope-items">
+
+            <div class="row">
+                <div class="col-md-6 col-sm-6 isotope-item {{$subject}}">
+                    <div class="thumbnail no-border no-padding no-radius">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="caption">
+                                    <h3 class="caption-title"> {{$tutor.name}}  <p class="caption-text">{{$tutor.gender}}</p></h3>
+
+                                    <p class="caption-category"><i class="fa fa-file-text-o"></i> {{$tutor.location}}</p>
+
+                                    <p class="caption-price">{{$tutor.rate}}</p>
+                                    <p class="caption-text">{{$tutor.contact}}</p>
+                                    <p class="caption-text">{{$tutor.subjects}}</p>
+                                    <p class="caption-text">{{$tutor.description}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center margin-top">
+            <a href="tutors" class="btn btn-theme-grey-dark btn-theme-md" data-animation="fadeInUp" data-animation-delay="100">see</a>
+        </div>
+
+    </div>
+</section>
+<!-- /PAGE -->
+
