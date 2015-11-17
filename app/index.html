@@ -56,7 +56,7 @@
 
                 <!-- Logo -->
                 <div class="logo">
-                    <a href="{!! url('/') !!}" class="scroll-to">
+                    <a href="/" class="scroll-to">
                                 <span class="fa-stack">
                                     <i class="fa logo-hex fa-stack-2x"></i>
                                     <i class="fa logo-fa fa-map-marker fa-stack-1x"></i>
@@ -71,15 +71,15 @@
                 <nav class="navigation closed clearfix">
                     <a href="#" class="menu-toggle btn"><i class="fa fa-bars"></i></a>
                     <ul class="sf-menu nav">
-                        <li class="active">
-                            <a href="/">Home</a>
+                        <li ui-sref-active="active">
+                            <a ui-sref="home">Home</a>
                         </li>
-                        <li>
-                            <a href="/tutors">Tutors</a>
+                        <li ui-sref-active="active">
+                            <a ui-sref="tutors">Tutors</a>
                         </li>
 
-                        <li >
-                            <a href="/about-us">About Us</a>
+                        <li ui-sref-active="active">
+                            <a ui-sref="about-us">About Us</a>
                         </li>
                     </ul>
                 </nav>
@@ -92,7 +92,7 @@
 
     <!-- Content area -->
     <div class="content-area">
-        <div ng-view></div>
+        <div ui-view></div>
         <!-- PAGE -->
         <section class="page-section color">
             <div class="container">
@@ -315,7 +315,7 @@
 <!--<script src="assets/js/theme-ajax-mail.js"></script>-->
 <script src="assets/js/theme.js"></script>
 
-<script data-main="require-config" src="bower_components/requirejs/require.js"></script>
+<script data-main="app.config" src="bower_components/requirejs/require.js"></script>
 
 <script type="text/javascript">
     "use strict";

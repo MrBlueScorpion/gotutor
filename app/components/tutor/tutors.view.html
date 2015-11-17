@@ -1,0 +1,119 @@
+<section class="page-section image breadcrumbs overlay">
+    <div class="container">
+        <h1>Tutors PAGE</h1>
+        <ul class="breadcrumb">
+            <li>{!! link_to('/', 'Home') !!}</li>
+            <li class="active" >Tutors</li>
+        </ul>
+    </div>
+</section>
+
+
+<!-- PAGE -->
+<section class="page-section with-sidebar sidebar-right first-section">
+    <div class="container">
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar col-sm-4 col-md-3">
+
+            <div class="widget">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    {!! Form::open([
+                    'action' => 'TutorController@index',
+                    'method' => 'GET',
+                    'id' => 'tutors-filter']) !!}
+                    @foreach($filters as $filter => $options)
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#{{$filter}}" aria-expanded="false" aria-controls="collapseOne">
+                                    {{$filter}}
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="{{$filter}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                @foreach($options as $option)
+                                <div class="checkbox">
+                                    <label>
+                                    </label>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                    {!! Form::close() !!}
+                </div>
+            </div>
+
+        </aside>
+        <!-- /Sidebar -->
+
+        <hr class="page-divider transparent visible-xs"/>
+
+        <!-- Content -->
+        <section id="content" class="content col-sm-8 col-md-9">
+
+<!--            <div class="listing-meta">
+
+                <div class="filters">
+                    <a href="#">Business <i class="fa fa-times"></i></a>
+                    <a href="#">Networking <i class="fa fa-times"></i></a>
+                    <a href="#">Free <i class="fa fa-times"></i></a>
+                </div>
+
+                <div class="options">
+                    <a class="byrevelance" href="#">Revelance</a>
+                    <a class="bydate active" href="#">DATE</a>
+                    <ul class="list-grid-tabs" role="tablist">
+                        <li  class="active" role="presentation"> <a class="view-list" href="#list-view" data-toggle="tab" role="tab" ><i class="fa fa-th-list"></i></a></li>&#45;&#45;}}
+                        <li  role="presentation"><a class="view-th " href="#grid-view" data-toggle="tab" role="tab"><i class="fa fa-th"></i></a></li>&#45;&#45;}}
+                        </ul>
+                </div>
+
+            </div>-->
+
+            <div class="tab-content">
+                <div id="list-view"  class="tab-pane fade active in" role="tabpanel">
+                    <div class="thumbnails events vertical">
+
+
+                        <div class="thumbnail no-border no-padding no-radius">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="caption">
+
+                                        <h3 class="caption-title">{!! link_to_action('TutorController@show',$tutor->name,['id'=> $tutor->id])!!}</h3>
+                                        <p class="caption-text">{{$tutor.gender}}</p>@endif
+                                        <p class="caption-category"><i class="fa fa-file-text-o"></i> {{$tutor.location}}</p>
+                                        <p class="caption-text">{{$tutor.subjects}}</p>@endif
+                                        <p class="caption-price">{{$tutor.rate}}</p>
+                                        <p class="caption-price">{{$tutor.contact}}</p>@endif
+                                        <p class="caption-text">{{$tutor.description}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="page-divider half"/>
+
+
+                    </div>
+
+                    @if ($tutors.hasPages())
+                    <!-- Pagination -->
+                    <div class="pagination-wrapper">
+                        {!! $tutors.appends(Input::except('page')).render() !!}
+                    </div>
+                    @endif
+                    <!-- /Pagination -->
+                </div>
+
+            </div>
+        </section>
+        <!-- /Content -->
+
+    </div>
+</section>
+<!-- /PAGE -->

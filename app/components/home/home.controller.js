@@ -1,3 +1,10 @@
-/**
- * Created by Lixing on 15/11/2015.
- */
+'use strict';
+
+define(function(require){
+
+  return ['$scope', function($scope){
+
+    console.log($scope);
+  }];
+
+});

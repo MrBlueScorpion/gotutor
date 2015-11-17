@@ -1,35 +1,16 @@
-define(function(require){
+'use strict';
 
-    'use strict';
+require([
+  'angular',
+  'app.module'
+  ],
 
-    var angular = require('angular');
-    var ngRoute = require('angularRoute');
+  function (angular) {
+    var $html = angular.element(document.getElementsByTagName('html'));
 
-    var app = angular.module('app', ['ngRoute']);
+    angular.element().ready(function() {
+      angular.bootstrap(document, ['app']);
+    });
+  });
 
-    app.init = function() {
-        angular.bootstrap(document, ['app']);
-    };
 
-    //app.config([], function($stateProvider, $urlRouterProvider) {
-    //
-    //    $stateProvider.state('tutors', {
-    //        url: '/tutors',
-    //        templateUrl: 'home/home.view.html'
-    //    })
-    //});
-
-    app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
-            //$httpProvider.responseInterceptors.push('httpInterceptor');
-
-        $routeProvider
-            .when('/', { templateUrl: 'components/home/home.view.html', controller: '' })
-            .when('/tutors', { templateUrl: 'components/home/home.view.html', controller: '' })
-            .otherwise({ redirectTo: '/' });
-
-        // use the HTML5 History API
-        $locationProvider.html5Mode(true);
-        }
-    ]);
-    return app;
-});
