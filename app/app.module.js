@@ -23,7 +23,8 @@ define(function (require) {
     $stateProvider
       .state('home', {
         url: '/',
-        templateUrl: 'components/home/home.view.html'
+        templateUrl: 'components/home/home.view.html',
+        controller : 'HomeController'
       })
       .state('tutors', {
         url : '/tutors',
