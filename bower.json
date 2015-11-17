@@ -16,6 +16,7 @@
     "font-awesome": "fontawesome#~4.4.0",
     "superfish": "~1.7.6",
     "bootstrap-select": "~1.7.5",
-    "angular-ui-router": "~0.2.15"
+    "angular-ui-router": "~0.2.15",
+    "underscore": "~1.8.3"
   }
 }

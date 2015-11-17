@@ -2,6 +2,7 @@
 
 require([
   'angular',
+  'underscore',
   'app.module'
   ],
 

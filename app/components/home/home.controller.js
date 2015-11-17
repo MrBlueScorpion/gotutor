@@ -1,10 +1,17 @@
 'use strict';
 
-define(function(require){
+define(function(require) {
 
-  return ['$scope', function($scope){
+  return ['$scope', 'TutorApiService', function($scope, TutorApiService){
 
-    console.log($scope);
+    TutorApiService.getRecommendedTutors().then(function(data){
+      $scope.tutors = data;
+
+      $scope.subjects = _.keys(data);
+      console.log(_.keys(data));
+    });
+
+
 
   }];
 

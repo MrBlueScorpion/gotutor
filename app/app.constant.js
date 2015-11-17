@@ -1,10 +1,10 @@
+'use strict';
 define(function(require) {
-  'use strict';
 
   return {
     TUTOR_API : {
-      HOST : '192.168.1.5',
-      PORT : 3000
+      HOST : '192.168.10.1',
+      PORT : 9999
     }
   }
 
