@@ -2,7 +2,7 @@
 
 define(function(require) {
 
-  var utility = require('shared/helper/utility');
+  var utility = require('shared/helpers/utility');
 
   return ['$q', '$http', function ($q, $http) {
 
