@@ -3,9 +3,10 @@
   "private": true,
   "version": "0.0.1",
   "description": "A starter project for Go Tute",
-  "repository": "https://github.com/angular/angular-seed",
+  "repository": "https://zlxjackie@bitbucket.org/gotute/gotute.git",
   "license": "MIT",
   "devDependencies": {
+    "gulp": "^3.9.0",
     "gulp-connect": "^2.2.0",
     "http-server": "^0.6.1",
     "jasmine-core": "^2.3.4",
@@ -31,6 +32,5 @@
     "update-index-async": "node -e \"require('shelljs/global'); sed('-i', /\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/, '//@@NG_LOADER_START@@\\n' + sed(/sourceMappingURL=angular-loader.min.js.map/,'sourceMappingURL=bower_components/angular-loader/angular-loader.min.js.map','app/bower_components/angular-loader/angular-loader.min.js') + '\\n//@@NG_LOADER_END@@', 'app/index-async.html');\""
   },
   "dependencies": {
-    "gulp": "^3.9.0"
   }
 }
