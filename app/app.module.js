@@ -37,6 +37,10 @@ define(function (require) {
           url: '/register',
           templateUrl: 'components/tutor/register.view.html'
         })
+        .state('register.account', {
+          url: '/account',
+          templateUrl: 'components/tutor/account.view.html'
+        })
         .state('register.profile', {
           url: '/profile',
           templateUrl: 'components/tutor/profile.view.html'

@@ -5,3 +5,60 @@
     background-color: #f1f2f3;
 }
 
+/* style.css */
+/* BASIC STYLINGS
+============================================================================= */
+body {
+    padding-top: 20px;
+}
+
+/* form styling */
+#form-container {
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+#form-container .page-header {
+    margin-bottom: 50px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+/* numbered buttons */
+#status-buttons {
+}
+
+#status-buttons a {
+    display: inline-block;
+    font-size: 20px;
+    margin: 20px 30px 0 30px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+#status-buttons a:hover {
+    text-decoration: none;
+}
+
+/* we will style the span as the circled number */
+#status-buttons span {
+    background: #080808;
+    color: #49ff70;
+    display: block;
+    height: 50px;
+    margin: 0 auto 10px;
+    padding-top: 10px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+/* active buttons turn light green-blue*/
+#status-buttons a.active span {
+    background: #00BC8C;
+}
+
+/* active buttons turn light green-blue*/
+#status-buttons a.hover span {
+    background: #00BC8C;
+}
+
