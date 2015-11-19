@@ -2,6 +2,8 @@
 
 require([
   'angular',
+  'angular-toastr',
+  'angular-ui-router',
   'underscore',
   'app.module'
   ],
