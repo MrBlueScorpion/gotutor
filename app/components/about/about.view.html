@@ -29,7 +29,7 @@
                     <p><a href="mailto:info@gotute.com">info@gotute.com</a></p>
                 </div>
                 <div class="col-sm-6">
-                    {!! Html::image('assets/img/about-us.jpg')!!}
+                    <img src="assets/img/about-us.jpg">
                 </div>
             </div>
         </section>
@@ -40,68 +40,76 @@
 <!-- /PAGE -->
 
 
+
 <section class="page-section">
     <div class="container">
+
         <h1 class="section-title">
             <span data-animation="flipInY" data-animation-delay="100" class="icon-inner"><span class="fa-stack"><i class="fa rhex fa-stack-2x"></i><i class="fa fa-question-circle fa-stack-1x"></i></span></span>
             <span data-animation="fadeInRight" data-animation-delay="100" class="title-inner">STUDENT FAQ</span>
         </h1>
-        <div class="panel-group" id="accordion">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                            What is the average hourly rate?
-                        </a>
-                    </h4>
-                </div>
-                <div id="collapseOne" class="panel-collapse collapse in">
-                    <div class="panel-body">
-                        Tutor’s hourly rate depends on the distance travelled and the number of students attending a session. We encourage students to contact a few tutors in order to compare their hourly rate. In most circumstances better tutor charges more fees.
+        <div class="row faq-alt">
+            <div class="col-md-12">
+
+                <div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne1">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion1" href="#collapseOne1" aria-expanded="true" aria-controls="collapseOne1">
+                                    What is the average hourly rate?
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne1">
+                            <div class="panel-body">
+                                Tutor’s hourly rate depends on the distance travelled and the number of students attending a session. We encourage students to contact a few tutors in order to compare their hourly rate. In most circumstances better tutor charges more fees.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingTwo1">
+                            <h4 class="panel-title">
+                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapseTwo1" aria-expanded="false" aria-controls="collapseTwo1">
+                                    What if I don't like the tutor?
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo1">
+                            <div class="panel-body">
+                                Students can search the tutor and click Review a Tutor button.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingThree1">
+                            <h4 class="panel-title">
+                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapseThree1" aria-expanded="false" aria-controls="collapseThree1">
+                                    Do you have tutors that specialise in helping children with learning disabilities?
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree1">
+                            <div class="panel-body">
+                                Refer to tutor’s detailed descriptions for special requirements.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingFour1">
+                            <h4 class="panel-title">
+                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapseFour1" aria-expanded="false" aria-controls="collapseFour1">
+                                    How do I pay the tutor? What forms of payment do you accept?
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFour1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour1">
+                            <div class="panel-body">
+                                Most tutors prefer cash and some tutors offer first lesson free.
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                            What if I don't like the tutor?
-                        </a>
-                    </h4>
-                </div>
-                <div id="collapseTwo" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        Students can search the tutor and click Review a Tutor button.
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                            Do you have tutors that specialise in helping children with learning disabilities?
-                        </a>
-                    </h4>
-                </div>
-                <div id="collapseThree" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        Refer to tutor’s detailed descriptions for special requirements.
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
-                            How do I pay the tutor? What forms of payment do you accept?
-                        </a>
-                    </h4>
-                </div>
-                <div id="collapseFour" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        Most tutors prefer cash and some tutors offer first lesson free.
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>

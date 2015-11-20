@@ -1,17 +1,14 @@
 'use strict';
 
 require([
-  'angular',
-  'underscore',
-  'app.module'
-  ],
+  'app.module',
+  'underscore'
+], function () {
+  var $html = angular.element(document.getElementsByTagName('html'));
 
-  function (angular) {
-    var $html = angular.element(document.getElementsByTagName('html'));
-
-    angular.element().ready(function() {
-      angular.bootstrap(document, ['app']);
-    });
+  angular.element().ready(function() {
+    angular.bootstrap(document, ['app']);
   });
+});
 
 
