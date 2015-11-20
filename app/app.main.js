@@ -1,19 +1,14 @@
 'use strict';
 
 require([
-  'angular',
-  'angular-toastr',
-  'angular-ui-router',
-  'underscore',
-  'app.module'
-  ],
+  'app.module',
+  'underscore'
+], function () {
+  var $html = angular.element(document.getElementsByTagName('html'));
 
-  function (angular) {
-    var $html = angular.element(document.getElementsByTagName('html'));
-
-    angular.element().ready(function() {
-      angular.bootstrap(document, ['app']);
-    });
+  angular.element().ready(function() {
+    angular.bootstrap(document, ['app']);
   });
+});
 
 

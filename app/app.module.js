@@ -3,8 +3,9 @@
 define(function (require) {
 
   //vendor libraries
-  require('angular');
   require('angular-ui-router');
+  require('angular-animate');
+  require('angular-toastr');
 
   // app components
   require('components/home/home.module');

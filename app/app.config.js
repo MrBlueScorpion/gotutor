@@ -4,7 +4,8 @@ require.config({
   ],
   baseUrl: '.',
   priority: [
-    "angular"
+    'angular',
+    'underscore'
   ],
   paths: {
     'angular': 'bower_components/angular/angular',
