@@ -3,6 +3,8 @@
 define(function (require) {
 
   //vendor libraries
+  require('angular');
+  require('angular-ui-router');
 
   // app components
   require('components/home/home.module');
