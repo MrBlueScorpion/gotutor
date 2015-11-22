@@ -62,3 +62,31 @@ body {
     background: #00BC8C;
 }
 
+.input-group .form-control:not(:first-child):not(:last-child),
+.input-group-addon:not(:first-child):not(:last-child),
+.input-group-btn:not(:first-child):not(:last-child) {
+    border-top-left-radius:10px;
+    border-bottom-left-radius:10px;
+}
+
+.form-horizontal .control-label{
+    text-align:left !important;
+}
+
+.btn-theme-danger {
+    color: #ffffff;
+    background-color: #dc143c;
+    border-color: #dc143c;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+    padding: 15px 35px;
+    border-radius: 10px;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.form-control {
+    height: 45px;
+}

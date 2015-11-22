@@ -29,9 +29,22 @@ define(function(require) {
 
     };
 
+    var registerUser = function(username, password) {
+      var deferred = $q.defer();
+
+      deferred.resolve({
+        success : 'success'
+      });
+
+
+      return deferred.promise;
+    };
+
+
     return {
       getRecommendedTutors : getRecommendedTutors,
-      getTutorsByLocation : getTutorsByLocation
+      getTutorsByLocation : getTutorsByLocation,
+      registerUser : registerUser,
     }
 
 

@@ -6,6 +6,8 @@ define(function (require) {
   require('angular-ui-router');
   require('angular-animate');
   require('angular-toastr');
+  require('ng-file-upload');
+  require('angular-bootstrap-select');
 
   // app components
   require('components/home/home.module');
@@ -15,6 +17,8 @@ define(function (require) {
     'ui.router',
     'ngAnimate',
     'toastr',
+    'ngFileUpload',
+    'angular-bootstrap-select',
     'app.home',
     'app.tutor'
   ]);
@@ -36,17 +40,20 @@ define(function (require) {
           url : '/about-us',
           templateUrl: 'components/about/about.view.html'
         })
+        //.state('user', {
+        //  url: '/user',
+        //  abstract : true,
+        //  templateUrl: 'components/tutor/account.view.html'
+        //})
         .state('register', {
           url: '/register',
-          templateUrl: 'components/tutor/register.view.html'
+          templateUrl: 'components/tutor/register.view.html',
+          controller : 'RegisterController'
         })
-        .state('register.account', {
-          url: '/account',
-          templateUrl: 'components/tutor/account.view.html'
-        })
-        .state('register.profile', {
+        .state('profile', {
           url: '/profile',
-          templateUrl: 'components/tutor/profile.view.html'
+          templateUrl: 'components/tutor/profile.view.html',
+          controller : 'ProfileController'
         });
 
       $urlRouterProvider.otherwise('/');

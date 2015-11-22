@@ -5,6 +5,7 @@ require.config({
   baseUrl: '.',
   priority: [
     'angular',
+    'jquery',
     'underscore'
   ],
   paths: {
@@ -14,7 +15,14 @@ require.config({
     'angular-ui-router': 'bower_components/angular-ui-router/release/angular-ui-router',
     'underscore' : 'bower_components/underscore/underscore',
     'angular-animate': 'bower_components/angular-animate/angular-animate',
-    'angular-toastr' : 'bower_components/angular-toastr/dist/angular-toastr.tpls.min'
+    'angular-toastr' : 'bower_components/angular-toastr/dist/angular-toastr.tpls.min',
+    'bootstrap' : 'bower_components/bootstrap/dist/js/bootstrap',
+    'bootstrap-select' : 'bower_components/bootstrap-select/dist/js/bootstrap-select',
+    'angular-bootstrap-select': 'bower_components/angular-bootstrap-select/build/angular-bootstrap-select',
+    'jquery' : 'bower_components/jquery/dist/jquery',
+    'superfish' :'bower_components/superfish/dist/js/superfish',
+    'ng-file-upload' : 'bower_components/ng-file-upload/ng-file-upload.min',
+    'waypoints' : 'bower_components/waypoints/lib/jquery.waypoints'
     // text: 'bower_components/requirejs-text/text'
   },
   shim: {
@@ -39,7 +47,20 @@ require.config({
     'angular-toastr' : [
       'angular',
       'angular-animate'
+    ],
+    'angular-bootstrap-select' : [
+      'angular',
+      'jquery',
+      'bootstrap-select'
+    ],
+    'suerpfish' : [
+      'jquery'
+    ],
+    'ng-file-upload' : [
+      'angular'
+    ],
+    'waypoints' : [
+      'jquery'
     ]
-
   }
 });
