@@ -4,7 +4,15 @@ define(function(require){
 
   return['$scope', 'toastr', function($scope, toastr){
 
+    $scope.itemArray = [
+      {id: 1, name: 'first'},
+      {id: 2, name: 'second'},
+      {id: 3, name: 'third'},
+      {id: 4, name: 'fourth'},
+      {id: 5, name: 'fifth'}
+    ];
 
+    //$scope.selectedItem= $scope.itemArray[0];
     $scope.user = {
       name : null,
       gender : null,

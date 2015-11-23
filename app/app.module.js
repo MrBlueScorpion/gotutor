@@ -6,8 +6,10 @@ define(function (require) {
   require('angular-ui-router');
   require('angular-animate');
   require('angular-toastr');
+  require('angular-sanitize');
   require('ng-file-upload');
   require('angular-bootstrap-select');
+  require('angular-ui-select');
 
   // app components
   require('components/home/home.module');
@@ -19,6 +21,8 @@ define(function (require) {
     'toastr',
     'ngFileUpload',
     'angular-bootstrap-select',
+    'ui.select',
+    'ngSanitize',
     'app.home',
     'app.tutor'
   ]);
@@ -40,11 +44,13 @@ define(function (require) {
           url : '/about-us',
           templateUrl: 'components/about/about.view.html'
         })
-        //.state('user', {
-        //  url: '/user',
-        //  abstract : true,
-        //  templateUrl: 'components/tutor/account.view.html'
-        //})
+        .state('tutor', {
+          url: '/tutor/:tutorId',
+          templateUrl: 'components/tutor/detail.view.html',
+          controller: function($scope, $stateParams) {
+            $scope.tutorId = $stateParams.tutorId;
+          }
+        })
         .state('register', {
           url: '/register',
           templateUrl: 'components/tutor/register.view.html',
@@ -54,6 +60,10 @@ define(function (require) {
           url: '/profile',
           templateUrl: 'components/tutor/profile.view.html',
           controller : 'ProfileController'
+        })
+        .state('messages', {
+          url : '/messages',
+          templateUrl : 'components/tutor/messages.view.html'
         });
 
       $urlRouterProvider.otherwise('/');

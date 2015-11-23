@@ -22,7 +22,9 @@ require.config({
     'jquery' : 'bower_components/jquery/dist/jquery',
     'superfish' :'bower_components/superfish/dist/js/superfish',
     'ng-file-upload' : 'bower_components/ng-file-upload/ng-file-upload.min',
-    'waypoints' : 'bower_components/waypoints/lib/jquery.waypoints'
+    'waypoints' : 'bower_components/waypoints/lib/jquery.waypoints',
+    'angular-ui-select' : 'bower_components/ui-select/dist/select',
+    'angular-sanitize' : 'bower_components/angular-sanitize/angular-sanitize'
     // text: 'bower_components/requirejs-text/text'
   },
   shim: {
@@ -61,6 +63,12 @@ require.config({
     ],
     'waypoints' : [
       'jquery'
+    ],
+    'angular-ui-select': [
+      'angular'
+    ],
+    'angular-sanitize' : [
+      'angular'
     ]
   }
 });

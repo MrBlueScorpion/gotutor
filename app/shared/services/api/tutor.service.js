@@ -44,7 +44,7 @@ define(function(require) {
     return {
       getRecommendedTutors : getRecommendedTutors,
       getTutorsByLocation : getTutorsByLocation,
-      registerUser : registerUser,
+      registerUser : registerUser
     }
 
 
