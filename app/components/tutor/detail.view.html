@@ -1,0 +1,103 @@
+<section class="page-section image breadcrumbs overlay">
+    <div class="container">
+        <h1>TUTOR DETAIL PAGE</h1>
+        <ul class="breadcrumb">
+            <li><a ui-sref="home"></a>Home</li>
+            <li><a ui-sref="tutors"></a>Tutors</li>
+            <li class="active">Tutor Detail Page</li>
+        </ul>
+    </div>
+</section>
+
+
+<!-- PAGE -->
+<section class="page-section with-sidebar sidebar-right first-section light">
+    <div class="container">
+
+        <!-- Content -->
+        <section id="content" class="content col-sm-12 col-md-8 col-lg-9">
+
+
+            <!-- -->
+            <hr class="page-divider transparent half"/>
+            <!-- -->
+
+            <h1 class="section-title">
+                <span class="icon-inner"><span class="fa-stack"><i class="fa rhex fa-stack-2x"></i><i class="fa fa-star fa-stack-1x"></i></span></span>
+                <span class="title-inner">What's about event <small>/ whats going on there come and learn</small></span>
+            </h1>
+            <p class="font_roboto font_size16">Praesent ac sem in neque venenatis tristique. Morbi et ligula velit. Nullam a augue vel mi porta vestibulum non ac elit. Vivamus convallis tortor et fermentum semper.</p>
+            <p class="font_roboto font_size16">In hac habitasse platea dictumst. Curabitur eget dui id metus pulvinar suscipit. Quisque vitae ligula laoreet, scelerisque leo quis, facilisis metus. Sed pellentesque, urna sed varius consectetur, eros augue fringilla magna, id sem magna vel diam. Nulla sed hendrerit nunc.</p>
+
+
+
+            <!-- -->
+            <hr class="page-divider line large"/>
+            <!-- -->
+
+            <h1 class="section-title">
+                <span class="icon-inner"><span class="fa-stack"><i class="fa rhex fa-stack-2x"></i><i class="fa fa-ticket fa-stack-1x"></i></span></span>
+                <span class="title-inner">Inquiry now <small> / dont mıss your tutor!</small></span>
+            </h1>
+
+
+            <form class="row" name="enquiry-form" data-ng-controller="TutorsController" ng-submit="sendEnquiry()" novalidate>
+
+                <div class="row">
+
+                    <div class="col-sm-12 af-outer af-required">
+                        <div class="form-group af-inner with-icon">
+                            <i class="fa fa-user"></i>
+                            <input
+                                    type="text" name="name" id="name" placeholder="Name and Surname" value="" size="30"
+                                    data-toggle="tooltip" title="Name is required"
+                                    class="form-control placeholder"/>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 af-outer af-required">
+                        <div class="form-group af-inner with-icon">
+                            <i class="fa fa-globe"></i>
+                            <input
+                                    type="text" name="email" id="email" placeholder="Your Mail Here" value="" size="30"
+                                    data-toggle="tooltip" title="Email is required"
+                                    class="form-control placeholder"/>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 af-outer af-required">
+                        <div class="form-group af-inner with-icon">
+                            <i class="fa fa-globe"></i>
+                            <input
+                                    type="text" name="subject" id="subject" placeholder="What subject" value="" size="30"
+                                    data-toggle="tooltip" title="Subject is required"
+                                    class="form-control placeholder"/>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 af-outer af-required">
+                        <div class="form-group af-inner">
+                                    <textarea
+                                            name="message" id="input-message" placeholder="Type Your Message..." rows="6" cols="50"
+                                            data-toggle="tooltip" title="Message is required"
+                                            class="form-control placeholder"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 af-outer af-required text-center">
+                        <div class="form-group af-inner">
+                            <input type="submit" name="submit" class="form-button form-button-submit btn btn-theme btn-theme-lg btn-theme-transparent" id="submit_btn" value="Send message" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </section>
+        <!-- /Content -->
+
+        <hr class="page-divider transparent visible-xs"/>
+
+
+    </div>
+</section>
+<!-- /PAGE -->
