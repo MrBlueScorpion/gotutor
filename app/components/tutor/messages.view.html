@@ -13,7 +13,21 @@
         <div class="row">
             <div class="col-sm-12 col-md-12">
                 <h1>You have 10 inquiries</h1>
-                
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td width="20%"><checkbox larger data-ng-model="check"></checkbox></td>
+                            <td width="40%"><button class="btn btn-default">Refresh</button></td>
+                            <td width="40%"><button class="btn btn-default">Delete</button></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="mesages in mesages">
+                        <td><checkbox larger ng-model="check"></td>
+                        <td><checkbox larger ng-model="check2"></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
