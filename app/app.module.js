@@ -10,6 +10,7 @@ define(function (require) {
   require('ng-file-upload');
   require('angular-bootstrap-select');
   require('angular-ui-select');
+  require('angular-bootstrap-checkbox');
 
   // app components
   require('components/home/home.module');
@@ -22,6 +23,7 @@ define(function (require) {
     'ngFileUpload',
     'angular-bootstrap-select',
     'ui.select',
+    'ui.checkbox',
     'ngSanitize',
     'app.home',
     'app.tutor'

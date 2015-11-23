@@ -44,45 +44,41 @@
             <div class="col-sm-12 col-md-12" id="form-container">
                 <!-- use ng-submit to catch the form submission and use our Angular function -->
 
-                    <form id="signup-form" ng-submit="signUp(email,password)" name="sigUp-form">
+                <form id="signup-form" ng-submit="signUp(email,password)" name="sigUp-form">
 
-                        <!-- our nested state views will be injected here -->
-                        <!-- register.html -->
-                        <div class="row">
+                    <!-- our nested state views will be injected here -->
+                    <!-- register.html -->
+                    <div class="row">
 
-                            <div class="col-sm-8 col-sm-offset-2">
-                                <div class="form-group with-icon">
-                                    <i class="fa fa-envelope"></i>
-                                    <input type="text" name="email" id="email" placeholder="Your Email Here" ng-model="email"
-                                            data-toggle="tooltip" title="Email is required"
-                                            class="form-control placeholder"/>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-8 col-sm-offset-2">
-                                <div class="form-group with-icon">
-                                    <i class="fa fa-key"></i>
-                                    <input type="password" name="password" id="password" placeholder="Password" ng-model="password"
-                                            data-toggle="tooltip" title="Password is required"
-                                            class="form-control placeholder"/>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-8 text-center col-sm-offset-2">
-                                <div class="form-group">
-                                    <input type="submit" name="submit"
-                                           class="form-button form-button-submit btn btn-theme btn-theme-lg btn-theme-transparent btn-block"
-                                           id="submit_btn" value="Register"/>
-                                </div>
+                        <div class="col-sm-8 col-sm-offset-2">
+                            <div class="form-group with-icon">
+                                <i class="fa fa-envelope"></i>
+                                <input type="text" name="email" id="email" placeholder="Your Email Here" ng-model="email"
+                                        data-toggle="tooltip" title="Email is required"
+                                        class="form-control placeholder"/>
                             </div>
                         </div>
-                    </form>
+
+                        <div class="col-sm-8 col-sm-offset-2">
+                            <div class="form-group with-icon">
+                                <i class="fa fa-key"></i>
+                                <input type="password" name="password" id="password" placeholder="Password" ng-model="password"
+                                        data-toggle="tooltip" title="Password is required"
+                                        class="form-control placeholder"/>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8 text-center col-sm-offset-2">
+                            <div class="form-group">
+                                <input type="submit" name="submit"
+                                       class="form-button form-button-submit btn btn-theme btn-theme-lg btn-theme-transparent btn-block"
+                                       id="submit_btn" value="Register"/>
+                            </div>
+                        </div>
+                    </div>
+                </form>
 
             </div>
-
-
-
-
 
         </div>
     </div>
