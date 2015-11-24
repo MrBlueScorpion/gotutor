@@ -31,7 +31,7 @@ body {
 #status-buttons a {
     display: inline-block;
     font-size: 20px;
-    margin: 20px 30px 0 30px;
+    margin: 20px 120px 0 30px;
     text-align: center;
     text-transform: uppercase;
 }
@@ -42,8 +42,8 @@ body {
 
 /* we will style the span as the circled number */
 #status-buttons span {
-    background: #080808;
-    color: #49ff70;
+    background: #226948;
+    color: #ffffff;
     display: block;
     height: 50px;
     margin: 0 auto 10px;

@@ -1,11 +1,10 @@
 'use strict';
+
 define(function(require) {
 
   return {
-    TUTOR_API : {
-      HOST : '192.168.10.1',
-      PORT : 9999
-    }
+    TUTOR_API : 'api.gotute.com',
+    TUTOR_QUERY : 'query.gotute.com'
   }
 
 });

@@ -9,7 +9,7 @@ define(function(require) {
     var getRecommendedTutors = function () {
 
       var deferred = $q.defer();
-      var url = utility.generateUrl('recommend');
+      var url = utility.generateQueryUrl('recommend');
 
       $http({
         method : 'GET',
@@ -29,13 +29,22 @@ define(function(require) {
 
     };
 
-    var registerUser = function(username, password) {
+    var registerUser = function(email, password) {
       var deferred = $q.defer();
+      var url = utility.generateApiUrl('users/register');
 
-      deferred.resolve({
-        success : 'success'
+      $http({
+        method: 'POST',
+        url : url,
+        data : {
+          email : email,
+          password : password
+        }
+      }).then(function(response) {
+        deferred.resolve(response.data);
+      }, function(response) {
+        deferred.resolve(response);
       });
-
 
       return deferred.promise;
     };

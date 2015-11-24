@@ -1,14 +1,14 @@
 define(function(require){
 
-  return ['$scope', 'TutorApiService', 'toastr','$state', function($scope, TutorApiService, toastr, $state) {
+  return ['$scope', 'TutorApiService', 'toastr', '$state', function($scope, TutorApiService, toastr, $state) {
 
-    $scope.signUp = function(username, password) {
-      TutorApiService.registerUser(username, password).then(function(response){
-        console.log(username,password);
+    $scope.signUp = function(user) {
+      TutorApiService.registerUser(user.email, user.password).then(function(response) {
+        console.log(response);
       });
 
       toastr.success('Successfully', 'Successfully');
-      $state.go('profile');
+      //$state.go('profile');
       return true;
 
     }
