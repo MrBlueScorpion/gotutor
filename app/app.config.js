@@ -25,7 +25,8 @@ require.config({
     'waypoints' : 'bower_components/waypoints/lib/jquery.waypoints',
     'angular-ui-select' : 'bower_components/ui-select/dist/select',
     'angular-sanitize' : 'bower_components/angular-sanitize/angular-sanitize',
-    'angular-bootstrap-checkbox' : 'bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox'
+    'angular-bootstrap-checkbox' : 'bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox',
+    'angular-cookies' : 'bower_components/angular-cookies/angular-cookies'
     // text: 'bower_components/requirejs-text/text'
   },
   shim: {
@@ -72,6 +73,9 @@ require.config({
       'angular'
     ],
     'angular-bootstrap-checkbox' : [
+      'angular'
+    ],
+    'angular-cookies' : [
       'angular'
     ]
   }

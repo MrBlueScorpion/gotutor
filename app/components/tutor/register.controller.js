@@ -1,16 +1,21 @@
 define(function(require){
 
-  return ['$scope', 'TutorApiService', 'toastr', '$state', function($scope, TutorApiService, toastr, $state) {
+  return ['$scope', 'AuthenticateService', 'toastr', '$state', function($scope, AuthenticateService, toastr, $state) {
 
     $scope.signUp = function(user) {
-      TutorApiService.registerUser(user.email, user.password).then(function(response) {
-        console.log(response);
+      AuthenticateService.registerUser(user.email, user.password).then(function(response) {
+        if (!_.isUndefined(response.success)) {
+          $state.go('profile');
+          toastr.success('Success', 'Your have successfully register a tutor account');
+        } else {
+          toastr.error('Error', response.error);
+        }
       });
 
-      toastr.success('Successfully', 'Successfully');
-      //$state.go('profile');
-      return true;
+    };
 
+    $scope.onChange = function() {
+      console.log($scope.terms);
     }
 
   }];

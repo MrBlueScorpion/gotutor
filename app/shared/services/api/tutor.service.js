@@ -41,9 +41,12 @@ define(function(require) {
           password : password
         }
       }).then(function(response) {
-        deferred.resolve(response.data);
-      }, function(response) {
-        deferred.resolve(response);
+        if (!_.isUndefined(response.data)) {
+          deferred.resolve({success: response.data});
+        } else {
+          deferred.resolve({error: 'Unexpected error, please try again'})
+        }
+
       });
 
       return deferred.promise;

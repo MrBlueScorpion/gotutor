@@ -11,6 +11,7 @@ define(function (require) {
   require('angular-bootstrap-select');
   require('angular-ui-select');
   require('angular-bootstrap-checkbox');
+  require('angular-cookies');
 
   // app components
   require('components/home/home.module');
@@ -25,8 +26,10 @@ define(function (require) {
     'ui.select',
     'ui.checkbox',
     'ngSanitize',
+    'ngCookies',
     'app.home',
     'app.tutor'
+
   ]);
 
   app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
@@ -64,7 +67,10 @@ define(function (require) {
         .state('profile', {
           url: '/profile',
           templateUrl: 'components/tutor/profile.view.html',
-          controller : 'ProfileController'
+          controller : 'ProfileController',
+          data : {
+            requireLogin : true
+          }
         })
         .state('messages', {
           url : '/messages',
@@ -105,6 +111,26 @@ define(function (require) {
       toastClass: 'toast'
     });
   });
+
+  app.run(['$rootScope', '$state', 'AuthenticateService', 'toastr', '$cookieStore',
+    function($rootScope, $state, AuthenticateService, toastr, $cookieStore) {
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+      if(('data' in toState) && toState.data.requireLogin && _.isUndefined($cookieStore.get('currentUser'))) {
+        $rootScope.error = "You need to login first";
+        toastr.error($rootScope.error,'Error');
+        event.preventDefault();
+        $state.go('register');
+      }
+      //else if(fromState.url === '^') {
+      //  if(AuthenticateService.isLoggedIn()) {
+      //    $state.go('home');
+      //  } else {
+      //    $rootScope.error = null;
+      //    $state.go('anon.login');
+      //  }
+      //}
+    });
+  }]);
 
   return app;
 });

@@ -26,7 +26,8 @@
     "waypoints": "~4.0.0",
     "ui-select": "angular-ui-select#~0.13.2",
     "angular-sanitize": "~1.4.8",
-    "angular-bootstrap-checkbox": "~0.3.1"
+    "angular-bootstrap-checkbox": "~0.3.1",
+    "angular-cookies": "~1.4.8"
   },
   "resolutions": {
     "angular": "~1.4.0"

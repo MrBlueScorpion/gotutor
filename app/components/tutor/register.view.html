@@ -77,13 +77,18 @@
                                         class="form-control placeholder"/>
                             </div>
                         </div>
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <div class="form-group">
+                            <checkbox ng-model="privacy" name="terms" ng-change="onChange()"></checkbox> I accept the terms and conditions.
+                            </div>
+                        </div>
 
                         <div class="col-sm-6  col-sm-offset-3">
                             <div class="form-group">
                                 <input type="submit" name="submit"
                                        class="form-button form-button-submit btn btn-theme btn-theme-md btn-theme-transparent btn-block"
                                        id="submit_btn" value="Register"
-                                ng-disabled="registerForm.$invalid"/>
+                                ng-disabled="registerForm.$invalid || !privacy"/>
                             </div>
                         </div>
                     </div>
