@@ -9,147 +9,157 @@
 </section>
 
 <section class="page-section with-sidebar sidebar-right first-section">
+
     <div class="container">
+        <form class="form-horizontal">
         <!-- profile.html -->
-        <div class="row">
+        <!-- Content -->
+        <section id="content" class="content col-sm-12 col-md-8 col-lg-9">
 
-            <form class="form-horizontal">
-                <h1>Update My Profile</h1>
-                <div class="col-md-8">
-                    <div class="form-group with-icon">
-                        <label for="name" class="col-md-3 control-label">Name: </label>
-                        <div class="col-md-9">
-                            <i class="fa fa-user"></i>
-                            <input type="text" name="first-name" id="name" placeholder="Your Name" value="" size="30"
-                                    data-toggle="tooltip" title="First name is required"
-                                    class="form-control placeholder"/>
-                        </div>
-                    </div>
-
-                    <div class="form-group selectpicker-wrapper">
-                        <label for="gender" class="col-md-3 control-label">Gender: </label>
-                        <div class="col-md-9">
-                        <select class="selectpicker" data-width="100%"
-                                data-toggle="tooltip" title="Select gender" selectpicker id="gender">
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                        </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="gender" class="col-md-3 control-label">Gender: </label>
-                        <div class="col-md-9">
-                            <ui-select ng-model="selectedItem" theme="bootstrap">
-                                <ui-select-match placeholder="Select person...">
-                                   {{$select.selected.name}}
-                                    </ui-select-match>
-                                <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
-                                    <span ng-bind-html="item.name"></span>
-                                </ui-select-choices>
-                            </ui-select>
-                        </div>
-                    </div>
-                    <div class="form-group with-icon">
-                        <label for="rate" class="col-md-3 control-label">Rate: </label>
-                        <div class="col-md-3">
-                        <input type="text" name="rate"  placeholder=""
-                                data-toggle="tooltip" title="Password is required"
-                                class="form-control placeholder" id="rate"/>
-                        </div>
-                        <div class="col-md-3 text-center">
-                            <p>to</p>
-                        </div>
-                        <div class="col-md-3">
-                            <input type="text" name="rate"  placeholder=""
-                                   data-toggle="tooltip" title="Password is required"
-                                   class="form-control placeholder"/>
-                        </div>
-                    </div>
+        <h1 class="section-title">
+            <span class="icon-inner"><span class="fa-stack"><i class="fa rhex fa-stack-2x"></i><i class="fa fa-user fa-stack-1x"></i></span></span>
+            <span class="title-inner">Update my profile</span>
+        </h1>
 
 
-
-                    <div class="form-group">
-                        <label for="location" class="col-md-3 control-label">Location: </label>
-                            <div class="col-md-9">
-
-                                <p ng-model="user.locations[$index]" ng-repeat="location in user.locations">
-                                    <label>{{location}}</label>
-                                    <span class="btn btn-danger btn-sm pull-right fa fa-times" ng-click="removeLocation($index)">
-                                    Remove
-                                    </span>
-                                </p>
-
-
-                                <div class="input-group" ng-if="user.locationEditable">
-                                <input type="text" name="location" id="location" placeholder="location"
-                                       data-toggle="tooltip" title="location is required"
-                                       class="form-control placeholder" ng-model="location"/>
-                                         <span class="input-group-btn">
-                                            <button class="btn btn-theme btn-theme-md btn-theme-transparent" type="button" ng-click="addLocation(location)">Add</button>
-                                          </span>
-                                </div>
-
-                                <button ng-click="toggleEditable('locationEditable')" class="btn btn-theme btn-theme-sm btn-theme-transparent">{{user.locationEditable ? "Cancel" : "Add another location"}}</button>
-
-                            </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="subject" class="col-md-3 control-label">Subject: </label>
-                        <div class="col-md-9">
-
-                            <div ng-model="user.subjects[$index]" ng-repeat="subject in user.subjects">
-                                <p>{{subject}}
-                                <span class="btn btn-danger btn-sm pull-right fa fa-times" ng-click="removeSubject($index)">
-                                </span>
-                                </p>
-                            </div>
-
-
-                            <div class="input-group" ng-if="user.subjectEditable">
-                                <input type="text" name="subject" id="subject" placeholder="subject"
-                                       data-toggle="tooltip" title="subject is required"
-                                       class="form-control placeholder" ng-model="subject"/>
-                                     <span class="input-group-btn">
-                                        <button class="btn btn-theme btn-theme-md btn-theme-transparent" type="button" ng-click="addSubject(subject)">Add</button>
-                                      </span>
-                            </div>
-
-                            <button ng-click="toggleEditable('subjectEditable')" class="btn btn-theme btn-theme-sm btn-theme-transparent">{{user.subjectEditable ? "Cancel" : "Add another Subject"}}</button>
-
-                        </div>
-                    </div>
-
-
-
-                    <div class="form-group ">
-                        <label for="subject" class="col-md-3 control-label">Description: </label>
-                        <div class="col-md-9">
-                        <textarea name="message" id="input-message" placeholder="Type Your Message..." rows="6" cols="50"
-                        data-toggle="tooltip" title="Message is required"
-                        class="form-control placeholder"></textarea>
-                        </div>
-                    </div>
-
-
-
-                    <div class="form-group">
-                        <input type="submit" name="submit" class="btn btn-theme btn-theme-md btn-theme-transparent pull-right"
-                               ng-click="submit()" value="Submit" />
-                    </div>
+            <div class="form-group">
+                <label for="name" class="col-md-2 col-lg-2 control-label">Name: </label>
+                <div class="col-md-9 col-lg-9">
+                    <input type="text" name="first-name" id="name" placeholder="Your Name" value="" size="30"
+                            data-toggle="tooltip" title="First name is required"
+                            class="form-control placeholder"/>
                 </div>
+            </div>
 
-                <div class="col-md-4">
+            <div class="form-group selectpicker-wrapper">
+                <label for="gender" class="col-md-2 control-label">Gender: </label>
+                <div class="col-md-9">
+                <select class="selectpicker" data-width="100%"
+                        data-toggle="tooltip" title="Select gender" selectpicker id="gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="gender" class="col-md-2 control-label">Gender: </label>
+                <div class="col-md-9">
+                    <ui-select ng-model="selectedItem" theme="bootstrap">
+                        <ui-select-match placeholder="Select person...">
+                           {{$select.selected.name}}
+                            </ui-select-match>
+                        <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
+                            <span ng-bind-html="item.name"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="form-group with-icon">
+                <label for="rate" class="col-md-2 control-label">Rate: </label>
+                <div class="col-md-2">
+                <input type="text" name="rate"  placeholder=""
+                        data-toggle="tooltip" title="Password is required"
+                        class="form-control placeholder" id="rate"/>
+                </div>
+                <div class="col-md-2 text-center">
+                    <p>to</p>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" name="rate"  placeholder=""
+                           data-toggle="tooltip" title="Password is required"
+                           class="form-control placeholder"/>
+                </div>
+            </div>
 
-                    <img  ngf-thumbnail="picFile" class="thumb" style="border: 1px solid #000">
-                    <input type="file" ngf-select ng-model="picFile" name="file"
-                           accept="image/*" ngf-max-size="2MB" required
-                           class="btn btn-theme btn-theme-lg btn-theme-transparent"
-                           data-filename-placement="inside">
-                    <button ng-click="picFile = null" ng-show="picFile" class="btn btn-theme-danger btn-theme-sm btn-theme-transparent">Remove</button>
+            <div class="form-group">
+                <label for="location" class="col-md-2 control-label">Location: </label>
+                    <div class="col-md-9">
+
+                        <p ng-model="user.locations[$index]" ng-repeat="location in user.locations">
+                            <label>{{location}}</label>
+                            <span class="btn btn-danger btn-sm pull-right fa fa-times" ng-click="removeLocation($index)">
+                            Remove
+                            </span>
+                        </p>
+
+                        <div class="input-group" ng-if="user.locationEditable">
+                        <input type="text" name="location" id="location" placeholder="location"
+                               data-toggle="tooltip" title="location is required"
+                               class="form-control placeholder" ng-model="location"/>
+                                 <span class="input-group-btn">
+                                    <button class="btn btn-theme btn-theme-md btn-theme-transparent" type="button" ng-click="addLocation(location)">Add</button>
+                                  </span>
+                        </div>
+
+                        <button ng-click="toggleEditable('locationEditable')" class="btn btn-theme btn-theme-sm btn-theme-transparent">{{user.locationEditable ? "Cancel" : "Add another location"}}</button>
+
+                    </div>
+            </div>
+
+            <div class="form-group">
+                <label for="subject" class="col-md-2 control-label">Subject: </label>
+                <div class="col-md-9">
+
+                    <div ng-model="user.subjects[$index]" ng-repeat="subject in user.subjects">
+                        <p>{{subject}}
+                        <span class="btn btn-danger btn-sm pull-right fa fa-times" ng-click="removeSubject($index)">
+                        </span>
+                        </p>
+                    </div>
+
+
+                    <div class="input-group" ng-if="user.subjectEditable">
+                        <input type="text" name="subject" id="subject" placeholder="subject"
+                               data-toggle="tooltip" title="subject is required"
+                               class="form-control placeholder" ng-model="subject"/>
+                             <span class="input-group-btn">
+                                <button class="btn btn-theme btn-theme-md btn-theme-transparent" type="button" ng-click="addSubject(subject)">Add</button>
+                              </span>
+                    </div>
+
+                    <button ng-click="toggleEditable('subjectEditable')" class="btn btn-theme btn-theme-sm btn-theme-transparent">{{user.subjectEditable ? "Cancel" : "Add another Subject"}}</button>
 
                 </div>
-            </form>
-        </div>
+            </div>
+
+            <div class="form-group ">
+                <label for="subject" class="col-md-2 control-label">Description: </label>
+                <div class="col-md-9">
+                <textarea name="message" id="input-message" placeholder="Type Your Message..." rows="6" cols="50"
+                data-toggle="tooltip" title="Message is required"
+                class="form-control placeholder"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-11">
+                <input type="submit" name="submit" class="btn btn-theme btn-theme-md btn-theme-transparent pull-right"
+                       ng-click="submit()" value="Submit" />
+                </div>
+            </div>
+
+        </section>
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar col-sm-4 col-md-3">
+
+            <div class="widget google-map-widget">
+                <!-- Google map -->
+                <div class="google-map1">
+                    <div style="background: grey">
+                        <img  ngf-thumbnail="picFile" class="thumb" style="border: 1px solid #000">
+                    </div>
+                </div>
+                <!-- /Google map -->
+
+                <input type="file" ngf-select ng-model="picFile" name="file"
+                       accept="image/*" ngf-max-size="2MB" required
+                       class="btn"
+                       data-filename-placement="inside">
+                <button ng-click="picFile = null" ng-show="picFile" class="btn btn-theme-danger btn-theme-sm btn-theme-transparent">Remove</button>
+            </div>
+
+        </aside>
+        <!-- /Sidebar -->
+        </form>
     </div>
 </section>

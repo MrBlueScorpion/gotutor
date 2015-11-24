@@ -48,9 +48,12 @@ define(function (require) {
         })
         .state('tutor', {
           url: '/tutor/:tutorId',
-          templateUrl: 'components/tutor/detail.view.html',
-          controller: function($scope, $stateParams) {
-            $scope.tutorId = $stateParams.tutorId;
+          templateUrl: 'components/tutor/tutor.view.html',
+          controller: 'TutorController',
+          resolve: {
+            tutorId : ['$stateParams', function($stateParams) {
+              return $stateParams.tutorId;
+            }]
           }
         })
         .state('register', {
