@@ -5,19 +5,19 @@ define(function(require) {
   require('angular');
 
 
-  var RegisterController = require('components/tutor/register.controller'),
-      ProfileController = require('components/tutor/profile.controller'),
+  var RegisterController = require('components/auth/register.controller'),
+      ProfileController = require('components/user/profile.controller'),
       TutorController = require('components/tutor/tutor.controller'),
-      TutorApiService = require('shared/services/api/tutor.service'),
-      AuthenticateService = require('shared/services/api/authenticate.service');
+      LoginController = require('components/auth/login.controller');
+
 
   var app = angular.module('app.tutor',[]);
 
   app.controller('RegisterController', RegisterController)
      .controller('ProfileController', ProfileController)
      .controller('TutorController', TutorController)
-     .service('TutorApiService', TutorApiService)
-     .service('AuthenticateService', AuthenticateService);
+     .controller('LoginController', LoginController);
+
 
   return app;
 

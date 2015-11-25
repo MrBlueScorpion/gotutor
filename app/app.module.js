@@ -16,6 +16,9 @@ define(function (require) {
   // app components
   require('components/home/home.module');
   require('components/tutor/tutor.module');
+  var TutorApiService = require('shared/services/api/tutor.service'),
+      AuthService = require('shared/services/api/auth.service'),
+      SessionService = require('shared/services/api/session.service');
 
   var app = angular.module('app', [
     'ui.router',
@@ -32,22 +35,38 @@ define(function (require) {
 
   ]);
 
-  app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
-    function ($stateProvider, $urlRouterProvider, $locationProvider) {
+  app.service('TutorApiService', TutorApiService)
+     .service('AuthService', AuthService)
+     .service('SessionService', SessionService);
+
+
+  app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastrConfig', '$httpProvider',
+    function ($stateProvider, $urlRouterProvider, $locationProvider, toastrConfig, $httpProvider) {
+      //ui-router configuration
+
 
       $stateProvider
         .state('home', {
           url: '/',
           templateUrl: 'components/home/home.view.html',
-          controller : 'HomeController'
+          controller : 'HomeController',
+          data : {
+            requireLogin : false
+          }
         })
         .state('tutors', {
           url : '/tutors',
-          templateUrl: 'components/tutor/tutors.view.html'
+          templateUrl: 'components/tutor/tutors.view.html',
+          data : {
+            requireLogin : false
+          }
         })
         .state('about-us', {
           url : '/about-us',
-          templateUrl: 'components/about/about.view.html'
+          templateUrl: 'components/about/about.view.html',
+          data : {
+            requireLogin : false
+          }
         })
         .state('tutor', {
           url: '/tutor/:tutorId',
@@ -57,24 +76,36 @@ define(function (require) {
             tutorId : ['$stateParams', function($stateParams) {
               return $stateParams.tutorId;
             }]
+          },
+          data : {
+            requireLogin : false
           }
         })
         .state('register', {
           url: '/register',
-          templateUrl: 'components/tutor/register.view.html',
+          templateUrl: 'components/auth/register.view.html',
           controller : 'RegisterController'
         })
-        .state('profile', {
-          url: '/profile',
-          templateUrl: 'components/tutor/profile.view.html',
-          controller : 'ProfileController',
+        .state('login', {
+          url: '/login',
+          templateUrl: 'components/auth/login.view.html',
+          controller : 'LoginController'
+        })
+        .state('user', {
+          abstract : true,
+          templateUrl : 'components/user/user.view.html',
           data : {
             requireLogin : true
           }
         })
-        .state('messages', {
+        .state('user.profile', {
+          url: '/profile',
+          templateUrl: 'components/user/profile.view.html',
+          controller : 'ProfileController'
+        })
+        .state('user.messages', {
           url : '/messages',
-          templateUrl : 'components/tutor/messages.view.html'
+          templateUrl : 'components/user/messages.view.html'
         });
 
       $urlRouterProvider.otherwise('/');
@@ -82,54 +113,70 @@ define(function (require) {
       // use the HTML5 History API
       $locationProvider.html5Mode(true).hashPrefix('!');
 
+      //angular toast configuration
+      angular.extend(toastrConfig, {
+        allowHtml: false,
+        closeButton: true,
+        closeHtml: '<button>&times;</button>',
+        extendedTimeOut: 1000,
+        iconClasses: {
+          error: 'toast-error',
+          info: 'toast-info',
+          success: 'toast-success',
+          warning: 'toast-warning'
+        },
+        messageClass: 'toast-message',
+        onHidden: null,
+        onShown: null,
+        onTap: null,
+        progressBar: false,
+        tapToDismiss: true,
+        templates: {
+          toast: 'directives/toast/toast.html',
+          progressbar: 'directives/progressbar/progressbar.html'
+        },
+        timeOut: 5000,
+        titleClass: 'toast-title',
+        toastClass: 'toast'
+      });
+
+      //session expiry configuration
+      $httpProvider.interceptors.push(['$q','$location', function($q, $location) {
+        return {
+          'responseError': function(response) {
+            if(response.status === 401 || response.status === 403) {
+              $location.path('/login');
+            }
+            return $q.reject(response);
+          }
+        };
+      }]);
+
   }]);
 
-  app.config(function(toastrConfig) {
-    angular.extend(toastrConfig, {
-      allowHtml: false,
-      closeButton: true,
-      closeHtml: '<button>&times;</button>',
-      extendedTimeOut: 1000,
-      iconClasses: {
-        error: 'toast-error',
-        info: 'toast-info',
-        success: 'toast-success',
-        warning: 'toast-warning'
-      },
-      messageClass: 'toast-message',
-      onHidden: null,
-      onShown: null,
-      onTap: null,
-      progressBar: false,
-      tapToDismiss: true,
-      templates: {
-        toast: 'directives/toast/toast.html',
-        progressbar: 'directives/progressbar/progressbar.html'
-      },
-      timeOut: 5000,
-      titleClass: 'toast-title',
-      toastClass: 'toast'
-    });
-  });
 
-  app.run(['$rootScope', '$state', 'AuthenticateService', 'toastr', '$cookieStore',
-    function($rootScope, $state, AuthenticateService, toastr, $cookieStore) {
-    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-      if(('data' in toState) && toState.data.requireLogin && _.isUndefined($cookieStore.get('currentUser'))) {
-        $rootScope.error = "You need to login first";
-        toastr.error($rootScope.error,'Error');
-        event.preventDefault();
-        $state.go('register');
-      }
-      //else if(fromState.url === '^') {
-      //  if(AuthenticateService.isLoggedIn()) {
-      //    $state.go('home');
-      //  } else {
-      //    $rootScope.error = null;
-      //    $state.go('anon.login');
-      //  }
-      //}
-    });
+  app.run(['$rootScope', '$state', 'AuthService', 'SessionService', 'toastr',
+    function($rootScope, $state, AuthService, SessionService, toastr) {
+
+      $rootScope.auth = AuthService;
+      $rootScope.session = SessionService;
+
+      $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+        if(('data' in toState) && toState.data.requireLogin && !AuthService.isLoggedIn()) {
+          $rootScope.error = "You need to login first";
+          toastr.error($rootScope.error,'Error');
+          event.preventDefault();
+          $state.go('login');
+        }
+        //else if(fromState.url === '^') {
+        //  if(AuthenticateService.isLoggedIn()) {
+        //    $state.go('home');
+        //  } else {
+        //    $rootScope.error = null;
+        //    $state.go('anon.login');
+        //  }
+        //}
+      });
   }]);
 
   return app;
