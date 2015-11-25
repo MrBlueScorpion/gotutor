@@ -29,34 +29,10 @@ define(function(require) {
 
     };
 
-    var registerUser = function(email, password) {
-      var deferred = $q.defer();
-      var url = utility.generateApiUrl('users/register');
-
-      $http({
-        method: 'POST',
-        url : url,
-        data : {
-          email : email,
-          password : password
-        }
-      }).then(function(response) {
-        if (!_.isUndefined(response.data)) {
-          deferred.resolve({success: response.data});
-        } else {
-          deferred.resolve({error: 'Unexpected error, please try again'})
-        }
-
-      });
-
-      return deferred.promise;
-    };
-
 
     return {
       getRecommendedTutors : getRecommendedTutors,
-      getTutorsByLocation : getTutorsByLocation,
-      registerUser : registerUser
+      getTutorsByLocation : getTutorsByLocation
     }
 
 

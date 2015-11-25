@@ -169,7 +169,7 @@ define(function (require) {
           $state.go('login');
         }
         //else if(fromState.url === '^') {
-        //  if(AuthenticateService.isLoggedIn()) {
+        //  if(AuthService.isLoggedIn()) {
         //    $state.go('home');
         //  } else {
         //    $rootScope.error = null;

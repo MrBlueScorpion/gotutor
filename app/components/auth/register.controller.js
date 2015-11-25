@@ -8,7 +8,7 @@ define(function(require){
           $state.go('user.profile');
           toastr.success('Success', 'Your have successfully register a tutor account');
         } else {
-          toastr.error('Error', response.error);
+          toastr.error(response.error, 'Error');
         }
       });
 

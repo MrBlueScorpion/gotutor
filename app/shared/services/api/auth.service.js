@@ -61,9 +61,15 @@ define(function(require){
       $http({
         method : 'POST',
         url : url
-      }).then(function(response){
+      }).then(function(response) {
         SessionService.destroy();
       });
+    };
+
+    var getUserProfile = function() {
+      var deferred = $q.defer();
+
+      
     };
 
     return {
