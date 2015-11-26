@@ -6,6 +6,7 @@ define(function (require) {
   require('angular-ui-router');
   require('angular-animate');
   require('angular-toastr');
+  require('angular-sanitize');
 
   // app components
   require('components/home/home.module');
@@ -15,6 +16,7 @@ define(function (require) {
     'ui.router',
     'ngAnimate',
     'toastr',
+    'ngSanitize',
     'app.home',
     'app.tutor'
   ]);
@@ -29,8 +31,9 @@ define(function (require) {
           controller : 'HomeController'
         })
         .state('tutors', {
-          url : '/tutors',
-          templateUrl: 'components/tutor/tutors.view.html'
+          url : '/tutors?subject&subjectids&geohash&location&gender&page',
+          templateUrl: 'components/tutor/tutors.view.html',
+          controller: 'TutorsListController'
         })
         .state('about-us', {
           url : '/about-us',
