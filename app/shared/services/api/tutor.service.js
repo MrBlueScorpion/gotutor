@@ -11,17 +11,10 @@ define(function(require) {
     var getRecommendedTutors = function () {
 
       var deferred = $q.defer();
-      var url = utility.generateUrl('recommend');
+      var url = utility.generateQueryUrl('recommend');
 
-      $http({
-        method : 'GET',
-        url : url
-      }).then(function(response){
-
-          if (!_.isUndefined(response.data)) {
-            deferred.resolve(response.data);
-          }
-
+      $http.get(url).then(function(response) {
+        deferred.resolve(response.data);
       });
 
       return deferred.promise;
@@ -35,7 +28,7 @@ define(function(require) {
       if (getTutorsCanceler) getTutorsCanceler.resolve();
       getTutorsCanceler = $q.defer();
       var deferred = $q.defer();
-      var url = utility.generateUrl('search');
+      var url = utility.generateQueryUrl('search');
       //process query and generate url
       //console.log(query);
       if (query.subjectids && query.subjectids.length > 0) {

@@ -1,0 +1,101 @@
+<section class="page-section image breadcrumbs overlay">
+    <div class="container">
+        <h1>REGISTER</h1>
+        <ul class="breadcrumb">
+            <li><a ui-sref="home">Home</a></li>
+            <li class="active">REGISTER</li>
+        </ul>
+    </div>
+</section>
+
+<section class="page-section first-section">
+    <div class="container">
+        <section id="content" class="content col-sm-12 col-md-8 col-lg-12">
+            <h1 class="section-title">
+                <span class="icon-inner"><span class="fa-stack"><i class="fa rhex fa-stack-2x"></i><i class="fa fa-user fa-stack-1x"></i></span></span>
+                <span class="title-inner">Become a tutor for FREE</span>
+            </h1>
+
+
+            <div class="page-header text-center">
+                <!-- the links to our nested states using relative paths -->
+                <!-- add the active class if the state matches our ui-sref -->
+                <div id="status-buttons" class="text-center">
+                    <a><span>1</span> Sign Up</a>
+                    <a><span>2</span> Get Leads</a>
+                    <a><span>3</span> Profit</a>
+                </div>
+            </div>
+            <hr class="page-divider half"/>
+            <section class="content">
+            <h1 class="section-title">
+                <span class="title-inner text-center">Member Benefits</span>
+            </h1>
+            <div class="row">
+                    <div class="col-md-4">
+                        <div  style="width:200px;height: 200px;border: 1px solid black; padding: 10px">
+                        <p>Recieve instant email/SMS notification when an inquiry is made</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div style="width:200px;height: 200px;border: 1px solid black; padding: 10px">
+                        <p>Update your profile to maximize the opportunity to been seen</p>
+                           </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div style="width:200px;height: 200px;border: 1px solid black; padding: 10px">
+                        <p>Free membership for a limited time</p>
+                        </div>
+                    </div>
+            </div>
+
+
+            </section>
+            <hr class="page-divider half"/>
+                <!-- use ng-submit to catch the form submission and use our Angular function -->
+
+            <form id="registerForm" ng-submit="signUp(user)" name="registerForm">
+
+                    <!-- our nested state views will be injected here -->
+                    <!-- register.html -->
+                    <div class="row">
+
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <div class="form-group with-icon">
+                                <i class="fa fa-envelope"></i>
+                                <input type="text" name="email" id="email" placeholder="Your Email Here" ng-model="user.email"
+                                        required title="Email is required"
+                                        class="form-control placeholder"/>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <div class="form-group with-icon">
+                                <i class="fa fa-key"></i>
+                                <input type="password" name="password" id="password" placeholder="Password" ng-model="user.password"
+                                        required title="Password is required"
+                                        class="form-control placeholder"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <div class="form-group">
+                            <checkbox ng-model="privacy"></checkbox> I accept the terms and conditions.
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6  col-sm-offset-3">
+                            <div class="form-group">
+                                <input type="submit" name="submit"
+                                       class="form-button form-button-submit btn btn-theme btn-theme-md btn-theme-transparent btn-block"
+                                       id="submit_btn" value="Register"
+                                ng-disabled="registerForm.$invalid || !privacy"/>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+
+
+         </section>
+    </div>
+</section>

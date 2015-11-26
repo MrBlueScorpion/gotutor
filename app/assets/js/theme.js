@@ -18,7 +18,7 @@ var theme = function () {
     // BootstrapSelect
     // ---------------------------------------------------------------------------------------
     function handleBootstrapSelect() {
-        //$('.selectpicker').selectpicker();
+        $('.selectpicker').selectpicker();
     }
 
 
@@ -194,7 +194,7 @@ var theme = function () {
             } else {
                 header.removeClass('shrink');
             }
-            $.waypoints('refresh');
+            //$.waypoints('refresh');
         }
         ;
         $(window).load(function () {

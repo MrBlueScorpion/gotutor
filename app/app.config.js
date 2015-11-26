@@ -5,6 +5,7 @@ require.config({
   baseUrl: '.',
   priority: [
     'angular',
+    'jquery',
     'underscore'
   ],
   paths: {
@@ -15,7 +16,17 @@ require.config({
     'underscore' : 'bower_components/underscore/underscore',
     'angular-animate': 'bower_components/angular-animate/angular-animate',
     'angular-toastr' : 'bower_components/angular-toastr/dist/angular-toastr.tpls.min',
-    'angular-sanitize': 'bower_components/angular-sanitize/angular-sanitize'
+    'bootstrap' : 'bower_components/bootstrap/dist/js/bootstrap',
+    'bootstrap-select' : 'bower_components/bootstrap-select/dist/js/bootstrap-select',
+    'angular-bootstrap-select': 'bower_components/angular-bootstrap-select/build/angular-bootstrap-select',
+    'jquery' : 'bower_components/jquery/dist/jquery',
+    'superfish' :'bower_components/superfish/dist/js/superfish',
+    'ng-file-upload' : 'bower_components/ng-file-upload/ng-file-upload.min',
+    'waypoints' : 'bower_components/waypoints/lib/jquery.waypoints',
+    'angular-ui-select' : 'bower_components/ui-select/dist/select',
+    'angular-sanitize' : 'bower_components/angular-sanitize/angular-sanitize',
+    'angular-bootstrap-checkbox' : 'bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox',
+    'angular-cookies' : 'bower_components/angular-cookies/angular-cookies'
     // text: 'bower_components/requirejs-text/text'
   },
   shim: {
@@ -41,9 +52,31 @@ require.config({
       'angular',
       'angular-animate'
     ],
+    'angular-bootstrap-select' : [
+      'angular',
+      'jquery',
+      'bootstrap-select'
+    ],
+    'suerpfish' : [
+      'jquery'
+    ],
+    'ng-file-upload' : [
+      'angular'
+    ],
+    'waypoints' : [
+      'jquery'
+    ],
+    'angular-ui-select': [
+      'angular'
+    ],
     'angular-sanitize' : [
       'angular'
+    ],
+    'angular-bootstrap-checkbox' : [
+      'angular'
+    ],
+    'angular-cookies' : [
+      'angular'
     ]
-
   }
 });
