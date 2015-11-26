@@ -152,14 +152,15 @@ define(function (require) {
         };
       }]);
 
+      $httpProvider.defaults.withCredentials = true;
+
   }]);
 
 
-  app.run(['$rootScope', '$state', 'AuthService', 'SessionService', 'toastr',
-    function($rootScope, $state, AuthService, SessionService, toastr) {
+  app.run(['$rootScope', '$state', 'AuthService', 'toastr',
+    function($rootScope, $state, AuthService, toastr) {
 
       $rootScope.auth = AuthService;
-      $rootScope.session = SessionService;
 
       $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
         if(('data' in toState) && toState.data.requireLogin && !AuthService.isLoggedIn()) {

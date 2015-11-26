@@ -11,15 +11,8 @@ define(function(require) {
       var deferred = $q.defer();
       var url = utility.generateQueryUrl('recommend');
 
-      $http({
-        method : 'GET',
-        url : url
-      }).then(function(response){
-
-          if (!_.isUndefined(response.data)) {
-            deferred.resolve(response.data);
-          }
-
+      $http.get(url).then(function(response) {
+        deferred.resolve(response.data);
       });
 
       return deferred.promise;
