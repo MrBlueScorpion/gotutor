@@ -6,8 +6,7 @@ define(function(require) {
     //Init function
     function init() {
       //show loading mask
-      $('#status').show();
-      $('#preloader').show();
+      $scope.showLoader(true);
       //show error
       $scope.showError = false;
       //Filter data source
@@ -160,8 +159,7 @@ define(function(require) {
         $scope.showError = true;
       }).finally(function(){
         //hide loading mask
-        $('#status').fadeOut();
-        $('#preloader').fadeOut(200);
+        $scope.showLoader(false);
       });
     }
 
@@ -230,6 +228,17 @@ define(function(require) {
     //capitalize
     $scope.capitalizeFirstLetter = function(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
+    };
+
+    //show/hide loader
+    $scope.showLoader = function (show) {
+      if (show) {
+        $('#status').show();
+        $('#preloader').show();
+      } else {
+        $('#status').fadeOut();
+        $('#preloader').fadeOut(200);
+      }
     };
 
     //Start here
