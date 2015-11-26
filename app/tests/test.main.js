@@ -1,13 +1,14 @@
 require.config({
   deps: [
-    'app.main'
+    'tests/tutors.controller.test'
   ],
-  baseUrl: '.',
+  baseUrl: './base/app/',
   priority: [
     'angular',
     'underscore'
   ],
   paths: {
+    'jquery': 'bower_components/jquery/dist/jquery',
     'angular': 'bower_components/angular/angular',
     'angular-route': 'bower_components/angular-route/angular-route',
     'angular-mocks': 'bower_components/angular-mocks/angular-mocks',
@@ -16,9 +17,11 @@ require.config({
     'angular-animate': 'bower_components/angular-animate/angular-animate',
     'angular-toastr' : 'bower_components/angular-toastr/dist/angular-toastr.tpls.min',
     'angular-sanitize': 'bower_components/angular-sanitize/angular-sanitize'
-    // text: 'bower_components/requirejs-text/text'
   },
   shim: {
+    'jquery': {
+      'exports': '$'
+    },
     'angular': {
       'exports': 'angular'
     },
@@ -44,6 +47,6 @@ require.config({
     'angular-sanitize' : [
       'angular'
     ]
-
-  }
+  },
+  callback: window.__karma__.start
 });
