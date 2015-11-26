@@ -4,11 +4,16 @@ define(function(require) {
 
   var constant = require('app.constant');
 
-  var generateUrl = function(action) {
-    return 'http://' + constant.TUTOR_API.HOST + ':' + constant.TUTOR_API.PORT + '/' + action;
+  var generateApiUrl = function(action) {
+    return 'https://' + constant.TUTOR_API + '/' + action;
+  };
+
+  var generateQueryUrl = function(action) {
+    return 'http://' + constant.TUTOR_QUERY + '/' + action;
   };
 
   return {
-    generateUrl : generateUrl
+    generateApiUrl : generateApiUrl,
+    generateQueryUrl : generateQueryUrl
   }
 });

@@ -2,7 +2,8 @@
 
 require([
   'app.module',
-  'underscore'
+  'underscore',
+  'waypoints'
 ], function () {
   var $html = angular.element(document.getElementsByTagName('html'));
 
