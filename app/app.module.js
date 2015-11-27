@@ -55,8 +55,9 @@ define(function (require) {
           }
         })
         .state('tutors', {
-          url : '/tutors',
+          url : '/tutors?subject&subjectids&geohash&location&gender&page',
           templateUrl: 'components/tutor/tutors.view.html',
+          controller: 'TutorsListController',
           data : {
             requireLogin : false
           }

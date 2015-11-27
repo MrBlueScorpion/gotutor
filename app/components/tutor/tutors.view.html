@@ -2,506 +2,118 @@
     <div class="container">
         <h1>Tutors PAGE</h1>
         <ul class="breadcrumb">
-            <li><a ui-sref="home"></a></li>
+            <li><a ui-sref="home">Home</a></li>
             <li class="active" >Tutors</li>
         </ul>
     </div>
 </section>
 
+<div id="preloader">
+    <div id="status">
+        <div class="spinner"></div>
+    </div>
+</div>
+
 
 <!-- PAGE -->
-<section class="page-section with-sidebar sidebar-right first-section">
+<section class="page-section with-sidebar sidebar-right first-section" ng-cloak>
     <div class="container">
-
-        <!-- Sidebar -->
-        <aside id="sidebar" class="sidebar col-sm-4 col-md-3">
-
-            <div class="widget google-map-widget">
-                <!-- Google map -->
-                <div class="google-map1">
-                    <div id="map-canvas1"></div>
+    <div class="text-center" ng-if="showError"><h3>Sorry, can not find any tutor.</h3></div>
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar col-sm-4 col-md-3">
+        <div class="widget">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" ng-if="filters">
+                <div>
+                    <div class="panel panel-default" ng-repeat="(type, values) in filters">
+                        <div class="panel-heading" role="tab" id="heading-{{ type }}">
+                            <h4 class="panel-title">
+                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#{{ type }}" aria-expanded="false" aria-controls="collapseOne">
+                                    {{ type }}
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="{{ type }}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-{{ type }}">
+                            <div class="panel-body">
+                                <div class="checkbox" ng-repeat="option in values">
+                                    <label>
+                                        <input type="checkbox" ng-if="type == 'gender'" ng-checked="filterChecked('gender', option.key)" ng-click="applyFilter($event, 'gender', option.key)"/>
+                                        <span ng-if="type == 'gender'">{{ ::capitalizeFirstLetter(option.key) }}</span>
+                                        <input type="checkbox" ng-if="type == 'location'" ng-checked="filterChecked('location', option.geohash)" ng-click="applyFilter($event, 'location', option.geohash)"/>
+                                        <span ng-if="type == 'location'">{{ ::capitalizeFirstLetter(option.suburb) }}</span>
+                                        <input type="checkbox" ng-if="type == 'subject'" ng-checked="filterChecked('subject', option.id)" ng-click="applyFilter($event, 'subject', option.id)"/>
+                                        <span ng-if="type == 'subject'">{{ ::capitalizeFirstLetter(option.subject) }}</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!-- /Google map -->
-                <a href="#" class="link"><i class="fa fa-map-marker"></i> ISTANBUL, TURKEY</a>
             </div>
-
-            <div class="widget">
-                <h4 class="widget-title">Search</h4>
-                <form method="post" action="#" name="comments-form" id="comments-form">
-                    <div class="form-group selectpicker-wrapper">
-                        <select class="selectpicker" data-live-search="true" data-width="100%"
-                                data-toggle="tooltip" title="Select Categories">
-                            <option>Select Categories</option>
-                            <option>Business</option>
-                            <option>Networking</option>
-                            <option>Free</option>
-                        </select>
-                    </div>
-                    <div class="form-group"><input type="text" placeholder="Choose Date" class="form-control datetimepicker"></div>
-                    <div class="form-group"><input type="text" placeholder="Location" class="form-control"></div>
-                    <div class="row">
-                        <div class="form-group col-md-6"><input type="text" placeholder="Min Price" class="form-control"></div>
-                        <div class="form-group col-md-6"><input type="text" placeholder="Max Price" class="form-control"></div>
-                    </div>
-                    <div class="form-group"><input type="submit" class="btn btn-theme" id="submit" value="Search"></div>
-
-                </form>
-            </div>
-
-        </aside>
-        <!-- /Sidebar -->
+        </div>
+    </aside>
+    <!-- /Sidebar -->
 
         <hr class="page-divider transparent visible-xs"/>
 
         <!-- Content -->
         <section id="content" class="content col-sm-8 col-md-9">
-
-            <div class="listing-meta">
-
-                <div class="filters">
-                    <h2 class="post-title"> Showing Results : 8 to 24 Total 152  </h2>
-                </div>
-
+            <div class="listing-meta" ng-if="totalCount > 0">
                 <div class="options">
-                    <ul class="list-grid-tabs" role="tablist">
-                        <li  class="active" role="presentation"> <a class="view-list" href="#list-view" data-toggle="tab" role="tab" ><i class="fa fa-th-list"></i></a></li>
-                        <li  role="presentation"><a class="view-th " href="#grid-view" data-toggle="tab" role="tab"><i class="fa fa-th"></i></a></li>
-                    </ul>
+                    <span>Showing&nbsp;<strong>{{ ::(((pagination.currentPage - 1) * pagination.pageSize) + 1) }}</strong>&nbsp;-&nbsp;<strong>{{ ::(((pagination.currentPage - 1) * pagination.pageSize) + tutors.length) }}</strong>&nbsp;of&nbsp;<strong>{{ ::totalCount }}</strong>&nbsp;Tutors</span>
+                    <!--Subject and location defined-->
+                    <!--<span ng-if="mainQuery.keywords.length > 0 && mainQuery.location.length > 0">{{ ::totalCount }} <strong>{{ capitalizeFirstLetter(mainQuery.keywords) }}</strong> Tutors Found in <strong>{{ capitalizeFirstLetter(mainQuery.location) }}</strong></span>-->
+                    <!--Only subject defined-->
+                    <!--<span ng-if="mainQuery.keywords.length > 0 && mainQuery.location.length == 0">{{ ::totalCount }} <strong>{{ capitalizeFirstLetter(mainQuery.keywords) }}</strong> Tutors Found</span>-->
+                    <!--Only location defined-->
+                    <!--<span ng-if="mainQuery.keywords.length == 0 && mainQuery.location.length > 0">{{ ::totalCount }} Tutors Found in <strong>{{ capitalizeFirstLetter(mainQuery.location) }}</strong></span>-->
+                    <!--Nothing defined-->
+                    <!--<span ng-if="mainQuery.keywords.length == 0 && mainQuery.location.length == 0">{{ ::totalCount }} Tutors Found</span>-->
                 </div>
-
             </div>
-
             <div class="tab-content">
-                <div id="list-view"  class="tab-pane fade active in" role="tabpanel">
+                <div id="list-view"  class="tab-pane fade active in" role="tabpanel" ng-if="tutors.length > 0">
                     <div class="thumbnails events vertical">
 
-                        <div class="thumbnail no-border no-padding">
+                        <div class="thumbnail no-border no-padding no-radius" ng-repeat-start="tutor in tutors">
                             <div class="row">
-                                <div class="col-md-3 col-sm-3 col-xs-4">
-                                    <div class="media">
-                                        <a href="#" class="like"><i class="fa fa-heart"></i></a>
-                                        <img src="assets/img/preview/event-1.jpg" alt="">
-                                        <div class="caption hovered"></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-9 col-sm-9 col-xs-8">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="caption">
-                                        <a href="#" class="pull-right">
-                                                            <span class="fa-stack fa-lg">
-                                                                <i class="fa fa-stack-2x fa-circle-thin"></i>
-                                                                <i class="fa fa-stack-1x fa-share-alt"></i>
-                                                            </span>
-                                        </a>
-                                        <h3 class="caption-title"><a href="#">Standart Event Name Here</a></h3>
-                                        <p class="caption-category"><i class="fa fa-file-text-o"></i> 15 October at 20:00 - 22:00 on Manhattan / New York</p>
-                                        <p class="caption-price">Tickets from $49,99</p>
-                                        <p class="caption-text">Fusce pellentesque velvitae tincidunt egestas. Pellentesque habitant morbi.Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis. Bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris.</p>
-                                        <p class="caption-more"><a href="#" class="btn btn-theme">Tickets &amp; details</a></p>
+                                        <h3 class="caption-title"><a href="/tutor/{{ ::tutor.id }}" ng-bind-html="::tutor.name"></a></h3>
+                                        <!--<p class="caption-text">{{ ::tutor.gender }}</p>-->
+                                        <p class="caption-category"><i class="fa fa-file-text-o"></i>&nbsp;<span ng-bind-html="::tutor.location"></span></p>
+                                        <p class="caption-text" ng-bind-html="::tutor.subjects"></p>
+                                        <p class="caption-price">{{ ::tutor.rate }}</p>
+                                        <p class="caption-text" ng-bind-html="::tutor.description"></p>
+                                        <p class="caption-more"><a href="/tutor/{{ ::tutor.id }}" class="btn btn-theme">Tutor Profile & Details</a></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <hr class="page-divider half"/>
-
-                        <div class="thumbnail no-border no-padding">
-                            <div class="row">
-                                <div class="col-md-3 col-sm-3 col-xs-4">
-                                    <div class="media">
-                                        <a href="#" class="like"><i class="fa fa-heart-o"></i></a>
-                                        <img src="assets/img/preview/event-1.jpg" alt="">
-                                        <div class="caption hovered"></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-9 col-sm-9 col-xs-8">
-                                    <div class="caption">
-                                        <a href="#" class="pull-right">
-                                                            <span class="fa-stack fa-lg">
-                                                                <i class="fa fa-stack-2x fa-circle-thin"></i>
-                                                                <i class="fa fa-stack-1x fa-share-alt"></i>
-                                                            </span>
-                                        </a>
-                                        <h3 class="caption-title"><a href="#">Standart Event Name Here</a></h3>
-                                        <p class="caption-category"><i class="fa fa-file-text-o"></i> 15 October at 20:00 - 22:00 on Manhattan / New York</p>
-                                        <p class="caption-price">Tickets from $49,99</p>
-                                        <p class="caption-text">Fusce pellentesque velvitae tincidunt egestas. Pellentesque habitant morbi.Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis. Bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris.</p>
-                                        <p class="caption-more"><a href="#" class="btn btn-theme">Tickets &amp; details</a></p>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <hr class="page-divider half"/>
-
-                        <div class="thumbnail no-border no-padding">
-                            <div class="row">
-                                <div class="col-md-3 col-sm-3 col-xs-4">
-                                    <div class="media">
-                                        <a href="#" class="like"><i class="fa fa-heart"></i></a>
-                                        <img src="assets/img/preview/event-1.jpg" alt="">
-                                        <div class="caption hovered"></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-9 col-sm-9 col-xs-8">
-                                    <div class="caption">
-                                        <a href="#" class="pull-right">
-                                                            <span class="fa-stack fa-lg">
-                                                                <i class="fa fa-stack-2x fa-circle-thin"></i>
-                                                                <i class="fa fa-stack-1x fa-share-alt"></i>
-                                                            </span>
-                                        </a>
-                                        <h3 class="caption-title"><a href="#">Standart Event Name Here</a></h3>
-                                        <p class="caption-category"><i class="fa fa-file-text-o"></i> 15 October at 20:00 - 22:00 on Manhattan / New York</p>
-                                        <p class="caption-price">Tickets from $49,99</p>
-                                        <p class="caption-text">Fusce pellentesque velvitae tincidunt egestas. Pellentesque habitant morbi.Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis. Bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris.</p>
-                                        <p class="caption-more"><a href="#" class="btn btn-theme">Tickets &amp; details</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr class="page-divider half"/>
-
-                        <div class="thumbnail no-border no-padding">
-                            <div class="row">
-                                <div class="col-md-3 col-sm-3 col-xs-4">
-                                    <div class="media">
-                                        <a href="#" class="like"><i class="fa fa-heart-o"></i></a>
-                                        <img src="assets/img/preview/event-1.jpg" alt="">
-                                        <div class="caption hovered"></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-9 col-sm-9 col-xs-8">
-                                    <div class="caption">
-                                        <a href="#" class="pull-right">
-                                                            <span class="fa-stack fa-lg">
-                                                                <i class="fa fa-stack-2x fa-circle-thin"></i>
-                                                                <i class="fa fa-stack-1x fa-share-alt"></i>
-                                                            </span>
-                                        </a>
-                                        <h3 class="caption-title"><a href="#">Standart Event Name Here</a></h3>
-                                        <p class="caption-category"><i class="fa fa-file-text-o"></i> 15 October at 20:00 - 22:00 on Manhattan / New York</p>
-                                        <p class="caption-price">Tickets from $49,99</p>
-                                        <p class="caption-text">Fusce pellentesque velvitae tincidunt egestas. Pellentesque habitant morbi.Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis. Bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris.</p>
-                                        <p class="caption-more"><a href="#" class="btn btn-theme">Tickets &amp; details</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr class="page-divider half"/>
-
-                        <div class="thumbnail no-border no-padding">
-                            <div class="row">
-                                <div class="col-md-3 col-sm-3 col-xs-4">
-                                    <div class="media">
-                                        <a href="#" class="like"><i class="fa fa-heart"></i></a>
-                                        <img src="assets/img/preview/event-1.jpg" alt="">
-                                        <div class="caption hovered"></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-9 col-sm-9 col-xs-8">
-                                    <div class="caption">
-                                        <a href="#" class="pull-right">
-                                                            <span class="fa-stack fa-lg">
-                                                                <i class="fa fa-stack-2x fa-circle-thin"></i>
-                                                                <i class="fa fa-stack-1x fa-share-alt"></i>
-                                                            </span>
-                                        </a>
-                                        <h3 class="caption-title"><a href="#">Standart Event Name Here</a></h3>
-                                        <p class="caption-category"><i class="fa fa-file-text-o"></i> 15 October at 20:00 - 22:00 on Manhattan / New York</p>
-                                        <p class="caption-price">Tickets from $49,99</p>
-                                        <p class="caption-text">Fusce pellentesque velvitae tincidunt egestas. Pellentesque habitant morbi.Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis. Bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris.</p>
-                                        <p class="caption-more"><a href="#" class="btn btn-theme">Tickets &amp; details</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr class="page-divider half"/>
-
-                        <div class="thumbnail no-border no-padding">
-                            <div class="row">
-                                <div class="col-md-3 col-sm-3 col-xs-4">
-                                    <div class="media">
-                                        <a href="#" class="like"><i class="fa fa-heart-o"></i></a>
-                                        <img src="assets/img/preview/event-1.jpg" alt="">
-                                        <div class="caption hovered"></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-9 col-sm-9 col-xs-8">
-                                    <div class="caption">
-                                        <a href="#" class="pull-right">
-                                                            <span class="fa-stack fa-lg">
-                                                                <i class="fa fa-stack-2x fa-circle-thin"></i>
-                                                                <i class="fa fa-stack-1x fa-share-alt"></i>
-                                                            </span>
-                                        </a>
-                                        <h3 class="caption-title"><a href="#">Standart Event Name Here</a></h3>
-                                        <p class="caption-category"><i class="fa fa-file-text-o"></i> 15 October at 20:00 - 22:00 on Manhattan / New York</p>
-                                        <p class="caption-price">Tickets from $49,99</p>
-                                        <p class="caption-text">Fusce pellentesque velvitae tincidunt egestas. Pellentesque habitant morbi.Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis. Bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris.</p>
-                                        <p class="caption-more"><a href="#" class="btn btn-theme">Tickets &amp; details</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr class="page-divider half"/>
-
-                        <div class="thumbnail no-border no-padding">
-                            <div class="row">
-                                <div class="col-md-3 col-sm-3 col-xs-4">
-                                    <div class="media">
-                                        <a href="#" class="like"><i class="fa fa-heart"></i></a>
-                                        <img src="assets/img/preview/event-1.jpg" alt="">
-                                        <div class="caption hovered"></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-9 col-sm-9 col-xs-8">
-                                    <div class="caption">
-                                        <a href="#" class="pull-right">
-                                                            <span class="fa-stack fa-lg">
-                                                                <i class="fa fa-stack-2x fa-circle-thin"></i>
-                                                                <i class="fa fa-stack-1x fa-share-alt"></i>
-                                                            </span>
-                                        </a>
-                                        <h3 class="caption-title"><a href="#">Standart Event Name Here</a></h3>
-                                        <p class="caption-category"><i class="fa fa-file-text-o"></i> 15 October at 20:00 - 22:00 on Manhattan / New York</p>
-                                        <p class="caption-price">Tickets from $49,99</p>
-                                        <p class="caption-text">Fusce pellentesque velvitae tincidunt egestas. Pellentesque habitant morbi.Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis. Bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris.</p>
-                                        <p class="caption-more"><a href="#" class="btn btn-theme">Tickets &amp; details</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr class="page-divider half"/>
-
-                        <div class="thumbnail no-border no-padding">
-                            <div class="row">
-                                <div class="col-md-3 col-sm-3 col-xs-4">
-                                    <div class="media">
-                                        <a href="#" class="like"><i class="fa fa-heart-o"></i></a>
-                                        <img src="assets/img/preview/event-1.jpg" alt="">
-                                        <div class="caption hovered"></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-9 col-sm-9 col-xs-8">
-                                    <div class="caption">
-                                        <a href="#" class="pull-right">
-                                                            <span class="fa-stack fa-lg">
-                                                                <i class="fa fa-stack-2x fa-circle-thin"></i>
-                                                                <i class="fa fa-stack-1x fa-share-alt"></i>
-                                                            </span>
-                                        </a>
-                                        <h3 class="caption-title"><a href="#">Standart Event Name Here</a></h3>
-                                        <p class="caption-category"><i class="fa fa-file-text-o"></i> 15 October at 20:00 - 22:00 on Manhattan / New York</p>
-                                        <p class="caption-price">Tickets from $49,99</p>
-                                        <p class="caption-text">Fusce pellentesque velvitae tincidunt egestas. Pellentesque habitant morbi.Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis. Bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris.</p>
-                                        <p class="caption-more"><a href="#" class="btn btn-theme">Tickets &amp; details</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <hr class="page-divider half" ng-repeat-end/>
 
                     </div>
 
                     <!-- Pagination -->
-                    <div class="pagination-wrapper">
+                    <div class="pagination-wrapper" ng-if="pagination.totalPages > 0">
                         <ul class="pagination">
-                            <li class="disabled"><a href="#"><i class="fa fa-chevron-left"></i></a></li>
-                            <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
-                        </ul>
-                    </div>
-                    <!-- /Pagination -->
-                </div>
-                <div id="grid-view"  class="tab-pane fade " role="tabpanel">
-                    <div class="row thumbnails events">
-
-                        <div class="col-md-4 col-sm-6 isotope-item festival">
-                            <div class="thumbnail no-border no-padding">
-                                <div class="media">
-                                    <a href="#" class="like"><i class="fa fa-heart"></i></a>
-                                    <div class="date">
-                                        <span>25</span>
-                                        <span>Jan</span>
-                                    </div>
-                                    <img src="assets/img/preview/hotel-1.jpg" alt="">
-                                    <div class="caption hovered"></div>
-                                </div>
-                                <div class="caption">
-                                    <h3 class="caption-title"><a href="#">Standart Event Name Here</a></h3>
-                                    <p class="caption-category"><i class="fa fa-file-text-o"></i> 15 October <i class="fa fa-map-marker"></i> Manhattan / New York</p>
-                                    <p class="caption-price">Tickets from $49,99</p>
-                                    <p class="caption-text">Fusce pellentesque velvitae tincidunt egestas. Pellentesque habitant morbi.	</p>
-                                    <p class="caption-more"><a href="#" class="btn btn-theme">Tickets &amp; details</a></p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 col-sm-6 isotope-item conference">
-                            <div class="thumbnail no-border no-padding">
-                                <div class="media">
-                                    <a href="#" class="like"><i class="fa fa-heart-o"></i></a>
-                                    <div class="date">
-                                        <span>25</span>
-                                        <span>Jan</span>
-                                    </div>
-                                    <img src="assets/img/preview/hotel-1.jpg" alt="">
-                                    <div class="caption hovered"></div>
-                                </div>
-                                <div class="caption">
-                                    <h3 class="caption-title"><a href="#">Standart Event Name Here</a></h3>
-                                    <p class="caption-category"><i class="fa fa-file-text-o"></i> 15 October <i class="fa fa-map-marker"></i> Manhattan / New York</p>
-                                    <p class="caption-price">Tickets from $49,99</p>
-                                    <p class="caption-text">Fusce pellentesque velvitae tincidunt egestas. Pellentesque habitant morbi.	</p>
-                                    <p class="caption-more"><a href="#" class="btn btn-theme">Tickets &amp; details</a></p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 col-sm-6 isotope-item miscellaneous">
-                            <div class="thumbnail no-border no-padding">
-                                <div class="media">
-                                    <a href="#" class="like"><i class="fa fa-heart"></i></a>
-                                    <div class="date">
-                                        <span>25</span>
-                                        <span>Jan</span>
-                                    </div>
-                                    <img src="assets/img/preview/hotel-1.jpg" alt="">
-                                    <div class="caption hovered"></div>
-                                </div>
-                                <div class="caption">
-                                    <h3 class="caption-title"><a href="#">Standart Event Name Here</a></h3>
-                                    <p class="caption-category"><i class="fa fa-file-text-o"></i> 15 October <i class="fa fa-map-marker"></i> Manhattan / New York</p>
-                                    <p class="caption-price">Tickets from $49,99</p>
-                                    <p class="caption-text">Fusce pellentesque velvitae tincidunt egestas. Pellentesque habitant morbi.	</p>
-                                    <p class="caption-more"><a href="#" class="btn btn-theme">Tickets &amp; details</a></p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 col-sm-6 isotope-item festival playground">
-                            <div class="thumbnail no-border no-padding">
-                                <div class="media">
-                                    <a href="#" class="like"><i class="fa fa-heart-o"></i></a>
-                                    <div class="date">
-                                        <span>25</span>
-                                        <span>Jan</span>
-                                    </div>
-                                    <img src="assets/img/preview/hotel-1.jpg" alt="">
-                                    <div class="caption hovered"></div>
-                                </div>
-                                <div class="caption">
-                                    <h3 class="caption-title"><a href="#">Standart Event Name Here</a></h3>
-                                    <p class="caption-category"><i class="fa fa-file-text-o"></i> 15 October <i class="fa fa-map-marker"></i> Manhattan / New York</p>
-                                    <p class="caption-price">Tickets from $49,99</p>
-                                    <p class="caption-text">Fusce pellentesque velvitae tincidunt egestas. Pellentesque habitant morbi.	</p>
-                                    <p class="caption-more"><a href="#" class="btn btn-theme">Tickets &amp; details</a></p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 col-sm-6 isotope-item festival conference">
-                            <div class="thumbnail no-border no-padding">
-                                <div class="media">
-                                    <a href="#" class="like"><i class="fa fa-heart"></i></a>
-                                    <div class="date">
-                                        <span>25</span>
-                                        <span>Jan</span>
-                                    </div>
-                                    <img src="assets/img/preview/hotel-1.jpg" alt="">
-                                    <div class="caption hovered"></div>
-                                </div>
-                                <div class="caption">
-                                    <h3 class="caption-title"><a href="#">Standart Event Name Here</a></h3>
-                                    <p class="caption-category"><i class="fa fa-file-text-o"></i> 15 October <i class="fa fa-map-marker"></i> Manhattan / New York</p>
-                                    <p class="caption-price">Tickets from $49,99</p>
-                                    <p class="caption-text">Fusce pellentesque velvitae tincidunt egestas. Pellentesque habitant morbi.	</p>
-                                    <p class="caption-more"><a href="#" class="btn btn-theme">Tickets &amp; details</a></p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 col-sm-6 isotope-item conference playground">
-                            <div class="thumbnail no-border no-padding">
-                                <div class="media">
-                                    <a href="#" class="like"><i class="fa fa-heart-o"></i></a>
-                                    <div class="date">
-                                        <span>25</span>
-                                        <span>Jan</span>
-                                    </div>
-                                    <img src="assets/img/preview/hotel-1.jpg" alt="">
-                                    <div class="caption hovered"></div>
-                                </div>
-                                <div class="caption">
-                                    <h3 class="caption-title"><a href="#">Standart Event Name Here</a></h3>
-                                    <p class="caption-category"><i class="fa fa-file-text-o"></i> 15 October <i class="fa fa-map-marker"></i> Manhattan / New York</p>
-                                    <p class="caption-price">Tickets from $49,99</p>
-                                    <p class="caption-text">Fusce pellentesque velvitae tincidunt egestas. Pellentesque habitant morbi.	</p>
-                                    <p class="caption-more"><a href="#" class="btn btn-theme">Tickets &amp; details</a></p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 col-sm-6 isotope-item festival conference">
-                            <div class="thumbnail no-border no-padding">
-                                <div class="media">
-                                    <a href="#" class="like"><i class="fa fa-heart"></i></a>
-                                    <div class="date">
-                                        <span>25</span>
-                                        <span>Jan</span>
-                                    </div>
-                                    <img src="assets/img/preview/hotel-1.jpg" alt="">
-                                    <div class="caption hovered"></div>
-                                </div>
-                                <div class="caption">
-                                    <h3 class="caption-title"><a href="#">Standart Event Name Here</a></h3>
-                                    <p class="caption-category"><i class="fa fa-file-text-o"></i> 15 October <i class="fa fa-map-marker"></i> Manhattan / New York</p>
-                                    <p class="caption-price">Tickets from $49,99</p>
-                                    <p class="caption-text">Fusce pellentesque velvitae tincidunt egestas. Pellentesque habitant morbi.	</p>
-                                    <p class="caption-more"><a href="#" class="btn btn-theme">Tickets &amp; details</a></p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 col-sm-6 isotope-item playground">
-                            <div class="thumbnail no-border no-padding">
-                                <div class="media">
-                                    <a href="#" class="like"><i class="fa fa-heart-o"></i></a>
-                                    <div class="date">
-                                        <span>25</span>
-                                        <span>Jan</span>
-                                    </div>
-                                    <img src="assets/img/preview/hotel-1.jpg" alt="">
-                                    <div class="caption hovered"></div>
-                                </div>
-                                <div class="caption">
-                                    <h3 class="caption-title"><a href="#">Standart Event Name Here</a></h3>
-                                    <p class="caption-category"><i class="fa fa-file-text-o"></i> 15 October <i class="fa fa-map-marker"></i> Manhattan / New York</p>
-                                    <p class="caption-price">Tickets from $49,99</p>
-                                    <p class="caption-text">Fusce pellentesque velvitae tincidunt egestas. Pellentesque habitant morbi.	</p>
-                                    <p class="caption-more"><a href="#" class="btn btn-theme">Tickets &amp; details</a></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Pagination -->
-                    <div class="pagination-wrapper">
-                        <ul class="pagination">
-                            <li class="disabled"><a href="#"><i class="fa fa-chevron-left"></i></a></li>
-                            <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
+                            <li ng-repeat="pager in pagination.pagers" ng-class="{ 'disabled': pager.disabled, 'active': pager.active }">
+                                <!-- First page -->
+                                <a ng-if="(pager.type == 'first' || pager.type == 'last') && !pager.disabled" ui-sref="{ page: pager.page }"><i class="fa" ng-class="{ 'fa-angle-double-left': pager.type == 'first', 'fa-angle-double-right': pager.type == 'last' }"></i></a>
+                                <span ng-if="(pager.type == 'first' || pager.type == 'last') && pager.disabled"><i class="fa" ng-class="{ 'fa-angle-double-left': pager.type == 'first', 'fa-angle-double-right': pager.type == 'last' }"></i></span>
+                                <!-- /First page -->
+                                <!-- Previous/Next page -->
+                                <a ng-if="(pager.type == 'previous' || pager.type == 'next') && !pager.disabled" ui-sref="{page: pager.page }"><i class="fa" ng-class="{ 'fa-angle-left': pager.type == 'previous', 'fa-angle-right': pager.type == 'next' }"></i></a>
+                                <span ng-if="(pager.type == 'previous' || pager.type == 'next') && pager.disabled"><i class="fa" ng-class="{ 'fa-angle-left': pager.type == 'previous', 'fa-angle-right': pager.type == 'next' }"></i></span>
+                                <!-- /Previous/Next page -->
+                                <!-- Previous/Next page of page -->
+                                <a ng-if="pager.type == 'previous-pagers' || pager.type == 'next-pagers'"" ui-sref="{page: pager.page }">...</a>
+                                <!-- /Previous/Next page of page -->
+                                <!-- Pages -->
+                                <span ng-if="pager.type == 'pager' && pager.active" href="#">{{ :: pager.page }}<span class="sr-only">(current)</span></span>
+                                <a ng-if="pager.type == 'pager' && !pager.active" ui-sref="{page: pager.page }">{{ :: pager.page }}</a>
+                                <!-- /Pages -->
+                            </li>
                         </ul>
                     </div>
                     <!-- /Pagination -->
