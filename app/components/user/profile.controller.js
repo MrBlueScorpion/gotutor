@@ -2,7 +2,7 @@
 
 define(function(require){
 
-  return['$scope', 'toastr', function($scope, toastr){
+  return['$scope', 'toastr', '$http', function($scope, toastr, $http){
 
     $scope.itemArray = [
       {id: 1, name: 'first'},
@@ -34,24 +34,56 @@ define(function(require){
       $scope.user[modal] = $scope.user[modal] === false;
     };
 
-    $scope.addLocation = function(location) {
-      if (!_.isUndefined(location) && _.indexOf($scope.user.locations, location) < 0){
-        $scope.user.locations.push(location);
-        $scope.location = null;
-      } else {
-        toastr.error('Location already exists', location);
+    $scope.addOption = function(option, modal) {
+
+      if (_.isUndefined(option)) {
+        toastr.error('Please select an option from the list', modal);
+        return
       }
 
+      if (_.indexOf($scope.user[modal], option) > -1){
+        toastr.error(option + 'already exits in the your list', modal);
+        return
+      }
 
-      console.log($scope.user.locations);
+      $scope.user[modal].push(option);
+      $scope.location = null;
+      console.log($scope.location);
+      $scope.subject = null;
+      console.log($scope.user[modal]);
     };
 
     $scope.submit = function() {
       console.log($scope.user.locations);
     };
 
-    $scope.removeLocation = function(index) {
-      $scope.user.locations.splice(index, 1);
+    $scope.removeOption = function(index, modal) {
+      $scope.user[modal].splice(index, 1);
+    };
+
+
+    $scope.getLocation = function(val) {
+      return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
+        params: {
+          address: val,
+          sensor: false
+        }
+      }).then(function(response){
+        return response.data.results.map(function(item){
+          return item.formatted_address;
+        });
+      });
+    };
+
+
+
+    $scope.sliders = {};
+    $scope.sliders.sliderValue = 50;
+
+    $scope.testOptions = {
+      min: 0,
+      max: 100,
+      step: 1
     };
   }];
 });

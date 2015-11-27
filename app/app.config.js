@@ -26,7 +26,9 @@ require.config({
     'angular-ui-select' : 'bower_components/ui-select/dist/select',
     'angular-sanitize' : 'bower_components/angular-sanitize/angular-sanitize',
     'angular-bootstrap-checkbox' : 'bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox',
-    'angular-cookies' : 'bower_components/angular-cookies/angular-cookies'
+    'angular-cookies' : 'bower_components/angular-cookies/angular-cookies',
+    'angular-bootstrap' : 'bower_components/angular-bootstrap/ui-bootstrap-tpls',
+    'seiyria-bootstrap-slider' : 'bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min'
     // text: 'bower_components/requirejs-text/text'
   },
   shim: {
@@ -77,6 +79,12 @@ require.config({
     ],
     'angular-cookies' : [
       'angular'
+    ],
+    'angular-bootstrap' : [
+      'angular'
+    ],
+    'seiyria-bootstrap-slider' : [
+      'jquery'
     ]
   }
 });

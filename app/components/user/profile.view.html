@@ -45,20 +45,23 @@
                 </div>
             </div>
             <div class="form-group with-icon">
-                <label for="rate" class="col-md-2 control-label">Rate: </label>
-                <div class="col-md-2">
-                <input type="text" name="rate"  placeholder=""
-                        data-toggle="tooltip" title="Password is required"
-                        class="form-control placeholder" id="rate"/>
+                <label  class="col-md-2 control-label">Rate: </label>
+                <div class="col-md-9">
+                <slider ng-model="sliders.sliderValue" min="testOptions.min" step="testOptions.step" max="testOptions.max" value="testOptions.value" tooltip="hide"></slider>
                 </div>
-                <div class="col-md-2 text-center">
-                    <p>to</p>
-                </div>
-                <div class="col-md-2">
-                    <input type="text" name="rate"  placeholder=""
-                           data-toggle="tooltip" title="Password is required"
-                           class="form-control placeholder"/>
-                </div>
+                    <!--<div class="col-md-2">-->
+                <!--<input type="text" name="rate"  placeholder=""-->
+                        <!--data-toggle="tooltip" title="Password is required"-->
+                        <!--class="form-control placeholder" id="rate"/>-->
+                <!--</div>-->
+                <!--<div class="col-md-2 text-center">-->
+                    <!--<p>to</p>-->
+                <!--</div>-->
+                <!--<div class="col-md-2">-->
+                    <!--<input type="text" name="rate"  placeholder=""-->
+                           <!--data-toggle="tooltip" title="Password is required"-->
+                           <!--class="form-control placeholder"/>-->
+                <!--</div>-->
             </div>
 
             <div class="form-group">
@@ -67,17 +70,20 @@
 
                         <p ng-model="user.locations[$index]" ng-repeat="location in user.locations">
                             <label>{{location}}</label>
-                            <span class="btn btn-danger btn-sm pull-right fa fa-times" ng-click="removeLocation($index)">
-                            Remove
+                            <span class="btn btn-danger btn-sm pull-right fa fa-times" ng-click="removeOption($index, 'locations')">
                             </span>
                         </p>
 
                         <div class="input-group" ng-if="user.locationEditable">
                         <input type="text" name="location" id="location" placeholder="location"
                                data-toggle="tooltip" title="location is required"
-                               class="form-control placeholder" ng-model="location"/>
+                               class="form-control placeholder" ng-model="location"
+                               uib-typeahead="address for address in getLocation($viewValue)"
+                               typeahead-editable="false"
+                               typeahead-append-to-body="true" autocomplete="off"
+                               typeahead-select-on-exact="true"/>
                                  <span class="input-group-btn">
-                                    <button class="btn btn-theme btn-theme-md btn-theme-transparent" type="button" ng-click="addLocation(location)">Add</button>
+                                    <button class="btn btn-theme btn-theme-md btn-theme-transparent" type="button" ng-click="addOption(location, 'locations')">Add</button>
                                   </span>
                         </div>
 
@@ -92,7 +98,7 @@
 
                     <div ng-model="user.subjects[$index]" ng-repeat="subject in user.subjects">
                         <p>{{subject}}
-                        <span class="btn btn-danger btn-sm pull-right fa fa-times" ng-click="removeSubject($index)">
+                        <span class="btn btn-danger btn-sm pull-right fa fa-times" ng-click="removeOption($index, 'sujects')">
                         </span>
                         </p>
                     </div>
@@ -101,9 +107,11 @@
                     <div class="input-group" ng-if="user.subjectEditable">
                         <input type="text" name="subject" id="subject" placeholder="subject"
                                data-toggle="tooltip" title="subject is required"
-                               class="form-control placeholder" ng-model="subject"/>
+                               class="form-control placeholder" ng-model="subject"
+                               autocomplete="off"
+                               typeahead-select-on-exact="true"/>
                              <span class="input-group-btn">
-                                <button class="btn btn-theme btn-theme-md btn-theme-transparent" type="button" ng-click="addSubject(subject)">Add</button>
+                                <button class="btn btn-theme btn-theme-md btn-theme-transparent" type="button" ng-click="addOption(subject, 'subjects')">Add</button>
                               </span>
                     </div>
 

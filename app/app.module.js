@@ -12,6 +12,7 @@ define(function (require) {
   require('angular-ui-select');
   require('angular-bootstrap-checkbox');
   require('angular-cookies');
+  require('angular-bootstrap');
 
   // app components
   require('components/home/home.module');
@@ -19,6 +20,8 @@ define(function (require) {
   var TutorApiService = require('shared/services/api/tutor.service'),
       AuthService = require('shared/services/api/auth.service'),
       SessionService = require('shared/services/api/session.service');
+
+  var SliderDirective = require('shared/directives/slider.directive');
 
   var app = angular.module('app', [
     'ui.router',
@@ -28,6 +31,7 @@ define(function (require) {
     'angular-bootstrap-select',
     'ui.select',
     'ui.checkbox',
+    'ui.bootstrap',
     'ngSanitize',
     'ngCookies',
     'app.home',
@@ -37,7 +41,8 @@ define(function (require) {
 
   app.service('TutorApiService', TutorApiService)
      .service('AuthService', AuthService)
-     .service('SessionService', SessionService);
+     .service('SessionService', SessionService)
+     .directive('slider', SliderDirective);
 
 
   app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastrConfig', '$httpProvider',
@@ -152,7 +157,7 @@ define(function (require) {
         };
       }]);
 
-      $httpProvider.defaults.withCredentials = true;
+     // $httpProvider.defaults.withCredentials = true;
 
   }]);
 
@@ -162,22 +167,22 @@ define(function (require) {
 
       $rootScope.auth = AuthService;
 
-      $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-        if(('data' in toState) && toState.data.requireLogin && !AuthService.isLoggedIn()) {
-          $rootScope.error = "You need to login first";
-          toastr.error($rootScope.error,'Error');
-          event.preventDefault();
-          $state.go('login');
-        }
-        //else if(fromState.url === '^') {
-        //  if(AuthService.isLoggedIn()) {
-        //    $state.go('home');
-        //  } else {
-        //    $rootScope.error = null;
-        //    $state.go('anon.login');
-        //  }
-        //}
-      });
+      //$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+      //  if(('data' in toState) && toState.data.requireLogin && !AuthService.isLoggedIn()) {
+      //    $rootScope.error = "You need to login first";
+      //    toastr.error($rootScope.error,'Error');
+      //    event.preventDefault();
+      //    $state.go('login');
+      //  }
+      //  //else if(fromState.url === '^') {
+      //  //  if(AuthService.isLoggedIn()) {
+      //  //    $state.go('home');
+      //  //  } else {
+      //  //    $rootScope.error = null;
+      //  //    $state.go('anon.login');
+      //  //  }
+      //  //}
+      //});
   }]);
 
   return app;

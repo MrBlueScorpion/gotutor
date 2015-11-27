@@ -28,7 +28,9 @@
     "angular-sanitize": "~1.4.8",
     "angular-bootstrap-checkbox": "~0.3.1",
     "angular-cookies": "~1.4.8",
-    "angular-material": "~0.11.4"
+    "angular-material": "~0.11.4",
+    "angular-bootstrap": "~0.14.3",
+    "seiyria-bootstrap-slider": "~5.2.6"
   },
   "resolutions": {
     "angular": "1.4.7"
