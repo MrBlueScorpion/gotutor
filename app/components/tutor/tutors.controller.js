@@ -146,6 +146,11 @@ define(function(require) {
           $scope.totalCount = data.hits;
           //display filter
           $scope.filters = data.facet;
+          //add genders if not
+          if ($scope.filters.gender && $scope.filters.gender.length == 0) {
+            $scope.filters.gender.push({ key: "female" });
+            $scope.filters.gender.push({ key: "male" });
+          }
           //generage pagination
           $scope.updatePagination($scope.mainQuery.page, $scope.totalCount);
         } else {
