@@ -4,16 +4,32 @@ module.exports = function(config){
     basePath : './',
 
     files : [
-      'app/bower_components/angular/angular.js',
-      'app/bower_components/angular-route/angular-route.js',
-      'app/bower_components/angular-mocks/angular-mocks.js',
-      'app/components/**/*.js',
-      'app/view*/**/*.js'
+      'app/tests/test.main.js',
+      { pattern: 'app/bower_components/jquery/dist/jquery.js', included: false },
+      { pattern: 'app/bower_components/angular/angular.js', included: false },
+      { pattern: 'app/bower_components/angular-route/angular-route.js', included: false },
+      { pattern: 'app/bower_components/angular-animate/angular-animate.js', included: false },
+      { pattern: 'app/bower_components/angular-sanitize/angular-sanitize.js', included: false },
+      { pattern: 'app/bower_components/angular-toastr/dist/angular-toastr.tpls.min.js', included: false },
+      { pattern: 'app/bower_components/angular-ui-router/release/angular-ui-router.js', included: false },
+      { pattern: 'app/bower_components/angular-mocks/angular-mocks.js', included: false },
+      { pattern: 'app/bower_components/underscore/underscore.js', included: false },
+      { pattern: 'app/bower_components/bootstrap-select/dist/js/bootstrap-select.js', included: false },
+      { pattern: 'app/bower_components/angular-bootstrap-select/build/angular-bootstrap-select.js', included: false },
+      { pattern: 'app/bower_components/ng-file-upload/ng-file-upload.min.js', included: false },
+      { pattern: 'app/bower_components/ui-select/dist/select.js', included: false },
+      { pattern: 'app/bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js', included: false },
+      { pattern: 'app/bower_components/angular-cookies/angular-cookies.js', included: false },
+      { pattern: 'app/*.js', included: false },
+      { pattern: 'app/components/**/*.js', included: false },
+      { pattern: 'app/shared/**/*.js', included: false },
+      { pattern: 'app/tests/*.js', included: false },
+      //'app/view*/**/*.js'
     ],
 
     autoWatch : true,
 
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine', 'requirejs'],
 
     browsers : ['Chrome'],
 
@@ -21,13 +37,16 @@ module.exports = function(config){
             'karma-chrome-launcher',
             'karma-firefox-launcher',
             'karma-jasmine',
-            'karma-junit-reporter'
+            'karma-junit-reporter',
+            'karma-requirejs'
             ],
 
     junitReporter : {
       outputFile: 'test_out/unit.xml',
       suite: 'unit'
-    }
+    },
+
+    reporters: ['progress', 'junit']
 
   });
 };
