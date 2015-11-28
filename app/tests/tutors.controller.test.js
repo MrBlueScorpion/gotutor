@@ -11,13 +11,7 @@ define(['jquery', 'angular', 'angular-mocks', 'app.module', 'components/tutor/tu
 
         beforeEach(inject(function ($controller, $rootScope) {
             scope = $rootScope.$new();
-            scope.mainQuery = {};
-            scope.pagination = {
-                pageSize: 10,
-                currentPage: 1,
-                totalPages: 0,
-                pagers: []
-            };
+            // scope.mainQuery = {};
             stateParams = { subject: 'math', location: 'melbourne', subjectids: ['1', '2'], geohash: 'r1r0fuh4h', gender: 'male' }//mockup router data
             $controller(controller, {
                 $scope: scope,
@@ -35,7 +29,7 @@ define(['jquery', 'angular', 'angular-mocks', 'app.module', 'components/tutor/tu
             expect(scope.mainQuery.range).toBe('1km');
             expect(scope.mainQuery.gender).toBe('male');
             expect(scope.mainQuery.page).toBe(1);
-            expect(scope.mainQuery.pageSize).toBe(10);
+            expect(scope.mainQuery.pageSize).toBe(20);
         });
 
         //Test filterChecked method
@@ -55,7 +49,7 @@ define(['jquery', 'angular', 'angular-mocks', 'app.module', 'components/tutor/tu
             scope.updatePagination(1, 6049);
 
             expect(scope.pagination.currentPage).toBe(1);
-            expect(scope.pagination.totalPages).toBe(605);
+            expect(scope.pagination.totalPages).toBe(303);
 
             expect(scope.pagination.pagers[0].page).toBe(1);
             expect(scope.pagination.pagers[0].type).toBe('first');
@@ -80,7 +74,7 @@ define(['jquery', 'angular', 'angular-mocks', 'app.module', 'components/tutor/tu
             expect(scope.pagination.pagers[8].type).toBe('next');
             expect(scope.pagination.pagers[8].disabled).toBe(false);
 
-            expect(scope.pagination.pagers[9].page).toBe(605);
+            expect(scope.pagination.pagers[9].page).toBe(303);
             expect(scope.pagination.pagers[9].type).toBe('last');
             expect(scope.pagination.pagers[9].disabled).toBe(false);
         });
@@ -119,40 +113,40 @@ define(['jquery', 'angular', 'angular-mocks', 'app.module', 'components/tutor/tu
             expect(scope.pagination.pagers[9].type).toBe('next');
             expect(scope.pagination.pagers[9].disabled).toBe(false);
 
-            expect(scope.pagination.pagers[10].page).toBe(605);
+            expect(scope.pagination.pagers[10].page).toBe(303);
             expect(scope.pagination.pagers[10].type).toBe('last');
             expect(scope.pagination.pagers[10].disabled).toBe(false);
         });
 
         //Test pager generation last page
         it('TEST_updatePagination_Last_Page', function() {
-            //page 605 for record 6049
-            scope.updatePagination(605, 6049);
+            //page 303 for record 6049
+            scope.updatePagination(303, 6049);
 
-            expect(scope.pagination.currentPage).toBe(605);
+            expect(scope.pagination.currentPage).toBe(303);
 
             expect(scope.pagination.pagers[0].page).toBe(1);
             expect(scope.pagination.pagers[0].type).toBe('first');
             expect(scope.pagination.pagers[0].disabled).toBe(false);
 
-            expect(scope.pagination.pagers[1].page).toBe(604);
+            expect(scope.pagination.pagers[1].page).toBe(302);
             expect(scope.pagination.pagers[1].type).toBe('previous');
             expect(scope.pagination.pagers[1].disabled).toBe(false);
 
-            expect(scope.pagination.pagers[2].page).toBe(600);
+            expect(scope.pagination.pagers[2].page).toBe(300);
             expect(scope.pagination.pagers[2].type).toBe('previous-pagers');
 
-            expect(scope.pagination.pagers[3].page).toBe(601);
+            expect(scope.pagination.pagers[3].page).toBe(301);
             expect(scope.pagination.pagers[3].type).toBe('pager');
             expect(scope.pagination.pagers[3].active).toBe(false);
 
-            expect(scope.pagination.pagers[8].page).toBe(606);
-            expect(scope.pagination.pagers[8].type).toBe('next');
-            expect(scope.pagination.pagers[8].disabled).toBe(true);
+            expect(scope.pagination.pagers[6].page).toBe(304);
+            expect(scope.pagination.pagers[6].type).toBe('next');
+            expect(scope.pagination.pagers[6].disabled).toBe(true);
 
-            expect(scope.pagination.pagers[9].page).toBe(605);
-            expect(scope.pagination.pagers[9].type).toBe('last');
-            expect(scope.pagination.pagers[9].disabled).toBe(true);
+            expect(scope.pagination.pagers[7].page).toBe(303);
+            expect(scope.pagination.pagers[7].type).toBe('last');
+            expect(scope.pagination.pagers[7].disabled).toBe(true);
         });
 
         //Test capitalize first letter
