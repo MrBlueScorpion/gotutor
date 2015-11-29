@@ -10,7 +10,8 @@ define(function(require) {
       //show error
       $scope.showError = false;
       //Filter data source
-      $scope.filters = null;
+      //$scope.filters = null;
+      $scope.filtersAlt = [];
       //Searching results
       $scope.tutors = [];
       $scope.totalCount = 0;
@@ -20,7 +21,7 @@ define(function(require) {
       //$scope.filterQuery = {};
       //pagination
       $scope.pagination = {
-        pageSize: 10,
+        pageSize: 20,
         currentPage: 1,
         totalPages: 0,
         pagers: []
@@ -145,12 +146,12 @@ define(function(require) {
           $scope.tutors = data.results;
           $scope.totalCount = data.hits;
           //display filter
-          $scope.filters = data.facet;
-          //add genders if not
-          if ($scope.filters.gender && $scope.filters.gender.length == 0) {
-            $scope.filters.gender.push({ key: "female" });
-            $scope.filters.gender.push({ key: "male" });
-          }
+          // $scope.filters = data.facet;
+          // //add genders if not
+          // if ($scope.filters.gender && $scope.filters.gender.length == 0) {
+          //   $scope.filters.gender.push({ key: "female" });
+          //   $scope.filters.gender.push({ key: "male" });
+          // }
           //generage pagination
           $scope.updatePagination($scope.mainQuery.page, $scope.totalCount);
         } else {
