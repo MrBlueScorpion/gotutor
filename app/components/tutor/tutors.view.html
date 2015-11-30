@@ -20,7 +20,7 @@
     <div class="container">
     <div class="text-center" ng-if="showError"><h3>Sorry, can not find any tutor.</h3></div>
     <!-- Sidebar -->
-    <aside id="sidebar" class="sidebar col-sm-4 col-md-3">
+    <!--<aside id="sidebar" class="sidebar col-sm-4 col-md-3">
         <div class="widget">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" ng-if="filters">
                 <div>
@@ -50,13 +50,14 @@
                 </div>
             </div>
         </div>
-    </aside>
+    </aside>-->
     <!-- /Sidebar -->
 
         <hr class="page-divider transparent visible-xs"/>
 
         <!-- Content -->
-        <section id="content" class="content col-sm-8 col-md-9">
+        <!--<section id="content" class="content col-sm-8 col-md-9">-->
+        <section id="content" class="content col-sm-12">
             <div class="listing-meta" ng-if="totalCount > 0">
                 <div class="options">
                     <span>Showing&nbsp;<strong>{{ ::(((pagination.currentPage - 1) * pagination.pageSize) + 1) }}</strong>&nbsp;-&nbsp;<strong>{{ ::(((pagination.currentPage - 1) * pagination.pageSize) + tutors.length) }}</strong>&nbsp;of&nbsp;<strong>{{ ::totalCount }}</strong>&nbsp;Tutors</span>
@@ -73,29 +74,47 @@
             <div class="tab-content">
                 <div id="list-view"  class="tab-pane fade active in" role="tabpanel" ng-if="tutors.length > 0">
                     <div class="thumbnails events vertical">
-
                         <div class="thumbnail no-border no-padding no-radius" ng-repeat-start="tutor in tutors">
                             <div class="row">
-                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-2 hidden-sm hidden-xs">
+                                    <a ui-sref="tutor({tutorId: tutor.id})">
+                                        <div class="media">
+                                            <img ng-src="" ng-if="tutor.img">
+                                            <img ng-src="//placeholdit.imgix.net/~text/?txtsize=33&txt=Male&w=150&h=194" ng-if="tutor.gender && tutor.gender.toLowerCase() == 'male'">
+                                            <img ng-src="//placeholdit.imgix.net/~text/?txtsize=33&txt=Female&w=150&h=194" ng-if="tutor.gender && tutor.gender.toLowerCase() == 'female'">
+                                            <img ng-src="//placeholdit.imgix.net/~text/?txtsize=33&txt=School&w=150&h=194" ng-if="!tutor.img && !tutor.gender">
+                                            <div class="caption hovered"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-8 col-sm-9 col-xs-12">
                                     <div class="caption">
-                                        <h3 class="caption-title"><a href="/tutor/{{ ::tutor.id }}" ng-bind-html="::tutor.name"></a></h3>
+                                        <h3 class="caption-title"><a ui-sref="tutor({tutorId: tutor.id})" ng-bind-html="::tutor.name"></a></h3>
                                         <!--<p class="caption-text">{{ ::tutor.gender }}</p>-->
-                                        <p class="caption-category"><i class="fa fa-file-text-o"></i>&nbsp;<span ng-bind-html="::tutor.location"></span></p>
-                                        <p class="caption-text" ng-bind-html="::tutor.subjects"></p>
-                                        <p class="caption-price">{{ ::tutor.rate }}</p>
+                                        <p class="caption-category visible-xs-block"><i class="fa fa-map-marker"></i>&nbsp;<span ng-bind-html="::tutor.location"></span></p>
+                                        <p class="caption-text"><i class="fa fa-graduation-cap"></i>&nbsp;<span ng-bind-html="::tutor.subjects"></span></p>
+                                        <p class="caption-price visible-xs-block" ng-if="tutor.rate">{{ ::tutor.rate }} / Hour</p>
                                         <p class="caption-text" ng-bind-html="::tutor.description"></p>
-                                        <p class="caption-more"><a href="/tutor/{{ ::tutor.id }}" class="btn btn-theme">Tutor Profile & Details</a></p>
+                                        <p class="caption-more visible-xs-block"><a ui-sref="tutor({tutorId: tutor.id})" class="btn btn-theme btn-block">Tutor Details</a></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-sm-3 hidden-xs">
+                                    <div class="caption">
+                                        <p class="caption-text"></p>
+                                        <p class="caption-category"><i class="fa fa-map-marker"></i>&nbsp;<span ng-bind-html="::tutor.location"></span></p>
+                                        <p class="caption-price" ng-if="tutor.rate">{{ ::tutor.rate }} / Hour</p>
+                                        <p class="caption-text"></p>
+                                        <p class="caption-more visible-sm-block"><a ui-sref="tutor({tutorId: tutor.id})" class="btn btn-theme btn-block">Tutor Details</a></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                         <hr class="page-divider half" ng-repeat-end/>
-
                     </div>
 
                     <!-- Pagination -->
-                    <div class="pagination-wrapper" ng-if="pagination.totalPages > 0">
+                    <!-- Pagination for tablets and desktops -->
+                    <div class="pagination-wrapper hidden-xs" ng-if="pagination.totalPages > 0">
                         <ul class="pagination">
                             <li ng-repeat="pager in pagination.pagers" ng-class="{ 'disabled': pager.disabled, 'active': pager.active }">
                                 <!-- First page -->
@@ -113,6 +132,17 @@
                                 <span ng-if="pager.type == 'pager' && pager.active" href="#">{{ :: pager.page }}<span class="sr-only">(current)</span></span>
                                 <a ng-if="pager.type == 'pager' && !pager.active" ui-sref="{page: pager.page }">{{ :: pager.page }}</a>
                                 <!-- /Pages -->
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Pagination for phones -->
+                    <div class="pagination-wrapper visible-xs-block" ng-if="pagination.totalPages > 1">
+                        <ul class="pagination">
+                            <li ng-if="pagination.currentPage > 1">
+                                <a ui-sref="{page: pagination.currentPage - 1 }"><i class="fa fa-angle-left"></i>&nbsp;Previous</a>
+                            </li>
+                            <li ng-if="pagination.currentPage < pagination.totalPages">
+                                <a ui-sref="{page: pagination.currentPage + 1 }">Next&nbsp;<i class="fa fa-angle-right"></i></a>
                             </li>
                         </ul>
                     </div>
