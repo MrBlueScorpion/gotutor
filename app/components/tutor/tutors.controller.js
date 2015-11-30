@@ -3,6 +3,14 @@
 define(function(require) {
 
   return ['$scope', '$stateParams', '$state', 'TutorApiService', function ($scope, $stateParams, $state, TutorApiService) {
+    var FilterEnum = {
+      SUBJECT: 10,
+      SUBJECT_IDS: 20,
+      LOCATION: 30,
+      GEOHASH: 40,
+      GENDER: 50
+    };
+
     //Init function
     function init() {
       //show loading mask
@@ -12,6 +20,7 @@ define(function(require) {
       //Filter data source
       //$scope.filters = null;
       $scope.filtersAlt = [];
+      $scope.facet = null;
       //Searching results
       $scope.tutors = [];
       $scope.totalCount = 0;
@@ -152,8 +161,12 @@ define(function(require) {
           //   $scope.filters.gender.push({ key: "female" });
           //   $scope.filters.gender.push({ key: "male" });
           // }
-          //generage pagination
+          //get facet
+          $scope.facet = data.facet;
+          //generate pagination
           $scope.updatePagination($scope.mainQuery.page, $scope.totalCount);
+          //generate filters
+          $scope.generateFilterAlt();
         } else {
           //panic
           //console.log(data);
@@ -167,6 +180,104 @@ define(function(require) {
         //hide loading mask
         $scope.showLoader(false);
       });
+    }
+
+    //generate alternative filters
+    $scope.generateFilterAlt = function () {
+      //keywords or subject
+      if ($stateParams.subjectids) {//using subject
+        if (typeof $stateParams.subjectids === 'string') {//single id
+          (function () {
+            var subjectId = parseInt($stateParams.subjectids);
+            if (subjectId > 0) {
+              var subject = getSubjectById($scope.facet, subjectId);
+              if (subject) {
+                $scope.filtersAlt.push({ type: FilterEnum.SUBJECT_IDS, key: subjectId, text: subject.subject });
+              }
+            }
+          }())
+        } else {//id array
+          $stateParams.subjectids.forEach(function(ele) {
+            var subjectId = parseInt(ele);
+            if (subjectId > 0) {
+              var subject = getSubjectById($scope.facet, subjectId);
+              if (subject) {
+                $scope.filtersAlt.push({ type: FilterEnum.SUBJECT_IDS, key: subjectId, text: subject.subject });
+              }
+            }
+          });
+        }
+      } else if ($stateParams.subject) {//using subject string
+        $scope.filtersAlt.push({ type: FilterEnum.SUBJECT, key: $stateParams.subject, text: $stateParams.subject });
+      }
+      //location or geohash
+      if ($stateParams.geohash) {//using geohash
+        (function () {
+          var location = getLocationByGeohash($scope.facet, $stateParams.geohash);
+          if (location) {
+            $scope.filtersAlt.push({ type: FilterEnum.GEOHASH, key: $stateParams.geohash, text: location.suburb });
+          }
+        }())
+      } else if ($stateParams.location) {//using location string
+        $scope.filtersAlt.push({ type: FilterEnum.LOCATION, key: $stateParams.location, text: $stateParams.location });
+      }
+      //gender
+      //console.log($scope.filtersAlt);
+    };
+
+    //remove alternative filter
+    $scope.removeFiltersAlt = function (filter) {
+      var currentStateParams = angular.copy($stateParams);
+      if (filter) {
+        switch (filter.type) {
+          case FilterEnum.SUBJECT:
+            currentStateParams.subject = null;
+            break;
+          case FilterEnum.SUBJECT_IDS:
+            if (typeof currentStateParams.subjectids === 'string') {//is a string
+              currentStateParams.subjectids = null;
+            } else {//is a array
+              currentStateParams.subjectids = _.reject(currentStateParams.subjectids, function(id){
+                return id == '' + filter.key;
+              });
+            }
+            break;
+          case FilterEnum.LOCATION:
+            currentStateParams.location = null;
+            break;
+          case FilterEnum.GEOHASH:
+            currentStateParams.geohash = null;
+            break;
+          default:
+            break;
+        }
+      }
+      //console.log(currentStateParams);
+      //go!!!
+      $state.go('tutors', currentStateParams);
+    };
+
+    //get subject by id from filter
+    function getSubjectById(facet, id) {
+      var subject;
+      if (facet.subject) {
+        subject = _.find(facet.subject, function(subject){
+          console.log(subject);
+          return subject.id == id;
+        });
+      }
+      return subject;
+    }
+
+    //get location by geohash from filter
+    function getLocationByGeohash(facet, geohash) {
+      var location;
+      if (facet.location) {
+        location = _.find(facet.location, function(location){
+          return location.geohash == geohash;
+        });
+      }
+      return location;
     }
 
     //generate pagination obj
