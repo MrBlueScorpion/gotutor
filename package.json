@@ -1,7 +1,7 @@
 {
   "name": "GoTute",
   "private": true,
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "A starter project for Go Tute",
   "repository": "https://zlxjackie@bitbucket.org/gotute/gotute.git",
   "license": "MIT",
