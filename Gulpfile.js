@@ -4,9 +4,11 @@ var gulp = require('gulp'),
     minifyHTML = require('gulp-minify-html'),
     templateCache = require('gulp-angular-templatecache'),
     sort = require('gulp-sort'),
-    source = require("vinyl-source-stream"),
+    source = require('vinyl-source-stream'),
     debowerify = require('debowerify'),
     browserify = require('browserify'),
+    uglify = require('gulp-uglify'),
+    buffer = require('vinyl-buffer'),
     debug;
 
 gulp.task('clean', function () {
@@ -46,17 +48,21 @@ gulp.task('build:bower', function () {
             .pipe(gulp.dest("dist/bower_components/"))
 })
 
-gulp.task('build:js', function () {
-  return browserify()
+gulp.task('build:js', ['build:template'], function () {
+  var stream = browserify()
             .add("app/app.main.js")
             .transform(debowerify)
             .bundle()
             .pipe(source('app.main.js'))
-            .pipe(gulp.dest("dist/"))
+  
+  if (!debug)
+    stream = stream.pipe(buffer()).pipe(uglify())
+    
+  return stream.pipe(gulp.dest("dist/"))
             .on('end', function() { del.sync('app/angular-templates.js') })
 })
 
-gulp.task('build', ['clean', 'build:assets', 'build:bower', 'build:template', 'build:html', 'build:js'])
+gulp.task('build', ['clean', 'build:assets', 'build:html', 'build:js'])
 
 gulp.task('connect', function() {
   connect.server({

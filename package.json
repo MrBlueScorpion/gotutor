@@ -28,6 +28,7 @@
     "protractor": "^2.1.0",
     "requirejs": "^2.1.22",
     "shelljs": "^0.2.6",
+    "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   },
   "scripts": {
