@@ -6,30 +6,11 @@ var gulp = require('gulp'),
     sort = require('gulp-sort'),
     source = require("vinyl-source-stream"),
     debowerify = require('debowerify'),
-    browserify = require('browserify');
-
-gulp.task('connect', function() {
-  connect.server({
-    root: 'app',
-    port: 80,
-    livereload: true,
-    fallback: 'app/index.html'
-  });
-});
-
-gulp.task('html', function () {
-  gulp.src('./app/*.html')
-    .pipe(connect.reload());
-});
-
-gulp.task('watch', function () {
-  gulp.watch(['./app/*.html'], ['html']);
-});
-
-gulp.task('default', ['connect', 'watch']);
+    browserify = require('browserify'),
+    debug;
 
 gulp.task('clean', function () {
-  del.sync('dist/**/*')
+  del.sync(['app/angular-templates.js', 'dist/**/*'])
 })
 
 gulp.task('build:assets', function () {
@@ -38,21 +19,31 @@ gulp.task('build:assets', function () {
 })
 
 gulp.task('build:template', function () {
-  return gulp.src('./app/components/**/*.html')
-             .pipe(sort())
-             .pipe(minifyHTML())
-             .pipe(templateCache('angular-templates.js', {
-                module: 'gotute.components.templateCache',
-                base: __dirname + '/app/',
-                root: ''
-             }))
-             .pipe(gulp.dest('dist/'))
+  var stream = gulp.src('./app/components/**/*.html').pipe(sort())
+             
+  if (!debug)
+    stream = stream.pipe(minifyHTML())
+    
+  return stream.pipe(templateCache('angular-templates.js', {
+    module: 'templateCache',
+    base: __dirname + '/app/',
+    root: '',
+    standalone: true
+  })).pipe(gulp.dest('app/'))
 })
 
 gulp.task('build:html', function () {
-  return gulp.src('./app/index.html')
-             .pipe(minifyHTML())
-             .pipe(gulp.dest('dist/'))
+  var stream = gulp.src('./app/index.html')
+  
+  if (!debug)
+    stream = stream.pipe(minifyHTML())
+  
+  return stream.pipe(gulp.dest('dist/'))
+})
+
+gulp.task('build:bower', function () {
+  return gulp.src('./app/bower_components/**/*')
+            .pipe(gulp.dest("dist/bower_components/"))
 })
 
 gulp.task('build:js', function () {
@@ -62,6 +53,31 @@ gulp.task('build:js', function () {
             .bundle()
             .pipe(source('app.main.js'))
             .pipe(gulp.dest("dist/"))
+            .on('end', function() { del.sync('app/angular-templates.js') })
 })
 
-gulp.task('build', ['clean', 'build:assets', 'build:template', 'build:html', 'build:js'])
+gulp.task('build', ['clean', 'build:assets', 'build:bower', 'build:template', 'build:html', 'build:js'])
+
+gulp.task('connect', function() {
+  connect.server({
+    root: 'dist',
+    port: 80,
+    livereload: true,
+    fallback: 'dist/index.html'
+  });
+});
+
+gulp.task('html', function () {
+  gulp.src('./app/*.html')
+    .pipe(connect.reload());
+});
+
+gulp.task('watch', function () {
+  gulp.watch(['./app/**/*'], ['build']);
+});
+
+gulp.task('debug', function() {
+  debug = true
+});
+
+gulp.task('default', ['debug', 'build', 'connect', 'watch']);
