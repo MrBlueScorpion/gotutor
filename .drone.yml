@@ -2,6 +2,7 @@ build:
   image: mhart/alpine-node
   commands:
     - npm install
+    - bower install
     - node ./node_modules/gulp/bin/gulp.js build
 
 notify:
