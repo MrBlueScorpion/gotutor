@@ -18,8 +18,7 @@ require('./components/tutor/tutor.module');
 
 require('./angular-templates')
 var TutorApiService = require('./shared/services/api/tutor.service'),
-    AuthService = require('./shared/services/api/auth.service'),
-    SessionService = require('./shared/services/api/session.service');
+    AuthService = require('./shared/services/api/auth.service')
 
 var SliderDirective = require('./shared/directives/slider.directive');
 
@@ -41,7 +40,6 @@ var app = angular.module('app', [
 
 app.service('TutorApiService', TutorApiService)
     .service('AuthService', AuthService)
-    .service('SessionService', SessionService)
     .directive('slider', SliderDirective);
 
 
@@ -167,23 +165,23 @@ app.run(['$rootScope', '$state', 'AuthService', 'toastr',
   function($rootScope, $state, AuthService, toastr) {
 
     $rootScope.auth = AuthService;
-
-    //$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-    //  if(('data' in toState) && toState.data.requireLogin && !AuthService.isLoggedIn()) {
-    //    $rootScope.error = "You need to login first";
-    //    toastr.error($rootScope.error,'Error');
-    //    event.preventDefault();
-    //    $state.go('login');
-    //  }
-    //  //else if(fromState.url === '^') {
-    //  //  if(AuthService.isLoggedIn()) {
-    //  //    $state.go('home');
-    //  //  } else {
-    //  //    $rootScope.error = null;
-    //  //    $state.go('anon.login');
-    //  //  }
-    //  //}
-    //});
+/*
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+     if(('data' in toState) && toState.data.requireLogin && !AuthService.isLoggedIn()) {
+       $rootScope.error = "You need to login first";
+       toastr.error($rootScope.error,'Error');
+       event.preventDefault();
+       $state.go('login');
+     }
+     //else if(fromState.url === '^') {
+     //  if(AuthService.isLoggedIn()) {
+     //    $state.go('home');
+     //  } else {
+     //    $rootScope.error = null;
+     //    $state.go('anon.login');
+     //  }
+     //}
+    });*/
 }]);
 
 module.exports = app;

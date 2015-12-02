@@ -3,7 +3,7 @@
 var utility = require('../../helpers/utility');
 
 module.exports = ['$q', '$http', function ($q, $http) {
-  var _isLoggedIn = false;
+  var _isLoggedIn;
 
   var registerUser = function(email, password) {
     var deferred = $q.defer();
@@ -24,6 +24,9 @@ module.exports = ['$q', '$http', function ($q, $http) {
   };
 
   var isLoggedIn = function() {
+    if (typeof(_isLoggedIn) !== 'undefined')
+      return _isLoggedIn;
+      
     var url = utility.generateApiUrl('users/me');
 
     $http.get(url).then(function() {

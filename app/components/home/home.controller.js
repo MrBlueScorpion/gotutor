@@ -9,7 +9,6 @@ module.exports = ['$scope', 'TutorApiService', 'toastr', '$http', function($scop
     console.log(_.keys(data));
   });*/
 
-  toastr.success('success', 'Toast is working');
   // Any function returning a promise object can be used to load values asynchronously
   $scope.getLocation = function(val) {
     return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
