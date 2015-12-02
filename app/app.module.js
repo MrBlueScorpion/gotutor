@@ -16,12 +16,7 @@ require('angular-bootstrap');
 require('./components/home/home.module');
 require('./components/tutor/tutor.module');
 
-require('./shared/services/api/tutor.service'),
-require('./shared/services/api/auth.service'),
-require('./shared/services/api/session.service');
-
 require('./angular-templates')
-
 var TutorApiService = require('./shared/services/api/tutor.service'),
     AuthService = require('./shared/services/api/auth.service'),
     SessionService = require('./shared/services/api/session.service');
@@ -52,9 +47,8 @@ app.service('TutorApiService', TutorApiService)
 
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastrConfig', '$httpProvider',
   function ($stateProvider, $urlRouterProvider, $locationProvider, toastrConfig, $httpProvider) {
+
     //ui-router configuration
-
-
     $stateProvider
       .state('home', {
         url: '/',
@@ -116,7 +110,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
       })
       .state('user.messages', {
         url : '/messages',
-        templateUrl : 'components/user/messages.view.html'
+        templateUrl : 'components/user/messages.view.html',
+        controller : 'MessageController'
       });
 
     $urlRouterProvider.otherwise('/');
@@ -166,6 +161,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
     // $httpProvider.defaults.withCredentials = true;
 
 }]);
+
 
 app.run(['$rootScope', '$state', 'AuthService', 'toastr',
   function($rootScope, $state, AuthService, toastr) {
