@@ -5,6 +5,12 @@ var utility = require('../../helpers/utility');
 module.exports = ['$q', '$http', function ($q, $http) {
   var _isLoggedIn;
 
+  /**
+   * Register a user
+   * @param email
+   * @param password
+   * @returns {*}
+   */
   var registerUser = function(email, password) {
     var deferred = $q.defer();
     var url = utility.generateApiUrl('users/register');
@@ -23,6 +29,10 @@ module.exports = ['$q', '$http', function ($q, $http) {
     return deferred.promise;
   };
 
+  /**
+   * Check if a user has logged in
+   * @returns {*}
+   */
   var isLoggedIn = function() {
     if (typeof(_isLoggedIn) !== 'undefined')
       return _isLoggedIn;
@@ -38,6 +48,13 @@ module.exports = ['$q', '$http', function ($q, $http) {
     return _isLoggedIn;
   };
 
+  /**
+   * User log in
+   *
+   * @param email
+   * @param password
+   * @returns {*}
+   */
   var loginUser = function(email, password) {
     var deferred = $q.defer(),
         url = utility.generateApiUrl('users/login');
@@ -60,7 +77,10 @@ module.exports = ['$q', '$http', function ($q, $http) {
     return deferred.promise;
   };
 
-
+  /**
+   * User log out
+   * @returns {*}
+   */
   var logoutUser = function() {
     var url = utility.generateApiUrl('users/logout');
 
@@ -73,6 +93,11 @@ module.exports = ['$q', '$http', function ($q, $http) {
     return _isLoggedIn;
   };
 
+  /**
+   * Get User profile
+   *
+   * @returns {*}
+   */
   var getUserProfile = function() {
     var deferred = $q.defer();
 
