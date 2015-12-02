@@ -1,3 +1,5 @@
++debug: true
+
 build:
   image: mhart/alpine-node
   commands:
@@ -7,7 +9,7 @@ build:
     - node ./node_modules/gulp/bin/gulp.js build
 
 deploy:
-  hello:
+  ecs-restart:
     image: docker.gotute.int:5000/ecs-restart
     config1: hello
     config2: abc
