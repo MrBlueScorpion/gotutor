@@ -1,5 +1,14 @@
 'use strict';
 module.exports = ['$scope', '$stateParams', '$state', 'TutorApiService', function ($scope, $stateParams, $state, TutorApiService) {
+
+  var FilterEnum = {
+      SUBJECT: 10,
+      SUBJECT_IDS: 20,
+      LOCATION: 30,
+      GEOHASH: 40,
+      GENDER: 50
+    };
+
   //Init function
   function init() {
     //show loading mask
@@ -9,6 +18,7 @@ module.exports = ['$scope', '$stateParams', '$state', 'TutorApiService', functio
     //Filter data source
     //$scope.filters = null;
     $scope.filtersAlt = [];
+    $scope.facet = null;
     //Searching results
     $scope.tutors = [];
     $scope.totalCount = 0;
@@ -132,101 +142,203 @@ module.exports = ['$scope', '$stateParams', '$state', 'TutorApiService', functio
     //console.log($scope.mainQuery);
   }
 
-  //search and display
-  function searchAndDisplay() {
-    TutorApiService.getTutorsByQuery($scope.mainQuery)
-    .then(function(data){
-      if (data && data.hits > 0 && data.results && data.results.length > 0 && data.facet) {
-        //got results
-        //console.log(data);
-        //display tutor list
-        $scope.tutors = data.results;
-        $scope.totalCount = data.hits;
-        //display filter
-        // $scope.filters = data.facet;
-        // //add genders if not
-        // if ($scope.filters.gender && $scope.filters.gender.length == 0) {
-        //   $scope.filters.gender.push({ key: "female" });
-        //   $scope.filters.gender.push({ key: "male" });
-        // }
-        //generage pagination
-        $scope.updatePagination($scope.mainQuery.page, $scope.totalCount);
-      } else {
-        //panic
-        //console.log(data);
-        //display error message
+    //search and display
+    function searchAndDisplay() {
+      TutorApiService.getTutorsByQuery($scope.mainQuery)
+      .then(function(data){
+        if (data && data.hits > 0 && data.results && data.results.length > 0 && data.facet) {
+          //got results
+          //console.log(data);
+          //display tutor list
+          $scope.tutors = data.results;
+          $scope.totalCount = data.hits;
+          //display filter
+          // $scope.filters = data.facet;
+          // //add genders if not
+          // if ($scope.filters.gender && $scope.filters.gender.length == 0) {
+          //   $scope.filters.gender.push({ key: "female" });
+          //   $scope.filters.gender.push({ key: "male" });
+          // }
+          //get facet
+          $scope.facet = data.facet;
+          //generate pagination
+          $scope.updatePagination($scope.mainQuery.page, $scope.totalCount);
+          //generate filters
+          $scope.generateFilterAlt();
+        } else {
+          //panic
+          //console.log(data);
+          //display error message
+          $scope.showError = true;
+        }
+      }).catch(function(e){
+        //console.log(e);
         $scope.showError = true;
-      }
-    }).catch(function(e){
-      //console.log(e);
-      $scope.showError = true;
-    }).finally(function(){
-      //hide loading mask
-      $scope.showLoader(false);
-    });
-  }
+      }).finally(function(){
+        //hide loading mask
+        $scope.showLoader(false);
+      });
+    };
 
-  //generate pagination obj
-  $scope.updatePagination = function (currentPage, totalCount) {
-    if (totalCount > 0) {
-      //update total pages
-      $scope.pagination.totalPages = Math.ceil(totalCount / $scope.pagination.pageSize);
-      //update current page, 1 based
-      $scope.pagination.currentPage = currentPage;
-      //update pagers array
-      var maxDisplayPagers = 5;
-      //first page
-      $scope.pagination.pagers.push({
-        type: 'first',
-        disabled: $scope.pagination.currentPage == 1,
-        page: 1
-      });
-      //previous page
-      $scope.pagination.pagers.push({
-        type: 'previous',
-        disabled: $scope.pagination.currentPage == 1,
-        page: $scope.pagination.currentPage - 1
-      });
-      //previous page for pagers
-      if ($scope.pagination.currentPage > maxDisplayPagers) {
-        $scope.pagination.pagers.push({
-          type: 'previous-pagers',
-          page: (Math.ceil($scope.pagination.currentPage / maxDisplayPagers) - 1) * 5
-        });
-      }
-      //pagers
-      for (var index = 0; index < maxDisplayPagers; index++) {
-        var page = ((Math.ceil($scope.pagination.currentPage / maxDisplayPagers) - 1) * 5) + 1 + index;
-        if (page <= $scope.pagination.totalPages) {
-          $scope.pagination.pagers.push({
-            type: 'pager',
-            active: page == $scope.pagination.currentPage,
-            page: page
+    //generate alternative filters
+    $scope.generateFilterAlt = function () {
+      //keywords or subject
+      if ($stateParams.subjectids) {//using subject
+        if (typeof $stateParams.subjectids === 'string') {//single id
+          (function () {
+            var subjectId = parseInt($stateParams.subjectids);
+            if (subjectId > 0) {
+              var subject = getSubjectById($scope.facet, subjectId);
+              if (subject) {
+                $scope.filtersAlt.push({ type: FilterEnum.SUBJECT_IDS, key: subjectId, text: subject.subject });
+              }
+            }
+          }())
+        } else {//id array
+          $stateParams.subjectids.forEach(function(ele) {
+            var subjectId = parseInt(ele);
+            if (subjectId > 0) {
+              var subject = getSubjectById($scope.facet, subjectId);
+              if (subject) {
+                $scope.filtersAlt.push({ type: FilterEnum.SUBJECT_IDS, key: subjectId, text: subject.subject });
+              }
+            }
           });
         }
+      } else if ($stateParams.subject) {//using subject string
+        $scope.filtersAlt.push({ type: FilterEnum.SUBJECT, key: $stateParams.subject, text: $stateParams.subject });
       }
-      //next page for pagers
-      if (Math.ceil($scope.pagination.currentPage / maxDisplayPagers) < Math.ceil($scope.pagination.totalPages / maxDisplayPagers)) {
-        $scope.pagination.pagers.push({
-          type: 'next-pagers',
-          page: (Math.ceil($scope.pagination.currentPage / maxDisplayPagers) * 5) + 1
+      //location or geohash
+      if ($stateParams.geohash) {//using geohash
+        (function () {
+          var location = getLocationByGeohash($scope.facet, $stateParams.geohash);
+          if (location) {
+            $scope.filtersAlt.push({ type: FilterEnum.GEOHASH, key: $stateParams.geohash, text: location.suburb });
+          }
+        }())
+      } else if ($stateParams.location) {//using location string
+        $scope.filtersAlt.push({ type: FilterEnum.LOCATION, key: $stateParams.location, text: $stateParams.location });
+      }
+      //gender
+      //console.log($scope.filtersAlt);
+    };
+
+    //remove alternative filter
+    $scope.removeFiltersAlt = function (filter) {
+      var currentStateParams = angular.copy($stateParams);
+      if (filter) {
+        switch (filter.type) {
+          case FilterEnum.SUBJECT:
+            currentStateParams.subject = null;
+            break;
+          case FilterEnum.SUBJECT_IDS:
+            if (typeof currentStateParams.subjectids === 'string') {//is a string
+              currentStateParams.subjectids = null;
+            } else {//is a array
+              currentStateParams.subjectids = _.reject(currentStateParams.subjectids, function(id){
+                return id == '' + filter.key;
+              });
+            }
+            break;
+          case FilterEnum.LOCATION:
+            currentStateParams.location = null;
+            break;
+          case FilterEnum.GEOHASH:
+            currentStateParams.geohash = null;
+            break;
+          default:
+            break;
+        }
+      }
+      //console.log(currentStateParams);
+      //go!!!
+      $state.go('tutors', currentStateParams);
+    };
+
+    //get subject by id from filter
+    function getSubjectById(facet, id) {
+      var subject;
+      if (facet.subject) {
+        subject = _.find(facet.subject, function(subject){
+          console.log(subject);
+          return subject.id == id;
         });
       }
-      //next page
-      $scope.pagination.pagers.push({
-        type: 'next',
-        disabled: $scope.pagination.currentPage == $scope.pagination.totalPages,
-        page: $scope.pagination.currentPage + 1
-      });
-      //last page
-      $scope.pagination.pagers.push({
-        type: 'last',
-        disabled: $scope.pagination.currentPage == $scope.pagination.totalPages,
-        page: $scope.pagination.totalPages
-      });
+      return subject;
     }
-    //console.log($scope.pagination);
-  }
+
+    //get location by geohash from filter
+    function getLocationByGeohash(facet, geohash) {
+      var location;
+      if (facet.location) {
+        location = _.find(facet.location, function(location){
+          return location.geohash == geohash;
+        });
+      }
+      return location;
+    }
+
+    //generate pagination obj
+    $scope.updatePagination = function (currentPage, totalCount) {
+      if (totalCount > 0) {
+        //update total pages
+        $scope.pagination.totalPages = Math.ceil(totalCount / $scope.pagination.pageSize);
+        //update current page, 1 based
+        $scope.pagination.currentPage = currentPage;
+        //update pagers array
+        var maxDisplayPagers = 5;
+        //first page
+        $scope.pagination.pagers.push({
+          type: 'first',
+          disabled: $scope.pagination.currentPage == 1,
+          page: 1
+        });
+        //previous page
+        $scope.pagination.pagers.push({
+          type: 'previous',
+          disabled: $scope.pagination.currentPage == 1,
+          page: $scope.pagination.currentPage - 1
+        });
+        //previous page for pagers
+        if ($scope.pagination.currentPage > maxDisplayPagers) {
+          $scope.pagination.pagers.push({
+            type: 'previous-pagers',
+            page: (Math.ceil($scope.pagination.currentPage / maxDisplayPagers) - 1) * 5
+          });
+        }
+        //pagers
+        for (var index = 0; index < maxDisplayPagers; index++) {
+          var page = ((Math.ceil($scope.pagination.currentPage / maxDisplayPagers) - 1) * 5) + 1 + index;
+          if (page <= $scope.pagination.totalPages) {
+            $scope.pagination.pagers.push({
+              type: 'pager',
+              active: page == $scope.pagination.currentPage,
+              page: page
+            });
+          }
+        }
+        //next page for pagers
+        if (Math.ceil($scope.pagination.currentPage / maxDisplayPagers) < Math.ceil($scope.pagination.totalPages / maxDisplayPagers)) {
+          $scope.pagination.pagers.push({
+            type: 'next-pagers',
+            page: (Math.ceil($scope.pagination.currentPage / maxDisplayPagers) * 5) + 1
+          });
+        }
+        //next page
+        $scope.pagination.pagers.push({
+          type: 'next',
+          disabled: $scope.pagination.currentPage == $scope.pagination.totalPages,
+          page: $scope.pagination.currentPage + 1
+        });
+        //last page
+        $scope.pagination.pagers.push({
+          type: 'last',
+          disabled: $scope.pagination.currentPage == $scope.pagination.totalPages,
+          page: $scope.pagination.totalPages
+        });
+      }
+      //console.log($scope.pagination);
+    };
 
   //capitalize
   $scope.capitalizeFirstLetter = function(string) {
