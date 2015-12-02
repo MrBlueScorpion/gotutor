@@ -1,3 +1,5 @@
+debug: true
+
 build:
   image: mhart/alpine-node
   commands:
@@ -9,6 +11,7 @@ build:
 deploy:
   ecs:
     image: docker.gotute.int:5000/ecs-restart
+    config: abc
 
 notify:
   slack:
