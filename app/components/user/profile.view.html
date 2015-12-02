@@ -34,11 +34,11 @@
                     </ui-select>
                 </div>
             </div>
-            <div class="form-group with-icon">
+            <div class="form-group">
                 <label  class="col-md-2 control-label">Rate: </label>
                 <div class="col-md-7">
                 <slider ng-model="sliders.rate" min="rateOptions.min" step="rateOptions.step" max="rateOptions.max"
-                        value="testOptions.value" range="true" formatter="format(sliders.rate)"></slider>
+                        value="rateOptions.value" range="true" formatter="format(sliders.rate)"></slider>
                 </div>
             </div>
 
@@ -57,7 +57,7 @@
                                    autofocus="true"
                                    on-select="addOption(locations.selected, 'locations')"
                                    focus-on="SetFocus">
-                            <ui-select-match placeholder="Search a location..." allow-clear="true">
+                            <ui-select-match placeholder="Search a location...">
                                 {{$select.selected.name}}
                             </ui-select-match>
                             <ui-select-choices repeat="location in (locations | filter: $select.search) track by location.code">

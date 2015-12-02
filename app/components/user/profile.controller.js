@@ -73,7 +73,7 @@ define(function(require){
 
     $scope.addOption = function(option, modal) {
       if (_.indexOf($scope.user[modal], option) > -1){
-        toastr.error(option.name + 'already exits in the your list', modal);
+        toastr.error(option.name + ' already exits in the your list', null);
         return
       }
 

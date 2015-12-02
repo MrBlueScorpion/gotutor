@@ -22,12 +22,16 @@
                 <tbody>
                 <tr ng-repeat="message in getPagedResults()">
                     <td><checkbox large ng-model="message.checked" value="message.id" ng-change="checkStatus()"></td>
-                    <td>{{message.content}}</td>
+                    <td>
+                        <p>From: {{message.sender}} <span class="pull-right">{{message.sentDate}}</span></p>
+                        {{message.content}}</td>
                 </tr>
                 </tbody>
             </table>
 
-            <uib-pagination class="pull-right" total-items="pagination.totalItems" items-per-page="pagination.itemsPerPage" ng-model="pagination.currentPage" ng-change="pagination.goToPage(pagination.currentPage)"></uib-pagination>
+            <uib-pagination class="pull-right" total-items="pagination.totalItems" items-per-page="pagination.itemsPerPage"
+                            ng-model="pagination.currentPage" ng-change="pagination.goToPage(pagination.currentPage)"
+                            direction-links="false" boundary-links="true"></uib-pagination>
         </section>
     </div>
 </section>

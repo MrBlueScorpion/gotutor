@@ -135,7 +135,7 @@ body {
 .btn-default:focus{
     border-color: #226948;
     background-color: transparent;
-    border-radius:10px;
+    border-radius:5px;
 }
 
 .slider-handle {
