@@ -4,13 +4,50 @@ define(function(require){
 
   return['$scope', 'toastr', '$http', function($scope, toastr, $http){
 
-    $scope.itemArray = [
-      {id: 1, name: 'first'},
-      {id: 2, name: 'second'},
-      {id: 3, name: 'third'},
-      {id: 4, name: 'fourth'},
-      {id: 5, name: 'fifth'}
+    $scope.gender = [
+      {id: 1, name: 'Male'},
+      {id: 2, name: 'Female'}
     ];
+
+    $scope.sliders = {};
+    $scope.sliders.rate = [15, 80];
+
+    $scope.rateOptions = {
+      min: 15,
+      max: 100,
+      step: 1
+    };
+
+
+    $scope.locations = [ // Taken from https://gist.github.com/unceus/6501985
+      {name: 'Afghanistan', code: 'AF'},
+      {name: 'Åland Islands', code: 'AX'},
+      {name: 'Albania', code: 'AL'},
+      {name: 'Algeria', code: 'DZ'},
+      {name: 'American Samoa', code: 'AS'},
+      {name: 'Andorra', code: 'AD'},
+      {name: 'Angola', code: 'AO'},
+      {name: 'Anguilla', code: 'AI'},
+      {name: 'Antarctica', code: 'AQ'},
+      {name: 'Antigua and Barbuda', code: 'AG'},
+      {name: 'Argentina', code: 'AR'},
+      {name: 'Armenia', code: 'AM'},
+      {name: 'Aruba', code: 'AW'},
+      {name: 'Australia', code: 'AU'},
+      {name: 'Austria', code: 'AT'},
+      {name: 'Azerbaijan', code: 'AZ'},
+      {name: 'Bahamas', code: 'BS'},
+      {name: 'Bahrain', code: 'BH'},
+      {name: 'Bangladesh', code: 'BD'},
+      {name: 'Barbados', code: 'BB'},
+      {name: 'Belarus', code: 'BY'},
+      {name: 'Belgium', code: 'BE'}
+  ];
+
+    $scope.format = function(value) {
+      if (!_.isUndefined(value))
+      return 'From $' + value[0] + '/hr  to  $' + value[1] + '/hr';
+    };
 
     //$scope.selectedItem= $scope.itemArray[0];
     $scope.user = {
@@ -22,7 +59,6 @@ define(function(require){
       },
       locationEditable : false,
       locations : [
-        'melbourne'
       ],
       subjectEditable : false,
       subjects : [
@@ -32,24 +68,17 @@ define(function(require){
 
     $scope.toggleEditable = function(modal) {
       $scope.user[modal] = $scope.user[modal] === false;
+      $scope.$broadcast('SetFocus');
     };
 
     $scope.addOption = function(option, modal) {
-
-      if (_.isUndefined(option)) {
-        toastr.error('Please select an option from the list', modal);
-        return
-      }
-
       if (_.indexOf($scope.user[modal], option) > -1){
-        toastr.error(option + 'already exits in the your list', modal);
+        toastr.error(option.name + 'already exits in the your list', modal);
         return
       }
 
       $scope.user[modal].push(option);
-      $scope.location = null;
-      console.log($scope.location);
-      $scope.subject = null;
+      $scope.locations.selected = null;
       console.log($scope.user[modal]);
     };
 
@@ -77,13 +106,6 @@ define(function(require){
 
 
 
-    $scope.sliders = {};
-    $scope.sliders.sliderValue = 50;
 
-    $scope.testOptions = {
-      min: 0,
-      max: 100,
-      step: 1
-    };
   }];
 });

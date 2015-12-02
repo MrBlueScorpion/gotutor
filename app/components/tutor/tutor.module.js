@@ -10,6 +10,7 @@ define(function(require) {
 
   var RegisterController = require('components/auth/register.controller'),
       ProfileController = require('components/user/profile.controller'),
+      MessageController = require('components/user/message.controller'),
       TutorController = require('components/tutor/tutor.controller'),
       LoginController = require('components/auth/login.controller');
 
@@ -20,6 +21,7 @@ define(function(require) {
 
   app.controller('RegisterController', RegisterController)
      .controller('ProfileController', ProfileController)
+     .controller('MessageController', MessageController)
      .controller('TutorController', TutorController)
      .controller('LoginController', LoginController);
 

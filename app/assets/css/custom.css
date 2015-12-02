@@ -78,13 +78,18 @@ body {
     background-color: #dc143c;
     border-color: #dc143c;
     text-transform: uppercase;
-    font-size: 18px;
     font-weight: 700;
     line-height: 1;
-    padding: 15px 35px;
     border-radius: 10px;
     -webkit-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out;
+}
+
+.btn-theme-danger,
+.btn-theme-danger:hover,
+.btn-theme-danger:active,
+.btn-theme-danger.active {
+    border-radius: 10px;
 }
 
 .form-control {
@@ -93,4 +98,56 @@ body {
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none !important;
+}
+
+.thumb {
+    width: 250px;
+    height:250px;
+    position: relative;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.google-map1 {
+    margin-bottom: 10px;
+}
+
+.btn-default,
+.btn-default:hover,
+.btn-default:focus{
+    border-color: #226948;
+    background-color: transparent;
+    border-radius:10px;
+}
+
+.slider-handle {
+    background-image: -webkit-linear-gradient(top, #2E9063 0%, #2E9063 100%);
+    background-image :linear-gradient(to bottom, #2E9063 0%, #2E9063 100%);
+}
+
+.slider-selection {
+    background-image: -webkit-linear-gradient(top, rgba(220, 20, 60, 0.8)  0%, rgba(220, 20, 60, 0.8)  100%);
+}
+
+#locations,
+#subjects {
+    margin-bottom: 10px;
 }

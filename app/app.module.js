@@ -36,7 +36,6 @@ define(function (require) {
     'ngCookies',
     'app.home',
     'app.tutor'
-
   ]);
 
   app.service('TutorApiService', TutorApiService)
@@ -47,9 +46,8 @@ define(function (require) {
 
   app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastrConfig', '$httpProvider',
     function ($stateProvider, $urlRouterProvider, $locationProvider, toastrConfig, $httpProvider) {
+
       //ui-router configuration
-
-
       $stateProvider
         .state('home', {
           url: '/',
@@ -111,7 +109,8 @@ define(function (require) {
         })
         .state('user.messages', {
           url : '/messages',
-          templateUrl : 'components/user/messages.view.html'
+          templateUrl : 'components/user/messages.view.html',
+          controller : 'MessageController'
         });
 
       $urlRouterProvider.otherwise('/');
