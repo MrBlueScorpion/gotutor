@@ -62,7 +62,7 @@ gulp.task('build:js', ['build:template'], function () {
             .on('end', function() { del.sync('app/angular-templates.js') })
 })
 
-gulp.task('build', ['clean', 'build:assets', 'build:html', 'build:js'])
+gulp.task('build', ['clean', 'build:assets', 'build:html', 'build:js', 'build:bower'])
 
 gulp.task('connect', function() {
   connect.server({
