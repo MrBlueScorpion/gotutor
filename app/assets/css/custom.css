@@ -154,5 +154,37 @@ body {
 
 .pagination-wrapper {
     text-align: center;
+}
 
+.listing-meta .filters span {
+    background-color: #f1f2f3;
+    color: #435469;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 28px;
+    padding: 0 0 0 8px;
+    display: inline-block;
+    font-family: 'Roboto', sans-serif;
+    margin-right: 8px;
+}
+
+.listing-meta .filters a {
+    background-color: transparent;
+    border-radius: 0;
+    font-size: 14px;
+    line-height: 28px;
+    padding: 0 8px;
+    display: inline-block;
+}
+
+.listing-meta .filters a .fa {
+    color: #96a0aa;
+}
+
+.listing-meta .filters a:hover {
+    background-color: transparent;
+}
+
+.listing-meta .filters a:hover .fa {
+    color: #435469;
 }
