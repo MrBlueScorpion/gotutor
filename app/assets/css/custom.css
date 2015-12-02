@@ -151,3 +151,8 @@ body {
 #subjects {
     margin-bottom: 10px;
 }
+
+.pagination-wrapper {
+    text-align: center;
+
+}
