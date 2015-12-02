@@ -1,9 +1,9 @@
 build:
   image: mhart/alpine-node
   commands:
-    - apk add --update git
+    - apk add --update git python
     - npm install
-    - node node_modules/bower/bin/bower install
+    - node node_modules/bower/bin/bower install --allow-root
     - node ./node_modules/gulp/bin/gulp.js build
 
 notify:
@@ -11,3 +11,10 @@ notify:
     webhook_url: https://hooks.slack.com/services/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
     channel: deployment
     username: drone
+
+publish:
+  hello:
+    image: docker.gotute.int:5000/ecs-restart
+    config1:
+      - hello
+    config2: abc
