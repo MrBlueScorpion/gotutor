@@ -1,57 +1,105 @@
 'use strict';
 
-define(function(require){
+module.exports = ['$scope', 'toastr', '$http', function($scope, toastr, $http){
 
-  return['$scope', 'toastr', function($scope, toastr){
+  $scope.gender = [
+    {id: 1, name: 'Male'},
+    {id: 2, name: 'Female'}
+  ];
 
-    $scope.itemArray = [
-      {id: 1, name: 'first'},
-      {id: 2, name: 'second'},
-      {id: 3, name: 'third'},
-      {id: 4, name: 'fourth'},
-      {id: 5, name: 'fifth'}
-    ];
+  $scope.sliders = {};
+  $scope.sliders.rate = [15, 80];
 
-    //$scope.selectedItem= $scope.itemArray[0];
-    $scope.user = {
-      name : null,
-      gender : null,
-      rate : {
-        max : null,
-        min : null
-      },
-      locationEditable : false,
-      locations : [
-        'melbourne'
-      ],
-      subjectEditable : false,
-      subjects : [
+  $scope.rateOptions = {
+    min: 15,
+    max: 100,
+    step: 1
+  };
 
-      ]
-    };
 
-    $scope.toggleEditable = function(modal) {
-      $scope.user[modal] = $scope.user[modal] === false;
-    };
+  $scope.locations = [ // Taken from https://gist.github.com/unceus/6501985
+    {name: 'Afghanistan', code: 'AF'},
+    {name: 'Åland Islands', code: 'AX'},
+    {name: 'Albania', code: 'AL'},
+    {name: 'Algeria', code: 'DZ'},
+    {name: 'American Samoa', code: 'AS'},
+    {name: 'Andorra', code: 'AD'},
+    {name: 'Angola', code: 'AO'},
+    {name: 'Anguilla', code: 'AI'},
+    {name: 'Antarctica', code: 'AQ'},
+    {name: 'Antigua and Barbuda', code: 'AG'},
+    {name: 'Argentina', code: 'AR'},
+    {name: 'Armenia', code: 'AM'},
+    {name: 'Aruba', code: 'AW'},
+    {name: 'Australia', code: 'AU'},
+    {name: 'Austria', code: 'AT'},
+    {name: 'Azerbaijan', code: 'AZ'},
+    {name: 'Bahamas', code: 'BS'},
+    {name: 'Bahrain', code: 'BH'},
+    {name: 'Bangladesh', code: 'BD'},
+    {name: 'Barbados', code: 'BB'},
+    {name: 'Belarus', code: 'BY'},
+    {name: 'Belgium', code: 'BE'}
+];
 
-    $scope.addLocation = function(location) {
-      if (!_.isUndefined(location) && _.indexOf($scope.user.locations, location) < 0){
-        $scope.user.locations.push(location);
-        $scope.location = null;
-      } else {
-        toastr.error('Location already exists', location);
+  $scope.format = function(value) {
+    if (!_.isUndefined(value))
+    return 'From $' + value[0] + '/hr  to  $' + value[1] + '/hr';
+  };
+
+  //$scope.selectedItem= $scope.itemArray[0];
+  $scope.user = {
+    name : null,
+    gender : null,
+    rate : {
+      max : null,
+      min : null
+    },
+    locationEditable : false,
+    locations : [
+    ],
+    subjectEditable : false,
+    subjects : [
+
+    ]
+  };
+
+  $scope.toggleEditable = function(modal) {
+    $scope.user[modal] = $scope.user[modal] === false;
+    $scope.$broadcast('SetFocus');
+  };
+
+  $scope.addOption = function(option, modal) {
+    if (_.indexOf($scope.user[modal], option) > -1){
+      toastr.error(option.name + ' already exits in the your list', null);
+      return
+    }
+
+    $scope.user[modal].push(option);
+    $scope.locations.selected = null;
+    console.log($scope.user[modal]);
+  };
+
+  $scope.submit = function() {
+    console.log($scope.user.locations);
+  };
+
+  $scope.removeOption = function(index, modal) {
+    $scope.user[modal].splice(index, 1);
+  };
+
+
+  $scope.getLocation = function(val) {
+    return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
+      params: {
+        address: val,
+        sensor: false
       }
-
-
-      console.log($scope.user.locations);
-    };
-
-    $scope.submit = function() {
-      console.log($scope.user.locations);
-    };
-
-    $scope.removeLocation = function(index) {
-      $scope.user.locations.splice(index, 1);
-    };
-  }];
-});
+    }).then(function(response){
+      return response.data.results.map(function(item){
+        return item.formatted_address;
+      });
+    });
+  };
+  
+}];

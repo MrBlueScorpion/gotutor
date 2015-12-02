@@ -1,15 +1,12 @@
 'use strict';
 
-require([
-  'app.module',
-  'underscore',
-  'waypoints'
-], function () {
-  var $html = angular.element(document.getElementsByTagName('html'));
+require('angular')
+window._ = require('underscore')
+require('./app.module')
 
-  angular.element().ready(function() {
-    angular.bootstrap(document, ['app']);
-  });
+angular.element().ready(function() {
+  angular.bootstrap(document, ['app']);
 });
+
 
 

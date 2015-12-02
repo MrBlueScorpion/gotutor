@@ -1,0 +1,13 @@
+build:
+  image: mhart/alpine-node
+  commands:
+    - apk add --update git
+    - npm install
+    - node node_modules/bower/bin/bower install
+    - node ./node_modules/gulp/bin/gulp.js build
+
+notify:
+  slack:
+    webhook_url: https://hooks.slack.com/services/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
+    channel: deployment
+    username: drone

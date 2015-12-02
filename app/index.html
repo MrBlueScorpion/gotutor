@@ -18,14 +18,15 @@
     <link type="text/css" rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
 
-    <link href="assets/plugins/jquery-ui-1.11.4.custom/jquery-ui.min.css" rel="stylesheet" type="text/css">
-    <link href="assets/plugins/prettyphoto/css/prettyPhoto.css" rel="stylesheet">
+    <!--<link href="assets/plugins/jquery-ui-1.11.4.custom/jquery-ui.min.css" rel="stylesheet" type="text/css">-->
+    <!--<link href="assets/plugins/prettyphoto/css/prettyPhoto.css" rel="stylesheet">-->
     <link href="bower_components/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
     <link href="bower_components/ui-select/dist/select.css" rel="stylesheet">
-    <link href="assets/plugins/owlcarousel2/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="assets/plugins/owlcarousel2/assets/owl.theme.default.min.css" rel="stylesheet">
-    <link href="assets/plugins/animate/animate.min.css" rel="stylesheet">
-    <link href="assets/plugins/countdown/jquery.countdown.css" rel="stylesheet">
+    <link href="bower_components/seiyria-bootstrap-slider/css/bootstrap-slider.css" rel="stylesheet">
+    <!--<link href="assets/plugins/owlcarousel2/assets/owl.carousel.min.css" rel="stylesheet">-->
+    <!--<link href="assets/plugins/owlcarousel2/assets/owl.theme.default.min.css" rel="stylesheet">-->
+    <!--<link href="assets/plugins/animate/animate.min.css" rel="stylesheet">-->
+    <!--<link href="assets/plugins/countdown/jquery.countdown.css" rel="stylesheet">-->
     <link href="bower_components/angular-toastr/dist/angular-toastr.css" rel="stylesheet">
 
     <link type="text/css" rel="stylesheet" href="assets/css/theme.css">
@@ -57,7 +58,6 @@
                     <li ng-show="auth._isLoggedIn" class="ng-cloak"><a ui-sref="profile"><i class="fa fa-file-text-o"></i> Welcome</a></li>
                     <li ng-show="auth._isLoggedIn" class="ng-cloak"><a href="#" ng-click="auth.logoutUser()"><i class="fa fa-user"></i> Logout</a></li>
                 </ul>
-                <div class="hot-line"><span><i class="fa fa-calendar"></i> <strong>Latest Event:</strong></span> Register for free</div>
             </div>
         </div>
         <!-- /Top Line -->
@@ -116,8 +116,8 @@
                 <div class="row">
                     <div class="col-md-9 col-sm-6">
                         <ul class="footer-menu">
-                            <li><a href="about-us" >About</a></li>
-                            <li><a href="tutors" >Tutors</a></li>
+                            <li><a ui-sref="about-us" >About</a></li>
+                            <li><a ui-sref="tutors" >Tutors</a></li>
                             <li><a href="#">Privacy</a></li>
                             <li>All Rights Reserved</li>
                         </ul>
@@ -145,7 +145,8 @@
 
 <!--[if lt IE 9]><script src="assets/plugins/jquery/jquery-1.11.1.min.js"></script><![endif]-->
 
-<script src="assets/plugins/jquery/jquery-2.1.1.min.js"></script>
+<!--<script src="assets/plugins/jquery/jquery-2.1.1.min.js"></script>-->
+
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="assets/plugins/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
 <script src="assets/plugins/modernizr.custom.js"></script>
@@ -156,21 +157,22 @@
 <script src="assets/plugins/placeholdem.min.js"></script>
 <script src="assets/plugins/jquery.smoothscroll.min.js"></script>
 <script src="assets/plugins/jquery.easing.min.js"></script>
-<script src="assets/plugins/smooth-scrollbar.min.js"></script>
+<script src="assets/plugins/smooth-scrollbar.min.js"></script>-->
 
 <!-- JS Page Level -->
 <script src="assets/plugins/owlcarousel2/owl.carousel.min.js"></script>
 <script src="assets/plugins/waypoints/waypoints.min.js"></script>
 <script src="assets/plugins/countdown/jquery.plugin.min.js"></script>
 <script src="assets/plugins/countdown/jquery.countdown.min.js"></script>
-<!--<script src="assets/plugins/isotope/jquery.isotope.min.js"></script>-->
+<script src="assets/plugins/isotope/jquery.isotope.min.js"></script>
 
 
 <!--<script src="assets/js/theme-ajax-mail.js"></script>-->
 <script src="assets/js/theme.js"></script>
-
+<!--
 <script data-main="app.config" src="bower_components/requirejs/require.js"></script>
-
+-->
+<script src="app.main.js"></script>
 <script type="text/javascript">
     "use strict";
     jQuery(document).ready(function () {

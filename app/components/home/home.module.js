@@ -1,14 +1,6 @@
 'use strict';
 
-define(function(require) {
+var HomeController = require("./home.controller")
 
-  require('angular');
-
-  var HomeController = require('components/home/home.controller');
-
-  var app = angular.module('app.home', []);
-
-  app.controller('HomeController', HomeController);
-
-  return app;
-});
+angular.module('app.home', [])
+  .controller('HomeController', HomeController);

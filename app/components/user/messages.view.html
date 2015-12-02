@@ -1,24 +1,37 @@
 <section class="page-section with-sidebar sidebar-right first-section">
     <div class="container">
-        <div class="row">
-            <div class="col-sm-12 col-md-12">
-                <h1>You have 10 inquiries</h1>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <td width="20%"><checkbox larger data-ng-model="check"></checkbox></td>
-                            <td width="40%"><button class="btn btn-default">Refresh</button></td>
-                            <td width="40%"><button class="btn btn-default">Delete</button></td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="mesages in mesages">
-                        <td><checkbox larger ng-model="check"></td>
-                        <td><checkbox larger ng-model="check2"></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <section id="content" class="content col-sm-12 col-md-8 col-lg-9">
+
+            <h1 class="section-title">
+                <span class="icon-inner"><span class="fa-stack"><i class="fa rhex fa-stack-2x"></i><i class="fa fa-user fa-stack-1x"></i></span></span>
+                <span class="title-inner">You have {{messages.length}} inquiries</span>
+            </h1>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <td width="5%">
+                        <checkbox large ng-model="allChecked" ng-click="checkAll(allChecked)"></checkbox>
+                    </td>
+                    <td colspan="2">
+                        <button class="btn btn-theme btn-theme-sm">Refresh</button>
+                        <button class="btn btn-theme-danger btn-theme-sm btn-theme-transparent-white">Delete</button>
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="message in getPagedResults()">
+                    <td><checkbox large ng-model="message.checked" value="message.id" ng-change="checkStatus()"></td>
+                    <td>
+                        <p>From: {{message.sender}} <span class="pull-right">{{message.sentDate}}</span></p>
+                        {{message.content}}</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <uib-pagination class="pull-right" total-items="pagination.totalItems" items-per-page="pagination.itemsPerPage"
+                            ng-model="pagination.currentPage" ng-change="pagination.goToPage(pagination.currentPage)"
+                            direction-links="false" boundary-links="true"></uib-pagination>
+        </section>
     </div>
 </section>

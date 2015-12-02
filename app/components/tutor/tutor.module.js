@@ -1,30 +1,26 @@
 'use strict';
 
-define(function(require) {
+var TutorsListController = require('./tutors.controller');
 
-  var TutorsListController = require('components/tutor/tutors.controller');
+var TutorApiService = require('../../shared/services/api/tutor.service');
 
-  var TutorApiService = require('shared/services/api/tutor.service');
+var RegisterController = require('../auth/register.controller'),
+    ProfileController = require('../user/profile.controller'),
+    MessageController = require('../user/message.controller'),
+    TutorController = require('../tutor/tutor.controller'),
+    LoginController = require('../auth/login.controller');
 
-  var angular = require('angular');
+var app = angular.module('app.tutor',[]);
 
-  var RegisterController = require('components/auth/register.controller'),
-      ProfileController = require('components/user/profile.controller'),
-      TutorController = require('components/tutor/tutor.controller'),
-      LoginController = require('components/auth/login.controller');
+app.controller('TutorsListController', TutorsListController);
 
+app.controller('RegisterController', RegisterController)
+    .controller('ProfileController', ProfileController)
+    .controller('MessageController', MessageController)
+    .controller('TutorController', TutorController)
+    .controller('LoginController', LoginController);
 
-  var app = angular.module('app.tutor',[]);
+app.service('TutorApiService', TutorApiService);
 
-  app.controller('TutorsListController', TutorsListController);
+module.exports = app;
 
-  app.controller('RegisterController', RegisterController)
-     .controller('ProfileController', ProfileController)
-     .controller('TutorController', TutorController)
-     .controller('LoginController', LoginController);
-
-  app.service('TutorApiService', TutorApiService);
-
-  return app;
-
-});
