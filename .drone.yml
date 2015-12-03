@@ -5,11 +5,6 @@ build:
     - node node_modules/bower/bin/bower install --allow-root
     - node ./node_modules/gulp/bin/gulp.js build
 
-deploy:
-  ecs:
-    image: docker.gotute.int:5000/ecs-restart
-    config: abc
-
 notify:
   slack:
     webhook_url: https://hooks.slack.com/services/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
