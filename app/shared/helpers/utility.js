@@ -13,4 +13,4 @@ var generateQueryUrl = function(action) {
 module.exports = {
   generateApiUrl : generateApiUrl,
   generateQueryUrl : generateQueryUrl
-}
+};

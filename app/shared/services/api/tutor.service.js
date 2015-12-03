@@ -18,8 +18,13 @@ module.exports = ['$q', '$http', function ($q, $http) {
     return deferred.promise;
   };
 
+  /**
+   * Get location autocomplete
+   * @param location
+   */
   var getTutorsByLocation = function(location) {
-
+    var deferred = $q.defer();
+    var url = utility.generateQueryUrl('')
   };
 
   var getTutorsByQuery = function (query) {
@@ -60,9 +65,27 @@ module.exports = ['$q', '$http', function ($q, $http) {
     return deferred.promise;
   };
 
+  /**
+   * Get a tutor details by id
+   * @param id
+   */
+  var getTutorById = function(id) {
+    var deferred = $q.defer();
+    var url = utility.generateQueryUrl('tutor/' + id);
+
+    $http.get(url).then(function(response) {
+      deferred.resolve(response);
+    }, function(response) {
+      deferred.resolve('error', 'Unexpected error')
+    });
+
+    return deferred.promise;
+  };
+
   return {
     getRecommendedTutors : getRecommendedTutors,
     getTutorsByLocation : getTutorsByLocation,
-    getTutorsByQuery: getTutorsByQuery
+    getTutorsByQuery: getTutorsByQuery,
+    getTutorById : getTutorById
   }
 }];
