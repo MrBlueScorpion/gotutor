@@ -1,9 +1,6 @@
-debug: true
-
 build:
-  image: mhart/alpine-node
+  image: docker.gotute.int:5000/node-build
   commands:
-    - apk add --update git python
     - npm install
     - node node_modules/bower/bin/bower install --allow-root
     - node ./node_modules/gulp/bin/gulp.js build
