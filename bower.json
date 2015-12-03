@@ -34,7 +34,7 @@
     "jquery": "~2.1.4"
   },
   "resolutions": {
-    "angular": "1.4.7",
+    "angular": "~1.4.0",
     "bootstrap-select": "~1.7.7"
   }
 }
