@@ -9,7 +9,7 @@ build:
   commands:
     - npm install
     - node node_modules/bower/bin/bower install --allow-root
-    - node ./node_modules/gulp/bin/gulp.js build --build `date +%Y%m%d-%H%M`
+    - node ./node_modules/gulp/bin/gulp.js build --build `date +%Y%m%d`.$$BUILD_NUMBER
 
 deploy:
   s3-deploy:
