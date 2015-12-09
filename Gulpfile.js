@@ -11,6 +11,8 @@ var gulp = require('gulp'),
     uglifyCss = require('gulp-minify-css'),
     concat = require('gulp-concat'),
     buffer = require('vinyl-buffer'),
+    htmlreplace = require('gulp-html-replace'),
+    version = require('yargs').argv['build'] || '0.0.1-dev',
     debug;
 
 gulp.task('clean', function () {
@@ -42,12 +44,15 @@ gulp.task('build:template', function () {
 })
 
 gulp.task('build:html', function () {
-  var stream = gulp.src('./app/index.html')
+  var stream = gulp.src('./app/index.html').pipe(htmlreplace({
+    js: '/' + version + '/app.main.js',
+    css: '/' + version + '/app.main.css'
+  }));
   
   if (!debug)
     stream = stream.pipe(minifyHTML())
   
-  return stream.pipe(gulp.dest('dist/'))
+  return stream.pipe(gulp.dest('dist/' + version + '/')).pipe(gulp.dest('dist/'))
 })
 
 gulp.task('build:css', function () {
@@ -64,7 +69,7 @@ gulp.task('build:css', function () {
   if (!debug)
     stream = stream.pipe(uglifyCss({ keepSpecialComments: 0 }))
     
-  return stream.pipe(gulp.dest("dist/"))
+  return stream.pipe(gulp.dest('dist/' + version + '/'))
 })
 
 gulp.task('build:js', ['build:template'], function () {
@@ -77,7 +82,7 @@ gulp.task('build:js', ['build:template'], function () {
   if (!debug)
     stream = stream.pipe(buffer()).pipe(uglify())
     
-  return stream.pipe(gulp.dest("dist/"))
+  return stream.pipe(gulp.dest('dist/' + version + '/'))
             .on('end', function() { del.sync('app/angular-templates.js') })
 })
 
@@ -103,6 +108,7 @@ gulp.task('watch', function () {
 
 gulp.task('debug', function() {
   debug = true
+  
 });
 
 gulp.task('default', ['debug', 'build', 'connect', 'watch']);
