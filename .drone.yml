@@ -5,6 +5,16 @@ build:
     - node node_modules/bower/bin/bower install --allow-root
     - node ./node_modules/gulp/bin/gulp.js build --build `date +%Y%m%d-%H%M`
 
+deploy:
+  s3-deploy:
+    when:
+      branch: master
+    image: docker.gotute.int:5000/s3-deploy
+    region: ap-southeast-2
+    bucket: www.gotute.com
+    awsKey: $$AWS_KEY
+    awsSecret: $$AWS_SECRET
+
 notify:
   slack:
     webhook_url: https://hooks.slack.com/services/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
