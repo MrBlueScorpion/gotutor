@@ -662,3 +662,4 @@ $(document).ready(function () {
 
 });
 
+module.exports = theme;
