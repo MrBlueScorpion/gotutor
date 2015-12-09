@@ -50,11 +50,6 @@ gulp.task('build:html', function () {
   return stream.pipe(gulp.dest('dist/'))
 })
 
-gulp.task('build:bower', function () {
-  return gulp.src('./app/bower_components/**/*')
-            .pipe(gulp.dest("dist/bower_components/"))
-})
-
 gulp.task('build:css', function () {
   var stream = gulp.src([
     './app/bower_components/bootstrap/dist/css/bootstrap.min.css',
@@ -86,7 +81,7 @@ gulp.task('build:js', ['build:template'], function () {
             .on('end', function() { del.sync('app/angular-templates.js') })
 })
 
-gulp.task('build', ['clean', 'build:assets', 'build:html', 'build:js', 'build:css', 'build:bower'])
+gulp.task('build', ['clean', 'build:assets', 'build:html', 'build:js', 'build:css'])
 
 gulp.task('connect', function() {
   connect.server({
