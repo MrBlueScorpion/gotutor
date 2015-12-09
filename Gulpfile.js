@@ -25,7 +25,7 @@ gulp.task('build:fonts', function () {
 })
 
 gulp.task('build:assets', ['build:fonts'], function () {
-  return gulp.src('./app/assets/**/*')
+  return gulp.src(['./app/assets/**/*'])
              .pipe(gulp.dest('dist/assets/'))
 })
 
@@ -73,11 +73,10 @@ gulp.task('build:css', function () {
 })
 
 gulp.task('build:js', ['build:template'], function () {
-  var stream = browserify()
-            .add("app/app.main.js")
-            .transform(debowerify)
-            .bundle()
-            .pipe(source('app.main.js'))
+  var stream = browserify().add("app/app.main.js")
+    .transform(debowerify)
+    .bundle()
+    .pipe(source('app.main.js'))
   
   if (!debug)
     stream = stream.pipe(buffer()).pipe(uglify())

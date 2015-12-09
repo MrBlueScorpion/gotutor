@@ -1,5 +1,6 @@
+(function() {
 'use strict';
-var theme = function () {
+window.theme = function () {
 
     // prevent empty links
     // ---------------------------------------------------------------------------------------
@@ -661,5 +662,4 @@ $(document).ready(function () {
     }
 
 });
-
-module.exports = theme;
+})();
