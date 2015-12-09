@@ -1,3 +1,9 @@
+cache:
+  mount:
+    - node_modules
+    - .git
+    - app/bower_components
+
 build:
   image: docker.gotute.int:5000/node-build
   commands:
