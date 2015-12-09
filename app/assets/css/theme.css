@@ -102,7 +102,7 @@
     left: 50%;
     top: 50%;
     /*You can use animated gif for preloader */
-    /*background-image: url(../img/preloader.gif);*/
+    /*background-image: url(assets/img/preloader.gif);*/
     /*background-repeat: no-repeat;*/
     /*background-position: center;*/
     margin: -100px 0 0 -100px;
@@ -264,7 +264,7 @@ body.boxed {
     padding-top: 100px;
     padding-bottom: 100px;
     background-attachment: fixed;
-    background-image: url('../img/preview/background-img-slider.jpg');
+    background-image: url('assets/img/preview/background-img-slider.jpg');
     background-size: cover !important;
     background-position: 50% 0 !important;
     background-repeat: no-repeat;
@@ -279,12 +279,12 @@ body.boxed {
     position: absolute;
     top: 0; left: 0; right: 0;
     width: 100%; height: 100%;
-    background: transparent url("../img/overlay.png") 50% 0 repeat;
+    background: transparent url("assets/img/overlay.png") 50% 0 repeat;
 }
 .page-section.background-img-slider {position: relative;}
 .wide .page-section.background-img-slider,
 .boxed .page-section.background-img-slider > .container {
-    background: transparent url("../img/preview/background-img-slider.jpg") 50% 0 repeat !important;
+    background: transparent url("assets/img/preview/background-img-slider.jpg") 50% 0 repeat !important;
     background-position: 50% 0 !important;
     background-size: cover !important;
 }
@@ -3189,7 +3189,7 @@ footer.post-meta .post-categories {display: block;}
     content: '';
     position: absolute;
     top: 0; right: 0; bottom: 0; left: 0;
-    /*background: url('../img/overlay-media.png') repeat 50% 50%;*/
+    /*background: url('assets/img/overlay-media.png') repeat 50% 50%;*/
 }
 .thumbnail.hover .media:after,
 .thumbnail:hover .media:after {
@@ -4705,7 +4705,7 @@ footer.post-meta .post-categories {display: block;}
     width: 100%; height: 100%;
     background-position: 50% 0;
     background-repeat: repeat;
-    background-image: url("../img/overlay.png");
+    background-image: url("assets/img/overlay.png");
     z-index: 3;
 }
 .parallax-inner {

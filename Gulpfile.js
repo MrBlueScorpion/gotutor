@@ -8,6 +8,8 @@ var gulp = require('gulp'),
     debowerify = require('debowerify'),
     browserify = require('browserify'),
     uglify = require('gulp-uglify'),
+    uglifyCss = require('gulp-minify-css'),
+    concat = require('gulp-concat'),
     buffer = require('vinyl-buffer'),
     debug;
 
@@ -15,7 +17,12 @@ gulp.task('clean', function () {
   del.sync(['app/angular-templates.js', 'dist/**/*'])
 })
 
-gulp.task('build:assets', function () {
+gulp.task('build:fonts', function () {
+  return gulp.src('./app/bower_components/font-awesome/fonts/*')
+             .pipe(gulp.dest('dist/fonts/'))
+})
+
+gulp.task('build:assets', ['build:fonts'], function () {
   return gulp.src('./app/assets/**/*')
              .pipe(gulp.dest('dist/assets/'))
 })
@@ -48,6 +55,23 @@ gulp.task('build:bower', function () {
             .pipe(gulp.dest("dist/bower_components/"))
 })
 
+gulp.task('build:css', function () {
+  var stream = gulp.src([
+    './app/bower_components/bootstrap/dist/css/bootstrap.min.css',
+    './app/bower_components/font-awesome/css/font-awesome.min.css',
+    './app/bower_components/bootstrap-select/dist/css/bootstrap-select.min.css',
+    './app/bower_components/ui-select/dist/select.css',
+    './app/bower_components/seiyria-bootstrap-slider/css/bootstrap-slider.css',
+    './app/bower_components/angular-toastr/dist/angular-toastr.css',
+    './app/assets/css/*.css'
+  ]).pipe(concat('app.main.css'))
+  
+  if (!debug)
+    stream = stream.pipe(uglifyCss({ keepSpecialComments: 0 }))
+    
+  return stream.pipe(gulp.dest("dist/"))
+})
+
 gulp.task('build:js', ['build:template'], function () {
   var stream = browserify()
             .add("app/app.main.js")
@@ -62,7 +86,7 @@ gulp.task('build:js', ['build:template'], function () {
             .on('end', function() { del.sync('app/angular-templates.js') })
 })
 
-gulp.task('build', ['clean', 'build:assets', 'build:html', 'build:js', 'build:bower'])
+gulp.task('build', ['clean', 'build:assets', 'build:html', 'build:js', 'build:css', 'build:bower'])
 
 gulp.task('connect', function() {
   connect.server({
@@ -79,7 +103,7 @@ gulp.task('html', function () {
 });
 
 gulp.task('watch', function () {
-  gulp.watch(['./app/**/*'], ['build:html', 'build:js']);
+  gulp.watch(['./app/**/*'], ['build:html', 'build:js', 'build:css']);
 });
 
 gulp.task('debug', function() {
