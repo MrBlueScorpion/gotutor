@@ -13,7 +13,7 @@ window.theme = function () {
     // Placeholdem
     // ---------------------------------------------------------------------------------------
     function handlePlaceholdem() {
-        Placeholdem(document.querySelectorAll('[placeholder]'));
+       Placeholdem(document.querySelectorAll('[placeholder]'));
     }
 
     // BootstrapSelect
@@ -179,9 +179,9 @@ window.theme = function () {
 
     $(window).resize(function () {
         // Refresh isotope
-        if ($().isotope) {
-            $('.isotope').isotope('reLayout', $.waypoints('refresh')); // layout/relayout on window resize
-        }
+        //if ($().isotope) {
+        //    $('.isotope').isotope('reLayout', $.waypoints('refresh')); // layout/relayout on window resize
+        //}
     });
 
     // Shrink header on scroll
@@ -262,9 +262,9 @@ window.theme = function () {
             resizePage();
         },
         init: function () {
-            handlePrettyPhoto();
+            //handlePrettyPhoto();
             handlePreventEmptyLinks();
-            handlePlaceholdem();
+            //handlePlaceholdem();
             handleBootstrapSelect();
             handleBootstrapDate();
             handleHoverClass();

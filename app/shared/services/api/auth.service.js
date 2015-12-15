@@ -24,7 +24,7 @@ module.exports = ['$q', '$http', function ($q, $http) {
       deferred.resolve({success: response});
     }, function (response) {
       _isLoggedIn = false;
-      deferred.resolve({error: 'Unexpected error, please try again'})
+      deferred.resolve({error: 'Unexpected error happened!'})
     });
 
     return deferred.promise;
@@ -70,10 +70,10 @@ module.exports = ['$q', '$http', function ($q, $http) {
       }
     }).then(function(response) {
       _isLoggedIn = true;
-      deferred.resolve({success: response});
+      deferred.resolve({success: response.data});
     }, function(response) {
       _isLoggedIn = false;
-      deferred.resolve({error: 'Unexpected error, please try again'})
+      deferred.resolve({error: 'Unexpected error happened!'})
     });
 
     return deferred.promise;

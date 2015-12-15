@@ -5,9 +5,9 @@ module.exports = ['$scope', 'AuthService', 'toastr', '$state', function($scope, 
     AuthService.loginUser(user.email, user.password).then(function(response) {
       if (!_.isUndefined(response.success)) {
         $state.go('user.profile');
-        toastr.success('Success', 'Your have successfully logged in');
+        toastr.success('Welcome back!!');
       } else {
-        toastr.error('Error', response.error);
+        toastr.error(response.error);
       }
     });
   }

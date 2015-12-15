@@ -156,7 +156,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
       };
     }]);
 
-    // $httpProvider.defaults.withCredentials = true;
+    $httpProvider.defaults.withCredentials = true;
 
 }]);
 
@@ -165,7 +165,7 @@ app.run(['$rootScope', '$state', 'AuthService', 'toastr',
   function($rootScope, $state, AuthService, toastr) {
 
     $rootScope.auth = AuthService;
-/*
+
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
      if(('data' in toState) && toState.data.requireLogin && !AuthService.isLoggedIn()) {
        $rootScope.error = "You need to login first";
@@ -181,7 +181,7 @@ app.run(['$rootScope', '$state', 'AuthService', 'toastr',
      //    $state.go('anon.login');
      //  }
      //}
-    });*/
+    });
 }]);
 
 module.exports = app;
