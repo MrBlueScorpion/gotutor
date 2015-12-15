@@ -82,10 +82,54 @@ module.exports = ['$q', '$http', function ($q, $http) {
     return deferred.promise;
   };
 
+  var sendMessage = function(data) {
+    var deferred = $q.defer();
+    var url = 'http://localhost:8080/messages';
+
+    $http({
+      method : 'POST',
+      url : url,
+      data : data
+    }).then(function (response) {
+      deferred.resolve(response.data)
+    });
+
+    return deferred.promise;
+  };
+
+
+  var getMessages = function(tutor_id) {
+    var deferred = $q.defer();
+    var url = 'http://localhost:8080/messages';
+
+    $http.get(url, {params: {receiver : tutor_id }})
+      .then(function(response) {
+        deferred.resolve(response.data);
+      });
+
+
+    return deferred.promise;
+  };
+
+  var deleteMessages = function (messageIds) {
+    var deferred = $q.defer();
+    var url = 'http://localhost:8080/messages';
+
+    $http.delete(url, {params: {messageIds: messageIds}})
+      .then(function(response) {
+        deferred.resolve(response.data)
+      });
+
+    return deferred.promise;
+  };
+
   return {
     getRecommendedTutors : getRecommendedTutors,
     getTutorsByLocation : getTutorsByLocation,
     getTutorsByQuery: getTutorsByQuery,
-    getTutorById : getTutorById
+    getTutorById : getTutorById,
+    sendMessage : sendMessage,
+    getMessages : getMessages,
+    deleteMessages : deleteMessages
   }
 }];

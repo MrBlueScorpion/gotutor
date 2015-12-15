@@ -4,6 +4,7 @@ var utility = require('../../helpers/utility');
 
 module.exports = ['$q', '$http', function ($q, $http) {
   var _isLoggedIn;
+  var currentUser;
 
   /**
    * Register a user
@@ -39,8 +40,9 @@ module.exports = ['$q', '$http', function ($q, $http) {
       
     var url = utility.generateApiUrl('users/me');
 
-    $http.get(url).then(function() {
+    $http.get(url).then(function(response) {
       _isLoggedIn = true;
+      currentUser = response.data;
     }, function() {
       _isLoggedIn = false;
     });

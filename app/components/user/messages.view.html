@@ -7,6 +7,7 @@
                 <span class="title-inner">You have {{messages.length}} inquiries</span>
             </h1>
 
+            <div ng-show="messages.length">
             <table class="table">
                 <thead>
                 <tr>
@@ -14,8 +15,7 @@
                         <checkbox large ng-model="allChecked" ng-click="checkAll(allChecked)"></checkbox>
                     </td>
                     <td colspan="2">
-                        <button class="btn btn-theme btn-theme-sm">Refresh</button>
-                        <button class="btn btn-theme-danger btn-theme-sm btn-theme-transparent-white">Delete</button>
+                        <button class="btn btn-theme btn-theme-sm" ng-click="deleteMessages()">Delete</button>
                     </td>
                 </tr>
                 </thead>
@@ -23,7 +23,7 @@
                 <tr ng-repeat="message in getPagedResults()">
                     <td><checkbox large ng-model="message.checked" value="message.id" ng-change="checkStatus()"></td>
                     <td>
-                        <p>From: {{message.sender}} <span class="pull-right">{{message.sentDate}}</span></p>
+                        <p>From: {{message.sender.email}} <span class="pull-right">{{message.created_at | date:'medium'}}</span></p>
                         {{message.content}}</td>
                 </tr>
                 </tbody>
@@ -32,6 +32,7 @@
             <uib-pagination class="pull-right" total-items="pagination.totalItems" items-per-page="pagination.itemsPerPage"
                             ng-model="pagination.currentPage" ng-change="pagination.goToPage(pagination.currentPage)"
                             direction-links="false" boundary-links="true"></uib-pagination>
+            </div>
         </section>
     </div>
 </section>

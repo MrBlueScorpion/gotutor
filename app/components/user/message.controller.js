@@ -1,68 +1,10 @@
 'use strict';
 
-module.exports = ['$scope', function($scope) {
-  $scope.messages = [
-    {
-      content : 'is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using',
-      sender : 'zlxjackie@hotmail.com',
-      sentDate : '01/01/2014'
-    },
-    {
-      content : 'is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using',
-      sender : 'zlxjackie@hotmail.com',
-      sentDate : '01/01/2014'
-    },
-    {
-      content : 'is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using',
-      sender : 'zlxjackie@hotmail.com',
-      sentDate : '01/01/2014'
-    },
-    {
-      content : 'is distracted by the readable content of a page when looking at its layout. The point of using',
-      sender : 'zlxjackie@hotmail.com',
-      sentDate : '01/01/2014'
-    },
-    {
-      content : 'is a long established facted by the readable content of a page when looking at its layout. The point of using',
-      sender : 'zlxjackie@hotmail.com',
-      sentDate : '01/01/2014'
-    },
-    {
-      content : 'is a long established by the readable content of a page when looking at its layout. The point of using',
-      sender : 'zlxjackie@hotmail.com',
-      sentDate : '01/01/2014'
-    },
-    {
-      content : 'is a long established fact t',
-      sentDate : '01/01/2014'
-    },
-    {
-      content : 'is a long established fact that a reader e readable content of a page when looking at its layout. The point of using',
-      sender : 'zlxjackie@gmail.com',
-      sentDate : '01/01/2014'
-    },
-    {
-      content : ' by the readable content of a page when looking at its layout. The point of using',
-      sender : 'zlxjackie@gmail.com',
-      sentDate : '01/01/2014'
-    },
-    {
-      content : 'e readable content of a page when looking at its layout. The point of using',
-      sender : 'zlxjackie@gmail.com',
-      sentDate : '01/01/2014'
-    },
-    {
-      content : ' the readable content of a page when looking at its layout. The point of using',
-      sender : 'zlxjackie@gmail.com',
-      sentDate : '01/01/2014'
-    },
-    {
-      content : 'e content of a page when looking at its layout. The point of using',
-      sender : 'zlxjackie@gmail.com',
-      sentDate : '01/01/2014'
-    }
-
-  ];
+module.exports = ['$scope', 'TutorApiService', 'toastr', function($scope, TutorApiService, toastr) {
+  $scope.messages = [];
+  TutorApiService.getMessages(2234).then(function(response) {
+    $scope.messages = response;
+  });
 
   $scope.pagination = {
     //numPages : 0,
@@ -97,4 +39,16 @@ module.exports = ['$scope', function($scope) {
     return $scope.messages.slice(start, end);
   };
 
-}]
+  $scope.deleteMessages = function() {
+    var messageIds = _.map($scope.checkedMessages, function(message) {
+      return message._id;
+    });
+    TutorApiService.deleteMessages(messageIds).then(function(response) {
+      $scope.messages = _.difference($scope.messages, $scope.checkedMessages);
+      if(!_.isUndefined(response.success)) {
+        toastr.success(response.success)
+      }
+    });
+  }
+
+}];
