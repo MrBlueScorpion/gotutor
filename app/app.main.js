@@ -20,9 +20,7 @@ require('./vendor/isotope/jquery.isotope.min.js')
 
 $.waypoints = require('waypoints')
 require('angular')
-require('bootstrap')
 require('bootstrap-select')
-
 
 require('./app.module')
 

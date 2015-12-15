@@ -19,12 +19,7 @@ gulp.task('clean', function () {
   del.sync(['app/angular-templates.js', 'dist/**/*'])
 })
 
-gulp.task('build:fonts', function () {
-  return gulp.src('./app/bower_components/font-awesome/fonts/*')
-             .pipe(gulp.dest('dist/fonts/'))
-})
-
-gulp.task('build:assets', ['build:fonts'], function () {
+gulp.task('build:assets', function () {
   return gulp.src(['./app/assets/**/*'])
              .pipe(gulp.dest('dist/assets/'))
 })
@@ -57,8 +52,6 @@ gulp.task('build:html', function () {
 
 gulp.task('build:css', function () {
   var stream = gulp.src([
-    './app/bower_components/bootstrap/dist/css/bootstrap.min.css',
-    './app/bower_components/font-awesome/css/font-awesome.min.css',
     './app/bower_components/bootstrap-select/dist/css/bootstrap-select.min.css',
     './app/bower_components/ui-select/dist/select.css',
     './app/bower_components/seiyria-bootstrap-slider/css/bootstrap-slider.css',
