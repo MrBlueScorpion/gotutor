@@ -18,7 +18,7 @@ require('./vendor/isotope/jquery.isotope.min.js')
 // make Isotope a jQuery plugin
 //$.bridget('isotope', Isotope );
 
-$.waypoints = require('waypoints')
+//$.waypoints = require('waypoints')
 require('angular')
 require('bootstrap-select')
 

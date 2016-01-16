@@ -110,6 +110,11 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
         url : '/messages',
         templateUrl : 'components/user/messages.view.html',
         controller : 'MessageController'
+      })
+      .state('404', {
+        url: '/404',
+        templateUrl: 'components/404/404.html',
+        controller : 'ErrorController'
       });
 
     $urlRouterProvider.otherwise('/');
@@ -164,23 +169,30 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
 app.run(['$rootScope', '$state', 'AuthService', 'toastr',
   function($rootScope, $state, AuthService, toastr) {
 
-    $rootScope.auth = AuthService;
-
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-     if(('data' in toState) && toState.data.requireLogin && !AuthService.isLoggedIn()) {
-       $rootScope.error = "You need to login first";
-       toastr.error($rootScope.error,'Error');
-       event.preventDefault();
-       $state.go('login');
-     }
-     //else if(fromState.url === '^') {
-     //  if(AuthService.isLoggedIn()) {
-     //    $state.go('home');
-     //  } else {
-     //    $rootScope.error = null;
-     //    $state.go('anon.login');
-     //  }
+      if(('data' in toState) && toState.data.requireLogin) {
+        AuthService.isLoggedIn().then(function(user) {
+          $rootScope.auth = AuthService;
+          if (angular.isDefined(user.id)) {
+            $rootScope.isLoggedIn = true;
+            $rootScope.currentUser = user;
+          } else {
+            $rootScope.isLoggedIn = false;
+            $rootScope.currentUser = null;
+            $rootScope.error = "You need to login first";
+            toastr.error($rootScope.error,'Error');
+            event.preventDefault();
+            $state.go('login');
+          }
+        });
+      }
+
+     //if($rootScope.isLoggedIn) {
+     //  $state.go('user.profile');
+     //} else {
+     //  $state.go('home');
      //}
+
     });
 }]);
 

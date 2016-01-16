@@ -3,8 +3,8 @@
 var utility = require('../../helpers/utility');
 
 module.exports = ['$q', '$http', function ($q, $http) {
-  var _isLoggedIn;
-  var currentUser;
+  var _isLoggedIn = false;
+  var currentUser = null;
 
   /**
    * Register a user
@@ -35,19 +35,19 @@ module.exports = ['$q', '$http', function ($q, $http) {
    * @returns {*}
    */
   var isLoggedIn = function() {
-    if (typeof(_isLoggedIn) !== 'undefined')
-      return _isLoggedIn;
-      
+    var deferred = $q.defer();
     var url = utility.generateApiUrl('users/me');
 
     $http.get(url).then(function(response) {
+      deferred.resolve(response.data);
       _isLoggedIn = true;
-      currentUser = response.data;
     }, function() {
       _isLoggedIn = false;
+      deferred.resolve(_isLoggedIn);
     });
 
-    return _isLoggedIn;
+
+    return deferred.promise;
   };
 
   /**
@@ -84,6 +84,7 @@ module.exports = ['$q', '$http', function ($q, $http) {
    * @returns {*}
    */
   var logoutUser = function() {
+    var deferred = $q.defer();
     var url = utility.generateApiUrl('users/logout');
 
     $http.get(url).then(function(response) {
@@ -91,6 +92,7 @@ module.exports = ['$q', '$http', function ($q, $http) {
     }, function(response) {
       _isLoggedIn = true;
     });
+
 
     return _isLoggedIn;
   };

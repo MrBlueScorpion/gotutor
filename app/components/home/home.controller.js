@@ -10,17 +10,11 @@ module.exports = ['$scope', 'TutorApiService', 'toastr', '$http', function($scop
   });*/
 
   // Any function returning a promise object can be used to load values asynchronously
-  $scope.getLocation = function(val) {
-    return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
-      params: {
-        address: val,
-        sensor: false
-      }
-    }).then(function(response){
-      return response.data.results.map(function(item){
-        return item.formatted_address;
-      });
-    });
+  $scope.getLocation = function(location) {
+    TutorApiService.getLocations(location).then(function(response) {
+      console.log(response);
+      $scope.locations = response
+    })
   };
 
 }];

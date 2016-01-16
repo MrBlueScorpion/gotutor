@@ -22,9 +22,15 @@ module.exports = ['$q', '$http', function ($q, $http) {
    * Get location autocomplete
    * @param location
    */
-  var getTutorsByLocation = function(location) {
+  var getLocations = function(location) {
     var deferred = $q.defer();
-    var url = utility.generateQueryUrl('')
+    var url = utility.generateQueryUrl('suggest/location?q=' + location);
+
+    $http.get(url).then(function(response) {
+      deferred.resolve(response.data);
+    });
+
+    return deferred.promise;
   };
 
   var getTutorsByQuery = function (query) {
@@ -74,9 +80,9 @@ module.exports = ['$q', '$http', function ($q, $http) {
     var url = utility.generateQueryUrl('tutor/' + id);
 
     $http.get(url).then(function(response) {
-      deferred.resolve(response);
+      deferred.resolve(response.data);
     }, function(response) {
-      deferred.resolve('error', 'Unexpected error')
+      deferred.resolve({'error': 'Invalid tutor Id'})
     });
 
     return deferred.promise;
@@ -125,7 +131,7 @@ module.exports = ['$q', '$http', function ($q, $http) {
 
   return {
     getRecommendedTutors : getRecommendedTutors,
-    getTutorsByLocation : getTutorsByLocation,
+    getLocations : getLocations,
     getTutorsByQuery: getTutorsByQuery,
     getTutorById : getTutorById,
     sendMessage : sendMessage,
