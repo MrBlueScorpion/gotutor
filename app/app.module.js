@@ -42,34 +42,51 @@ app.service('TutorApiService', TutorApiService)
     .service('AuthService', AuthService)
     .directive('slider', SliderDirective);
 
+app.constant('AUTH_EVENTS', {
+  loginSuccess : 'auth-login-success',
+  loginFailed: 'auth-login-failed',
+  logoutSuccess: 'auth-logout-success',
+  sessionTimeout: 'auth-session-timeout',
+  notAuthenticated: 'auth-not-authenticated',
+  notAuthorized: 'auth-not-authorized'
+})
+  .constant('USER_ROLES', {
+  all: '*',
+  admin: 'admin',
+  tutor: 'tutor',
+  user: 'user'
+});
 
-app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastrConfig', '$httpProvider',
-  function ($stateProvider, $urlRouterProvider, $locationProvider, toastrConfig, $httpProvider) {
+app.factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS) {
+    return {
+      responseError: function (response) {
+        $rootScope.$broadcast({
+          401: AUTH_EVENTS.notAuthenticated,
+          403: AUTH_EVENTS.notAuthorized
+        }[response.status], response);
+        return $q.reject(response);
+      }
+    };
+  });
+
+app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastrConfig', '$httpProvider', 'USER_ROLES',
+  function ($stateProvider, $urlRouterProvider, $locationProvider, toastrConfig, $httpProvider, USER_ROLES) {
 
     //ui-router configuration
     $stateProvider
       .state('home', {
         url: '/',
         templateUrl: 'components/home/home.view.html',
-        controller : 'HomeController',
-        data : {
-          requireLogin : false
-        }
+        controller : 'HomeController'
       })
       .state('tutors', {
         url : '/tutors?subject&subjectids&geohash&location&gender&page',
         templateUrl: 'components/tutor/tutors.view.html',
-        controller: 'TutorsListController',
-        data : {
-          requireLogin : false
-        }
+        controller: 'TutorsListController'
       })
       .state('about-us', {
         url : '/about-us',
-        templateUrl: 'components/about/about.view.html',
-        data : {
-          requireLogin : false
-        }
+        templateUrl: 'components/about/about.view.html'
       })
       .state('tutor', {
         url: '/tutor/:tutorId',
@@ -79,9 +96,6 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
           tutorId : ['$stateParams', function($stateParams) {
             return $stateParams.tutorId;
           }]
-        },
-        data : {
-          requireLogin : false
         }
       })
       .state('register', {
@@ -98,7 +112,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
         abstract : true,
         templateUrl : 'components/user/user.view.html',
         data : {
-          requireLogin : true
+          authorizedRoles: [USER_ROLES.tutor]
         }
       })
       .state('user.profile', {
@@ -150,48 +164,43 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
     });
 
     //session expiry configuration
-    $httpProvider.interceptors.push(['$q','$location', function($q, $location) {
-      return {
-        'responseError': function(response) {
-          if(response.status === 401 || response.status === 403) {
-            $location.path('/login');
-          }
-          return $q.reject(response);
-        }
-      };
-    }]);
+    $httpProvider.interceptors.push('AuthInterceptor');
 
     $httpProvider.defaults.withCredentials = true;
 
 }]);
 
 
-app.run(['$rootScope', '$state', 'AuthService', 'toastr',
-  function($rootScope, $state, AuthService, toastr) {
+app.run(['$rootScope', '$state', 'AuthService', 'toastr', 'AUTH_EVENTS',
+  function($rootScope, $state, AuthService, toastr, AUTH_EVENTS) {
+
+    $rootScope.$on(AUTH_EVENTS.notAuthorized, function(event) {
+
+    });
+
+    $rootScope.$on(AUTH_EVENTS.notAuthenticated, function(event) {
+     // AuthService.logout();
+      $rootScope.isLoggedIn = false;
+      $rootScope.currentUser = null;
+
+      $state.go('login');
+    });
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-      if(('data' in toState) && toState.data.requireLogin) {
-        AuthService.isLoggedIn().then(function(user) {
+      if(('data' in toState) && toState.data.authorizedRoles) {
+        AuthService.isAuthenticated().then(function(user) {
           $rootScope.auth = AuthService;
           if (angular.isDefined(user.id)) {
             $rootScope.isLoggedIn = true;
             $rootScope.currentUser = user;
+            $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
           } else {
-            $rootScope.isLoggedIn = false;
-            $rootScope.currentUser = null;
-            $rootScope.error = "You need to login first";
-            toastr.error($rootScope.error,'Error');
+            toastr.error("You need to login first");
+            $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
             event.preventDefault();
-            $state.go('login');
           }
         });
       }
-
-     //if($rootScope.isLoggedIn) {
-     //  $state.go('user.profile');
-     //} else {
-     //  $state.go('home');
-     //}
 
     });
 }]);
