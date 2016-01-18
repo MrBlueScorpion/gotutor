@@ -2,9 +2,9 @@
 
 var utility = require('../../helpers/utility');
 
-module.exports = ['$q', '$http', function ($q, $http) {
-  var _isLoggedIn;
-  var currentUser;
+module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', function ($q, $http, $rootScope, AUTH_EVENTS) {
+  var _isLoggedIn = false;
+  var currentUser = null;
 
   /**
    * Register a user
@@ -21,7 +21,8 @@ module.exports = ['$q', '$http', function ($q, $http) {
       password: password
     }).then(function (response) {
       _isLoggedIn = true;
-      deferred.resolve({success: response});
+      deferred.resolve(response.data);
+      $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
     }, function (response) {
       _isLoggedIn = false;
       deferred.resolve({error: 'Unexpected error happened!'})
@@ -34,20 +35,27 @@ module.exports = ['$q', '$http', function ($q, $http) {
    * Check if a user has logged in
    * @returns {*}
    */
-  var isLoggedIn = function() {
-    if (typeof(_isLoggedIn) !== 'undefined')
-      return _isLoggedIn;
-      
+  var isAuthenticated = function() {
+    var deferred = $q.defer();
     var url = utility.generateApiUrl('users/me');
 
     $http.get(url).then(function(response) {
+      deferred.resolve(response.data);
       _isLoggedIn = true;
-      currentUser = response.data;
     }, function() {
       _isLoggedIn = false;
+      deferred.resolve(_isLoggedIn);
     });
 
-    return _isLoggedIn;
+    return deferred.promise;
+  };
+
+  var isAuthorized = function (authorizedRoles) {
+    if (!angular.isArray(authorizedRoles)) {
+      authorizedRoles = [authorizedRoles];
+    }
+    //return (this.isAuthenticated() &&
+    //authorizedRoles.indexOf(Session.userRole) !== -1);
   };
 
   /**
@@ -70,10 +78,12 @@ module.exports = ['$q', '$http', function ($q, $http) {
       }
     }).then(function(response) {
       _isLoggedIn = true;
-      deferred.resolve({success: response.data});
+      deferred.resolve(response.data);
+      $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
     }, function(response) {
       _isLoggedIn = false;
-      deferred.resolve({error: 'Unexpected error happened!'})
+      deferred.resolve({error: 'Unexpected error happened!'});
+      $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
     });
 
     return deferred.promise;
@@ -84,13 +94,16 @@ module.exports = ['$q', '$http', function ($q, $http) {
    * @returns {*}
    */
   var logoutUser = function() {
+    var deferred = $q.defer();
     var url = utility.generateApiUrl('users/logout');
 
     $http.get(url).then(function(response) {
       _isLoggedIn = false;
+      $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
     }, function(response) {
       _isLoggedIn = true;
     });
+
 
     return _isLoggedIn;
   };
@@ -108,10 +121,10 @@ module.exports = ['$q', '$http', function ($q, $http) {
 
   return {
     registerUser : registerUser,
-    isLoggedIn : isLoggedIn,
+    isAuthenticated : isAuthenticated,
     loginUser : loginUser,
     logoutUser : logoutUser,
-    _isLoggedIn : _isLoggedIn
+    isAuthorized : isAuthorized
   }
 
 }];

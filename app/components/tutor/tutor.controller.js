@@ -1,11 +1,15 @@
-module.exports = ['$scope', '$stateParams', 'tutorId', 'TutorApiService', 'toastr',
-  function($scope, $stateParams, tutorId, TutorApiService, toastr) {
-  console.log($stateParams.tutorId);
+module.exports = ['$scope', '$stateParams', 'tutorId', 'TutorApiService', 'toastr', '$location', '$state',
+  function($scope, $stateParams, tutorId, TutorApiService, toastr, $location, $state) {
 
-  TutorApiService.getTutorById(tutorId).then(function(tutor) {
 
-    $scope.tutor = tutor;
-    console.log($scope.tutor);
+
+  TutorApiService.getTutorById(tutorId).then(function(response) {
+    if (!_.isUndefined(response.error)) {
+      $state.go('tutors');
+    } else {
+      $scope.tutor = response;
+    }
+
   });
 
 

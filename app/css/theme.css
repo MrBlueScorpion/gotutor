@@ -264,7 +264,7 @@ body.boxed {
     padding-top: 100px;
     padding-bottom: 100px;
     background-attachment: fixed;
-    background-color: #2e9063;
+    background-color: rgb(166, 236, 165);
     background-size: cover !important;
     background-position: 50% 0 !important;
     background-repeat: no-repeat;
@@ -284,9 +284,10 @@ body.boxed {
 .page-section.background-img-slider {position: relative;}
 .wide .page-section.background-img-slider,
 .boxed .page-section.background-img-slider > .container {
-    background: transparent url("/assets/img/preview/background-img-slider.jpg") 50% 0 repeat !important;
+    /*background: transparent url("/assets/img/preview/background-img-slider.jpg") 50% 0 repeat !important;*/
     background-position: 50% 0 !important;
     background-size: cover !important;
+    background: #18bc9c;
 }
 .wide .page-section.background-img-slider > .container {
     width: 100%;
