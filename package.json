@@ -6,7 +6,7 @@
   "repository": "https://zlxjackie@bitbucket.org/gotute/gotute.git",
   "license": "MIT",
   "devDependencies": {
-    "bower": "^1.6.8",
+    "bower": "^1.7.2",
     "browserify": "^12.0.1",
     "debowerify": "^1.3.1",
     "del": "^2.1.0",
