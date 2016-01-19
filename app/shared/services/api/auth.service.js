@@ -25,7 +25,7 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', function ($q, $htt
       $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
     }, function (response) {
       _isLoggedIn = false;
-      deferred.resolve({error: 'Unexpected error happened!'})
+      deferred.resolve({error: response.data.displayMessage})
     });
 
     return deferred.promise;

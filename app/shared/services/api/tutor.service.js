@@ -33,6 +33,17 @@ module.exports = ['$q', '$http', function ($q, $http) {
     return deferred.promise;
   };
 
+  var getSubjects = function(subject) {
+    var deferred = $q.defer();
+    var url = utility.generateQueryUrl('suggest/subject?q=' + subject);
+
+    $http.get(url).then(function(response) {
+      deferred.resolve(response.data);
+    });
+
+    return deferred.promise;
+  };
+
   var getTutorsByQuery = function (query) {
     if (getTutorsCanceler) getTutorsCanceler.resolve();
     getTutorsCanceler = $q.defer();
@@ -77,7 +88,7 @@ module.exports = ['$q', '$http', function ($q, $http) {
    */
   var getTutorById = function(id) {
     var deferred = $q.defer();
-    var url = utility.generateQueryUrl('tutor/' + id);
+    var url = utility.generateQueryUrl('tutors/' + id);
 
     $http.get(url).then(function(response) {
       deferred.resolve(response.data);
@@ -132,6 +143,7 @@ module.exports = ['$q', '$http', function ($q, $http) {
   return {
     getRecommendedTutors : getRecommendedTutors,
     getLocations : getLocations,
+    getSubjects : getSubjects,
     getTutorsByQuery: getTutorsByQuery,
     getTutorById : getTutorById,
     sendMessage : sendMessage,

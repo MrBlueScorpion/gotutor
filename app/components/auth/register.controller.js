@@ -1,11 +1,11 @@
 module.exports = ['$scope', 'AuthService', 'toastr', '$state', '$uibModal', function($scope, AuthService, toastr, $state, $uibModal) {
   $scope.signUp = function(user) {
     AuthService.registerUser(user.email, user.password).then(function(response) {
-      if (!_.isUndefined(response.success)) {
+      if (_.isUndefined(response.error)) {
         $state.go('user.profile');
-        toastr.success('Success', 'Your have successfully register a tutor account');
+        toastr.success('Your have successfully register a tutor account', 'Congratulations!');
       } else {
-        toastr.error(response.error, 'Error');
+        toastr.error(response.error);
       }
     });
   };
@@ -16,7 +16,7 @@ module.exports = ['$scope', 'AuthService', 'toastr', '$state', '$uibModal', func
       animation: true,
       templateUrl: 'components/auth/termsAndConditions.html',
       controller: 'TermsAndConditionsController',
-      size: size,
+      size: size
       //resolve: {
       //  items: function () {
       //    return $scope.items;
