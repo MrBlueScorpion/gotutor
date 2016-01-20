@@ -22,7 +22,7 @@
                                                                placeholder="FIND SUBJECT"
                                                                name="subject"
                                                                ng-model="subject" required="required"
-                                                               uib-typeahead="address for address in getLocation($viewValue)"
+                                                               uib-typeahead="subject for subject in getSubjects($viewValue)"
                                                                autocomplete="off"/>
                                                     </div>
                                                 </div>
@@ -32,13 +32,13 @@
                                                                placeholder="FIND LOCATION"
                                                                name="location"
                                                                ng-model="location"
-                                                               ng-change="getLocationSuggestion(location)"
+                                                               uib-typeahead="location as location.text for location in getLocations($viewValue)"
                                                                required="required"
                                                                autocomplete="off"/>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-1 col-lg-1">
-                                                    <button class="btn btn-block btn-theme btn-theme-md"><i
+                                                    <button class="btn btn-block btn-theme btn-theme-md" ng-click="searchTutors()"><i
                                                             class="glyphicon glyphicon-search"></i></button>
                                                 </div>
                                             </form>

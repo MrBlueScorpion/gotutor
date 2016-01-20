@@ -1,20 +1,29 @@
 'use strict';
 
-module.exports = ['$scope', 'TutorApiService', 'toastr', '$http', function($scope, TutorApiService, toastr, $http){
-
-/*    TutorApiService.getRecommendedTutors().then(function(data){
-    $scope.tutors = data;
-
-    $scope.subjects = _.keys(data);
-    console.log(_.keys(data));
-  });*/
+module.exports = ['$scope', 'TutorApiService', 'toastr', '$http', '$state',
+  function($scope, TutorApiService, toastr, $http, $state){
 
   // Any function returning a promise object can be used to load values asynchronously
-  $scope.getLocation = function(location) {
-    TutorApiService.getLocations(location).then(function(response) {
-      console.log(response);
-      $scope.locations = response
+  $scope.getLocations = function(location) {
+    return TutorApiService.getLocations(location).then(function(locations) {
+      return locations;
     })
   };
+
+  $scope.getSubjects = function(subject) {
+    return TutorApiService.getSubjects(subject).then(function(subjects) {
+      return subjects
+    })
+  };
+
+  $scope.searchTutors = function() {
+    var query = {
+     // geohash: $scope.location.geohash,
+      //location: $scope.location,
+      subject: $scope.subject
+    };
+    console.log(query);
+    $state.go('tutors', query);
+  }
 
 }];
