@@ -1,7 +1,7 @@
 <section class="page-section with-sidebar sidebar-right first-section">
 
     <div class="container">
-        <form class="form-horizontal" novalidate>
+        <form class="form-horizontal" novalidate name="profileForm">
         <!-- profile.html -->
         <!-- Content -->
         <section id="content" class="content col-sm-12 col-md-8 col-lg-9">
@@ -15,8 +15,9 @@
             <div class="form-group">
                 <label for="name" class="col-md-2 col-lg-2 control-label">Name: </label>
                 <div class="col-md-9 col-lg-9">
-                    <input type="text" name="first-name" id="name" placeholder="Your Name" value="" size="30"
-                            data-toggle="tooltip" title="First name is required"
+                    <input type="text" name="name" id="name" placeholder="Your Name"
+                            data-toggle="tooltip" title="Your name is required"
+                           ng-model="tutor.name"
                             class="form-control placeholder"/>
                 </div>
             </div>
@@ -24,12 +25,12 @@
             <div class="form-group">
                 <label for="gender" class="col-md-2 control-label">Gender: </label>
                 <div class="col-md-7">
-                    <ui-select ng-model="gender.selected" theme="bootstrap" id="gender">
+                    <ui-select ng-model="tutor.gender" theme="bootstrap" id="gender">
                         <ui-select-match placeholder="Select gender...">
-                           {{$select.selected.name}}
+                           {{$select.selected}}
                             </ui-select-match>
-                        <ui-select-choices repeat="item in (gender | filter: $select.search) track by item.id">
-                            <span ng-bind-html="item.name"></span>
+                        <ui-select-choices repeat="gender in genderOptions">
+                            <span ng-bind-html="gender"></span>
                         </ui-select-choices>
                     </ui-select>
                 </div>
@@ -37,35 +38,37 @@
             <div class="form-group">
                 <label  class="col-md-2 control-label">Rate: </label>
                 <div class="col-md-7">
-                <slider ng-model="sliders.rate" min="rateOptions.min" step="rateOptions.step" max="rateOptions.max"
-                        value="rateOptions.value" range="true" formatter="format(sliders.rate)"></slider>
+                <slider ng-model="tutor.rate" min="rateOptions.min" step="rateOptions.step" max="rateOptions.max"
+                        value="rateOptions.value" range="true" formatter="format(tutor.rate)"></slider>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="locations" class="col-md-2 control-label">Location: </label>
+                <label for="location" class="col-md-2 control-label">Location: </label>
                     <div class="col-md-9">
 
-                        <p ng-model="user.locations[$index]" ng-repeat="location in user.locations track by location.code">
-                            <label>{{location.name}}</label>
+                        <p ng-model="tutor.locations[$index]" ng-repeat="location in tutor.locations track by location.id">
+                            <label>{{location.text}}</label>
                             <span class="btn btn-danger btn-sm pull-right fa fa-times" ng-click="removeOption($index, 'locations')">
                             </span>
                         </p>
 
-                        <ui-select ng-model="locations.selected" theme="bootstrap" id="locations"
-                                   reset-search-input="true" ng-if="user.locationEditable"
-                                   autofocus="true"
-                                   on-select="addOption(locations.selected, 'locations')"
+                        <ui-select ng-model="location.selected" theme="bootstrap"
+                                   reset-search-input="true" ng-if="tutor.locationEditable"
+
+                                   on-select="addOption(location.selected, 'locations')"
                                    focus-on="SetFocus">
                             <ui-select-match placeholder="Search a location...">
-                                {{$select.selected.name}}
-                            </ui-select-match>
-                            <ui-select-choices repeat="location in (locations | filter: $select.search) track by location.code">
-                                <span ng-bind-html="location.name"></span>
+                                {{$select.selected.text}}
+                            </ui-select-match   >
+                            <ui-select-choices repeat="location in locations"
+                                               refresh="getLocations($select.search)"
+                                               refresh-delay="0">
+                                <span ng-bind-html="location.text | highlight: $select.search"></span>
                             </ui-select-choices>
                         </ui-select>
 
-                        <button ng-click="toggleEditable('locationEditable')" class="btn btn-theme btn-theme-sm btn-theme-transparent">{{user.locationEditable ? "Cancel" : "Add another location"}}</button>
+                        <button ng-click="toggleEditable('locationEditable')" class="btn btn-theme btn-theme-sm btn-theme-transparent">{{tutor.locationEditable ? "Cancel" : "Add another location"}}</button>
 
                     </div>
             </div>
@@ -74,7 +77,7 @@
                 <label for="subject" class="col-md-2 control-label">Subject: </label>
                 <div class="col-md-9">
 
-                    <div ng-model="user.subjects[$index]" ng-repeat="subject in user.subjects">
+                    <div ng-model="tutor.subjects[$index]" ng-repeat="subject in user.subjects">
                         <p>{{subject}}
                         <span class="btn btn-danger btn-sm pull-right fa fa-times" ng-click="removeOption($index, 'sujects')">
                         </span>
@@ -82,7 +85,7 @@
                     </div>
 
 
-                    <div class="input-group" ng-if="user.subjectEditable">
+                    <div class="input-group" ng-if="tutor.subjectEditable">
                         <input type="text" name="subject" id="subject" placeholder="subject"
                                data-toggle="tooltip" title="subject is required"
                                class="form-control placeholder" ng-model="subject"
@@ -93,7 +96,7 @@
                               </span>
                     </div>
 
-                    <button ng-click="toggleEditable('subjectEditable')" class="btn btn-theme btn-theme-sm btn-theme-transparent">{{user.subjectEditable ? "Cancel" : "Add another Subject"}}</button>
+                    <button ng-click="toggleEditable('subjectEditable')" class="btn btn-theme btn-theme-sm btn-theme-transparent">{{tutor.subjectEditable ? "Cancel" : "Add another Subject"}}</button>
 
                 </div>
             </div>
@@ -101,16 +104,17 @@
             <div class="form-group ">
                 <label for="subject" class="col-md-2 control-label">Description: </label>
                 <div class="col-md-9">
-                <textarea name="message" id="input-message" placeholder="Type Your Message..." rows="6" cols="50"
-                data-toggle="tooltip" title="Message is required"
+                <textarea name="description"placeholder="Type Your Description..." rows="6" cols="50"
+                data-toggle="tooltip" title="Description is required"
+                          ng-model="tutor.description"
                 class="form-control placeholder"></textarea>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-md-11">
-                <input type="submit" name="submit" class="btn btn-theme btn-theme-md btn-theme-transparent pull-right"
-                       ng-click="submit()" value="Submit" />
+                <input type="submit" class="btn btn-theme btn-theme-md btn-theme-transparent pull-right"
+                        value="Submit" ng-click="updateProfile(tutor)"/>
                 </div>
             </div>
 
@@ -128,12 +132,12 @@
                 <!-- /Google map -->
                 <div class="btn btn-theme btn-theme-sm btn-file">
                     Select..
-                <input type="file" ngf-select ng-model="picFile" name="file"
+                <input type="file" ngf-select ng-model="tutor.picFile" name="file"
                        accept="image/*" ngf-max-size="2MB" required
                        class="btn"
                        data-filename-placement="inside">
                     </div>
-                <button ng-click="picFile = null" ng-show="picFile" class="btn btn-theme-danger btn-theme-sm">Remove</button>
+                <button ng-click="tutor.picFile = null" ng-show="tutor.picFile" class="btn btn-theme-danger btn-theme-sm">Remove</button>
             </div>
 
         </aside>

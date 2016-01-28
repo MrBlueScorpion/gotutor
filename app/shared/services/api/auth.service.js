@@ -108,23 +108,15 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', function ($q, $htt
     return _isLoggedIn;
   };
 
-  /**
-   * Get User profile
-   *
-   * @returns {*}
-   */
-  var getUserProfile = function() {
-    var deferred = $q.defer();
 
-    
-  };
 
   return {
     registerUser : registerUser,
     isAuthenticated : isAuthenticated,
     loginUser : loginUser,
     logoutUser : logoutUser,
-    isAuthorized : isAuthorized
+    isAuthorized : isAuthorized,
+    //getTutorProfile: getTutorProfile
   }
 
 }];

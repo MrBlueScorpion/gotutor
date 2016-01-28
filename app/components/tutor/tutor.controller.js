@@ -3,7 +3,7 @@ module.exports = ['$scope', '$stateParams', 'tutorId', 'TutorApiService', 'toast
 
   TutorApiService.getTutorById(tutorId).then(function(tutor) {
     if (!_.isUndefined(tutor.error)) {
-      $state.go('tutors');
+      //$state.go('tutors');
     } else {
       $scope.tutor = tutor;
     }
@@ -11,9 +11,11 @@ module.exports = ['$scope', '$stateParams', 'tutorId', 'TutorApiService', 'toast
   });
 
 
-  $scope.sendMessage = function (message) {
-    message.receiver = {id: tutorId};
-    TutorApiService.sendMessage(message).then(function(response) {
+  $scope.sendEnquiry = function(enquiry) {
+    enquiry.tutorId = tutorId;
+    console.log(enquiry);
+    TutorApiService.sendMessage(enquiry).then(function(response) {
+      console.log(response);
       if (!_.isUndefined(response.success)) {
         toastr.success(response.success)
       }

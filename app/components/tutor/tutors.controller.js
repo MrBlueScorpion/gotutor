@@ -123,7 +123,7 @@ module.exports = ['$scope', '$stateParams', '$state', 'TutorApiService', functio
     //console.log(currentStateParams);
     //go!!!
     $state.go('tutors', currentStateParams);
-  }
+  };
 
   //Generate main query obj
   $scope.generateMainQuery = function () {
@@ -140,13 +140,13 @@ module.exports = ['$scope', '$stateParams', '$state', 'TutorApiService', functio
       $scope.mainQuery.pageSize = $scope.pagination.pageSize;
     }
     //console.log($scope.mainQuery);
-  }
+  };
 
     //search and display
     function searchAndDisplay() {
       TutorApiService.getTutorsByQuery($scope.mainQuery)
       .then(function(data){
-        if (data && data.hits > 0 && data.results && data.results.length > 0 && data.facet) {
+        if (data && data.hits > 0 && data.results && data.results.length > 0) {
           //got results
           //console.log(data);
           //display tutor list
@@ -160,7 +160,7 @@ module.exports = ['$scope', '$stateParams', '$state', 'TutorApiService', functio
           //   $scope.filters.gender.push({ key: "male" });
           // }
           //get facet
-          $scope.facet = data.facet;
+          //$scope.facet = data.facet;
           //generate pagination
           $scope.updatePagination($scope.mainQuery.page, $scope.totalCount);
           //generate filters

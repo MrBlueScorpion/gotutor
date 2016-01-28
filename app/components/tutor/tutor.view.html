@@ -50,7 +50,7 @@
             </h1>
 
 
-            <form class="row" name="enquiryForm" ng-submit="sendMessage(message)" novalidate>
+            <form class="row" name="enquiryForm" ng-submit="sendEnquiry(enquiry)" novalidate>
 
                 <div class="row">
 
@@ -60,7 +60,7 @@
                             <input
                                     type="text" name="name" id="name" placeholder="Name and Surname" size="30"
                                     data-toggle="tooltip" title="Name is required"
-                                    ng-model="message.sender.name" required="required"
+                                    ng-model="enquiry.name" required="required"
                                     class="form-control placeholder"/>
                         </div>
                     </div>
@@ -71,7 +71,7 @@
                             <input
                                     type="email" name="email" id="email" placeholder="Your Mail Here" size="30"
                                     data-toggle="tooltip" title="Email is required"
-                                    ng-model="message.sender.email" required="required"
+                                    ng-model="enquiry.contact" required="required"
                                     class="form-control placeholder"/>
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                             <input
                                     type="text" name="subject" id="subject" placeholder="What subject" size="30"
                                     data-toggle="tooltip" title="Subject is required"
-                                    ng-model="message.subject" required="required"
+                                    ng-model="enquiry.subject" required="required"
                                     class="form-control placeholder"/>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
                                     <textarea
                                             name="message" id="input-message" placeholder="Type Your Message..." rows="6" cols="50"
                                             data-toggle="tooltip" title="Message is required"
-                                            ng-model="message.content" required="required"
+                                            ng-model="enquiry.message" required="required"
                                             class="form-control placeholder"></textarea>
                         </div>
                     </div>
