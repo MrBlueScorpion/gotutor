@@ -101,25 +101,25 @@ module.exports = ['$q', '$http', function ($q, $http) {
 
   var sendMessage = function(data) {
     var deferred = $q.defer();
-    var url = 'http://localhost:8080/messages';
+    var url = utility.generateApiUrl('enquiries');
 
     $http({
       method : 'POST',
       url : url,
       data : data
     }).then(function (response) {
-      deferred.resolve(response.data)
+      deferred.resolve(response)
     });
 
     return deferred.promise;
   };
 
 
-  var getMessages = function(tutor_id) {
+  var getMessages = function() {
     var deferred = $q.defer();
-    var url = 'http://localhost:8080/messages';
+    var url = utility.generateApiUrl('users/me/enquiries');
 
-    $http.get(url, {params: {receiver : tutor_id }})
+    $http.get(url)
       .then(function(response) {
         deferred.resolve(response.data);
       });
@@ -130,12 +130,46 @@ module.exports = ['$q', '$http', function ($q, $http) {
 
   var deleteMessages = function (messageIds) {
     var deferred = $q.defer();
-    var url = 'http://localhost:8080/messages';
+    var url = utility.generateApiUrl('users/me/enquiries');
 
-    $http.delete(url, {params: {messageIds: messageIds}})
+    $http.delete(url, {params: {ids: messageIds}})
       .then(function(response) {
         deferred.resolve(response.data)
       });
+
+    return deferred.promise;
+  };
+
+
+  /**
+   * Get Tutor profile
+   *
+   * @returns {*}
+   */
+  var getTutorProfile = function() {
+    var deferred = $q.defer();
+    var url = utility.generateApiUrl('users/me/tutor');
+
+    $http.get(url).then(function(response) {
+      deferred.resolve(response.data);
+    }, function(error) {
+      deferred.resolve({error: 'Please update your profile'});
+    });
+
+    return deferred.promise;
+  };
+
+  var updateTutorProfile = function(tutor) {
+    var deferred = $q.defer();
+    var url = utility.generateApiUrl('users/me/tutor');
+
+    $http({
+      method : 'POST',
+      url : url,
+      data : tutor
+    }).then(function(response) {
+      deferred.resolve(response.data);
+    });
 
     return deferred.promise;
   };
@@ -148,6 +182,8 @@ module.exports = ['$q', '$http', function ($q, $http) {
     getTutorById : getTutorById,
     sendMessage : sendMessage,
     getMessages : getMessages,
-    deleteMessages : deleteMessages
+    deleteMessages : deleteMessages,
+    getTutorProfile : getTutorProfile,
+    updateTutorProfile : updateTutorProfile
   }
 }];

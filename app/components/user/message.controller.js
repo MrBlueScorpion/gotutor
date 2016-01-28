@@ -2,7 +2,8 @@
 
 module.exports = ['$scope', 'TutorApiService', 'toastr', function($scope, TutorApiService, toastr) {
   $scope.messages = [];
-  TutorApiService.getMessages(2234).then(function(response) {
+  TutorApiService.getMessages().then(function(response) {
+    console.log(response);
     $scope.messages = response;
   });
 
