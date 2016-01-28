@@ -7,6 +7,7 @@ var gulp = require('gulp'),
     source = require('vinyl-source-stream'),
     debowerify = require('debowerify'),
     browserify = require('browserify'),
+    ngAnnotate = require('gulp-ng-annotate'),
     uglify = require('gulp-uglify'),
     uglifyCss = require('gulp-minify-css'),
     concat = require('gulp-concat'),
@@ -72,7 +73,7 @@ gulp.task('build:js', ['build:template'], function () {
     .pipe(source('app.main.js'))
   
   if (!debug)
-    stream = stream.pipe(buffer()).pipe(uglify())
+    stream = stream.pipe(buffer()).pipe(ngAnnotate()).pipe(uglify())
     
   return stream.pipe(gulp.dest('dist/' + version + '/'))
             .on('end', function() { del.sync('app/angular-templates.js') })
@@ -100,7 +101,7 @@ gulp.task('watch', function () {
 
 gulp.task('debug', function() {
   debug = true
-  
 });
 
 gulp.task('default', ['debug', 'build', 'connect', 'watch']);
+
