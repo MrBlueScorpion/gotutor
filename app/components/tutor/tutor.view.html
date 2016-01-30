@@ -25,19 +25,20 @@
             <div class="col-lg-10">
                <table class="table">
                    <tbody>
-                    <tr><td>Gender</td><td>{{tutor.gender}}</td></tr>
-                    <tr><td>Rate</td><td>$19 per hour</td></tr>
-                    <tr ng-if="tutor.contact.phone > 0"><td>Phone</td><td>{{tutor.contact.phone.join(', ')}}</td></tr>
-                    <tr ng-if="tutor.contact.email.length > 0"><td>Email</td><td>{{tutor.contact.email.join(', ')}}</td></tr>
-                    <tr><td>Location</td><td>Melbourne</td></tr>
-                    <tr><td>Subjects</td><td>{{tutor.subjects.join(', ')}}</td></tr>
+                    <tr><td>Gender:</td><td>{{tutor.gender}}</td></tr>
+                    <tr><td>Rate:</td><td>$19 per hour</td></tr>
+                    <tr ng-if="tutor.contact.phone > 0"><td>Phone:</td><td>{{tutor.contact.phone.join(', ')}}</td></tr>
+                    <tr ng-if="tutor.contact.email.length > 0"><td>Email:</td><td>{{tutor.contact.email.join(', ')}}</td></tr>
+                    <tr><td>Location:</td><td>Melbourne</td></tr>
+                    <tr><td>Subjects:</td><td>{{tutor.subjects.join(', ')}}</td></tr>
                    </tbody>
                </table>
             </div>
             </div>
             <div class="row">
                 <div class="col-lg-11">
-                <p class="text-justify">{{tutor.description}}</p>
+                    <p>Descriptions:</p>
+                    <p class="text-justify" ng-bind-html="tutor.description | nl2br"></p>
                 </div>
             </div>
             <!-- -->
@@ -50,7 +51,7 @@
             </h1>
 
 
-            <form class="row" name="enquiryForm" ng-submit="sendEnquiry(enquiry)" novalidate>
+            <form class="row" name="enquiryForm" ng-submit="sendEnquiry()" novalidate>
 
                 <div class="row">
 

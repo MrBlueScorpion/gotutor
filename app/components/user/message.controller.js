@@ -42,7 +42,7 @@ module.exports = ['$scope', 'TutorApiService', 'toastr', function($scope, TutorA
 
   $scope.deleteMessages = function() {
     var messageIds = _.map($scope.checkedMessages, function(message) {
-      return message._id;
+      return message.id;
     });
     TutorApiService.deleteMessages(messageIds).then(function(response) {
       $scope.messages = _.difference($scope.messages, $scope.checkedMessages);

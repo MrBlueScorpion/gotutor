@@ -1,6 +1,6 @@
 <section class="page-section with-sidebar sidebar-right first-section">
     <div class="container">
-        <section id="content" class="content col-sm-12 col-md-8 col-lg-9">
+        <section id="content" class="content col-sm-12 col-md-12 col-lg-12">
 
             <h1 class="section-title">
                 <span class="icon-inner"><span class="fa-stack"><i class="fa rhex fa-stack-2x"></i><i class="fa fa-user fa-stack-1x"></i></span></span>
@@ -23,8 +23,8 @@
                 <tr ng-repeat="message in getPagedResults()">
                     <td><checkbox large ng-model="message.checked" value="message.id" ng-change="checkStatus()"></td>
                     <td>
-                        <p>From: {{message.sender.email}} <span class="pull-right">{{message.created_at | date:'medium'}}</span></p>
-                        {{message.content}}</td>
+                        <p>From:{{message.name}} {{message.contact}} <span class="pull-right">{{message.timestamp | date:'medium'}}</span></p>
+                        {{message.message}}</td>
                 </tr>
                 </tbody>
             </table>

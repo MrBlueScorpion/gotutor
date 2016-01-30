@@ -13,14 +13,13 @@ require('angular-cookies');
 require('angular-bootstrap');
 require('./shared/vendor/angucomplete-alt');
 
+
 // app components
 require('./components/home/home.module');
 require('./components/tutor/tutor.module');
-require('./angular-templates')
-
 
 var TutorApiService = require('./shared/services/api/tutor.service'),
-    AuthService = require('./shared/services/api/auth.service')
+    AuthService = require('./shared/services/api/auth.service');
 
 var SliderDirective = require('./shared/directives/slider.directive');
 
@@ -58,6 +57,15 @@ app.constant('AUTH_EVENTS', {
   admin: 'admin',
   tutor: 'tutor',
   user: 'user'
+});
+
+app.filter('nl2br', function($sce) {
+  return function(msg, is_xhtml) {
+    is_xhtml = is_xhtml || true;
+    var breakTag = (is_xhtml) ? '<br />' : '<br>';
+    msg = (msg + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ breakTag +'$2');
+    return $sce.trustAsHtml(msg);
+  }
 });
 
 app.factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS) {
@@ -190,7 +198,7 @@ app.run(['$rootScope', '$state', 'AuthService', 'toastr', 'AUTH_EVENTS',
     });
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-      if(('data' in toState) && toState.data.authorizedRoles) {
+
         AuthService.isAuthenticated().then(function(user) {
           $rootScope.auth = AuthService;
           if (angular.isDefined(user.id)) {
@@ -198,12 +206,13 @@ app.run(['$rootScope', '$state', 'AuthService', 'toastr', 'AUTH_EVENTS',
             $rootScope.currentUser = user;
             $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
           } else {
-            toastr.error("You need to login first");
-            $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
-            event.preventDefault();
+            if(('data' in toState) && toState.data.authorizedRoles) {
+              toastr.error("You need to login first");
+              $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+              event.preventDefault();
+            }
           }
         });
-      }
 
     });
 }]);
