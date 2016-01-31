@@ -264,7 +264,7 @@ body.boxed {
     padding-top: 100px;
     padding-bottom: 100px;
     background-attachment: fixed;
-    background-color: rgb(166, 236, 165);
+    background-color: #18bc9c;
     background-size: cover !important;
     background-position: 50% 0 !important;
     background-repeat: no-repeat;
@@ -353,7 +353,7 @@ body.boxed {
     position: absolute;
     top: 0; left: 0;
     bottom: 0; right: 0;
-    background-color: rgba(0, 0, 0, 0.30);
+/*    background-color: rgba(0, 0, 0, 0.30); */
 }
 
 .block-title {}
@@ -1707,6 +1707,7 @@ textarea {
 
 #main-slider .caption-hint {
     margin: 30px 0 40px 0;
+    color: #ffffff;
 }
 #main-slider .caption-subtitle .fa {color: #ffffff;}
 #main-slider .caption-subtitle span {
