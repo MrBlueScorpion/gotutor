@@ -11,12 +11,14 @@ require('ui-select');
 require('angular-bootstrap-checkbox');
 require('angular-cookies');
 require('angular-bootstrap');
+require('./shared/vendor/angucomplete-alt');
 
 // app components
 require('./components/home/home.module');
 require('./components/tutor/tutor.module');
-
 require('./angular-templates')
+
+
 var TutorApiService = require('./shared/services/api/tutor.service'),
     AuthService = require('./shared/services/api/auth.service')
 
@@ -35,7 +37,8 @@ var app = angular.module('app', [
   'ngCookies',
   'templateCache',
   'app.home',
-  'app.tutor'
+  'app.tutor',
+  'angucomplete-alt'
 ]);
 
 app.service('TutorApiService', TutorApiService)
