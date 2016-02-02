@@ -189,30 +189,34 @@ app.run(['$rootScope', '$state', 'AuthService', 'toastr', 'AUTH_EVENTS',
 
     });
 
+
+    $rootScope.$on(AUTH_EVENTS.loginSuccess, function(event) {
+
+    });
+
     $rootScope.$on(AUTH_EVENTS.notAuthenticated, function(event) {
      // AuthService.logout();
       $rootScope.isLoggedIn = false;
       $rootScope.currentUser = null;
-
       $state.go('login');
     });
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
 
-        AuthService.isAuthenticated().then(function(user) {
-          $rootScope.auth = AuthService;
-          if (angular.isDefined(user.id)) {
-            $rootScope.isLoggedIn = true;
-            $rootScope.currentUser = user;
-            $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-          } else {
-            if(('data' in toState) && toState.data.authorizedRoles) {
-              toastr.error("You need to login first");
-              $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
-              event.preventDefault();
-            }
+      AuthService.isAuthenticated().then(function(user) {
+        $rootScope.auth = AuthService;
+        if (angular.isDefined(user.id)) {
+          $rootScope.isLoggedIn = true;
+          $rootScope.currentUser = user;
+          $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+        } else {
+          if(('data' in toState) && toState.data.authorizedRoles) {
+            toastr.error("You need to login first");
+            $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+            event.preventDefault();
           }
-        });
+        }
+      });
 
     });
 }]);
