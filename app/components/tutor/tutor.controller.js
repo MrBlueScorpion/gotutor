@@ -6,18 +6,20 @@ module.exports = ['$scope', '$stateParams', 'tutorId', 'TutorApiService', 'toast
       //$state.go('tutors');
     } else {
       $scope.tutor = tutor;
+      $scope.enquiry = {};
     }
 
   });
 
 
-  $scope.sendEnquiry = function(enquiry) {
-    enquiry.tutorId = tutorId;
-    console.log(enquiry);
-    TutorApiService.sendMessage(enquiry).then(function(response) {
+  $scope.sendEnquiry = function() {
+    $scope.enquiry.tutorId = tutorId;
+    console.log($scope.enquiry);
+    TutorApiService.sendMessage($scope.enquiry).then(function(response) {
       console.log(response);
       if (!_.isUndefined(response.success)) {
-        toastr.success(response.success)
+        toastr.success(response.success);
+        $scope.enquiry = {};
       }
     });
   }

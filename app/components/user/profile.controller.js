@@ -1,24 +1,26 @@
 'use strict';
 
 module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', function($scope, toastr, $http, TutorApiService){
+ $scope.tutor = {
+    name : null,
+    gender : null,
+    rate : [15, 100],
+    locations : [
+    ],
+    subjects : [
+
+    ]
+  };
+  $scope.locationEditable = false;
+  $scope.subjectEditable = false;
   TutorApiService.getTutorProfile().then(function(response) {
     if (angular.isDefined(response.error)) {
       toastr.info(response.error);
-      $scope.tutor = {
-        name : null,
-        gender : null,
-        rate : [15, 100],
-        locationEditable : false,
-        locations : [
-        ],
-        subjectEditable : false,
-        subjects : [
 
-        ]
-      };
     } else {
 
-
+      $scope.tutor = response;
+      $scope.rate = [$scope.tutor.rate.min, $scope.tutor.rate.max];
     }
   });
   $scope.genderOptions = ['Male', 'Female'];
@@ -29,19 +31,14 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', function($scop
     step: 1
   };
 
-
-  $scope.locations = [];
-
   $scope.format = function(value) {
     if (!_.isUndefined(value))
     return 'From $' + value[0] + '/hr  to  $' + value[1] + '/hr';
   };
 
-  //$scope.selectedItem= $scope.itemArray[0];
-
 
   $scope.toggleEditable = function(modal) {
-    $scope.tutor[modal] = $scope.tutor[modal] == false;
+    $scope[modal] = $scope[modal] == false;
     $scope.$broadcast('SetFocus');
   };
 
@@ -74,7 +71,7 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', function($scop
     },
       "contact": {
       "phone": [ "0412345678", "0456788765" ],
-        "email": [ "test@test.com" ]
+
     }
     }*/
     tutor.locationIds = _.map(tutor.locations, function(location) {
@@ -82,8 +79,8 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', function($scop
     });
 
     console.log(tutor);
-    TutorApiService.updateTutorProfile(tutor).then(function(tutor) {
-      console.log(tutor);
+    TutorApiService.updateTutorProfile(tutor).then(function(response) {
+      toastr.success(response.success);
     });
   };
 

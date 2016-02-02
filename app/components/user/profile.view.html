@@ -17,28 +17,35 @@
                 <div class="col-md-9 col-lg-9">
                     <input type="text" name="name" id="name" placeholder="Your Name"
                             data-toggle="tooltip" title="Your name is required"
-                           ng-model="tutor.name"
+                           ng-model="tutor.name" required
                             class="form-control placeholder"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone" class="col-md-2 col-lg-2 control-label">Contact: </label>
+                <div class="col-md-9 col-lg-9">
+                    <input type="text" name="phone" id="phone" placeholder="Your Phone"
+                           data-toggle="tooltip" title="Your Phone is required"
+                           ng-model="tutor.phone" required
+                           class="form-control placeholder"/>
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="gender" class="col-md-2 control-label">Gender: </label>
                 <div class="col-md-7">
-                    <ui-select ng-model="tutor.gender" theme="bootstrap" id="gender">
-                        <ui-select-match placeholder="Select gender...">
-                           {{$select.selected}}
-                            </ui-select-match>
-                        <ui-select-choices repeat="gender in genderOptions">
-                            <span ng-bind-html="gender"></span>
-                        </ui-select-choices>
-                    </ui-select>
+                    <select class="form-control" ng-model="tutor.gender" id="gender"
+                            ng-options="gender for gender in genderOptions track by gender"
+                    required>
+                        <option value="">Please select gender...</option>
+                    </select>
                 </div>
             </div>
             <div class="form-group">
                 <label  class="col-md-2 control-label">Rate: </label>
                 <div class="col-md-7">
-                <slider ng-model="tutor.rate" min="rateOptions.min" step="rateOptions.step" max="rateOptions.max"
+                <slider ng-model="rate" min="rateOptions.min" step="rateOptions.step" max="rateOptions.max"
                         value="rateOptions.value" range="true" formatter="format(tutor.rate)"></slider>
                 </div>
             </div>
@@ -77,9 +84,9 @@
                 <label for="subject" class="col-md-2 control-label">Subject: </label>
                 <div class="col-md-9">
 
-                    <div ng-model="tutor.subjects[$index]" ng-repeat="subject in user.subjects">
+                    <div ng-model="tutor.subjects[$index]" ng-repeat="subject in tutor.subjects">
                         <p>{{subject}}
-                        <span class="btn btn-danger btn-sm pull-right fa fa-times" ng-click="removeOption($index, 'sujects')">
+                        <span class="btn btn-danger btn-sm pull-right fa fa-times" ng-click="removeOption($index, 'subjects')">
                         </span>
                         </p>
                     </div>

@@ -108,7 +108,7 @@ module.exports = ['$q', '$http', function ($q, $http) {
       url : url,
       data : data
     }).then(function (response) {
-      deferred.resolve(response)
+      deferred.resolve({success: 'Your enquiry has been sent to the tutor'})
     });
 
     return deferred.promise;
@@ -168,7 +168,7 @@ module.exports = ['$q', '$http', function ($q, $http) {
       url : url,
       data : tutor
     }).then(function(response) {
-      deferred.resolve(response.data);
+      deferred.resolve({'success' : 'Your profile updated successfully'});
     });
 
     return deferred.promise;
