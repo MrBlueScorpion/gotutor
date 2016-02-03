@@ -198,7 +198,7 @@ app.run(['$rootScope', '$state', 'AuthService', 'toastr', 'AUTH_EVENTS',
      // AuthService.logout();
       $rootScope.isLoggedIn = false;
       $rootScope.currentUser = null;
-      $state.go('login');
+
     });
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
@@ -213,6 +213,7 @@ app.run(['$rootScope', '$state', 'AuthService', 'toastr', 'AUTH_EVENTS',
           if(('data' in toState) && toState.data.authorizedRoles) {
             toastr.error("You need to login first");
             $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+            $state.go('login');
             event.preventDefault();
           }
         }
