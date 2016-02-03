@@ -17,6 +17,7 @@ require('./shared/vendor/angucomplete-alt');
 // app components
 require('./components/home/home.module');
 require('./components/tutor/tutor.module');
+require('./angular-templates');
 
 var TutorApiService = require('./shared/services/api/tutor.service'),
     AuthService = require('./shared/services/api/auth.service');
