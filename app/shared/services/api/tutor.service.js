@@ -134,7 +134,7 @@ module.exports = ['$q', '$http', function ($q, $http) {
 
     $http.delete(url, {params: {ids: messageIds}})
       .then(function(response) {
-        deferred.resolve(response.data)
+        deferred.resolve({success: 'Enquiry deleted successfully'})
       });
 
     return deferred.promise;

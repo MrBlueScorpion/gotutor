@@ -11,8 +11,6 @@ require('ui-select');
 require('angular-bootstrap-checkbox');
 require('angular-cookies');
 require('angular-bootstrap');
-require('./shared/vendor/angucomplete-alt');
-
 
 // app components
 require('./components/home/home.module');
@@ -37,8 +35,7 @@ var app = angular.module('app', [
   'ngCookies',
   'templateCache',
   'app.home',
-  'app.tutor',
-  'angucomplete-alt'
+  'app.tutor'
 ]);
 
 app.service('TutorApiService', TutorApiService)
@@ -146,7 +143,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
     $urlRouterProvider.otherwise('/');
 
     // use the HTML5 History API
-    $locationProvider.html5Mode(true).hashPrefix('!');
+    $locationProvider.html5Mode(true);
 
     //angular toast configuration
     angular.extend(toastrConfig, {

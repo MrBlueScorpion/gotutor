@@ -26,7 +26,7 @@
                <table class="table">
                    <tbody>
                     <tr><td>Gender:</td><td>{{tutor.gender}}</td></tr>
-                    <tr><td>Rate:</td><td>$19 per hour</td></tr>
+                    <tr><td>Rate:</td><td>${{tutor.rate.min}} - ${{tutor.rate.max}} per hour</td></tr>
                     <tr ng-if="tutor.contact.phone > 0"><td>Phone:</td><td>{{tutor.contact.phone.join(', ')}}</td></tr>
                     <tr ng-if="tutor.contact.email.length > 0"><td>Email:</td><td>{{tutor.contact.email.join(', ')}}</td></tr>
                     <tr><td>Location:</td><td>Melbourne</td></tr>

@@ -20,6 +20,7 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', function($scop
     } else {
 
       $scope.tutor = response;
+      $scope.tutor.locations = [];
       $scope.rate = [$scope.tutor.rate.min, $scope.tutor.rate.max];
     }
   });
@@ -31,7 +32,7 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', function($scop
     step: 1
   };
 
-  $scope.format = function(value) {
+  $scope.formatRate = function(value) {
     if (!_.isUndefined(value))
     return 'From $' + value[0] + '/hr  to  $' + value[1] + '/hr';
   };
@@ -39,12 +40,10 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', function($scop
 
   $scope.toggleEditable = function(modal) {
     $scope[modal] = $scope[modal] == false;
-    $scope.$broadcast('SetFocus');
   };
 
   $scope.addOption = function(option, modal) {
     var duplicate = false;
-
     _.each($scope.tutor[modal], function(location) {
       if (location.id == option.id) {
         toastr.error(option.text + ' already exits in the your list');
@@ -78,6 +77,9 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', function($scop
       return location.id;
     });
 
+    tutor.rate.min = $scope.rate[0];
+    tutor.rate.max = $scope.rate[1];
+
     console.log(tutor);
     TutorApiService.updateTutorProfile(tutor).then(function(response) {
       toastr.success(response.success);
@@ -88,15 +90,14 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', function($scop
     $scope.tutor[modal].splice(index, 1);
   };
 
-
   $scope.getLocations = function(location) {
-    TutorApiService.getLocations(location).then(function(locations) {
-      $scope.locations = locations;
-      $scope.noResults = locations.length == 0;
+    return TutorApiService.getLocations(location).then(function(locations) {
       return locations;
     })
   };
 
-
+  $scope.format = function ($model) {
+    return '';
+  }
   
 }];

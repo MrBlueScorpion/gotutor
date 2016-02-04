@@ -2,153 +2,159 @@
 
     <div class="container">
         <form class="form-horizontal" novalidate name="profileForm">
-        <!-- profile.html -->
-        <!-- Content -->
-        <section id="content" class="content col-sm-12 col-md-8 col-lg-9">
+            <!-- profile.html -->
+            <!-- Content -->
+            <section id="content" class="content col-sm-12 col-md-8 col-lg-9">
 
-        <h1 class="section-title">
-            <span class="icon-inner"><span class="fa-stack"><i class="fa rhex fa-stack-2x"></i><i class="fa fa-user fa-stack-1x"></i></span></span>
-            <span class="title-inner">Update my profile</span>
-        </h1>
+                <h1 class="section-title">
+                    <span class="icon-inner"><span class="fa-stack"><i class="fa rhex fa-stack-2x"></i><i
+                            class="fa fa-user fa-stack-1x"></i></span></span>
+                    <span class="title-inner">Update my profile</span>
+                </h1>
 
 
-            <div class="form-group">
-                <label for="name" class="col-md-2 col-lg-2 control-label">Name: </label>
-                <div class="col-md-9 col-lg-9">
-                    <input type="text" name="name" id="name" placeholder="Your Name"
-                            data-toggle="tooltip" title="Your name is required"
-                           ng-model="tutor.name" required
-                            class="form-control placeholder"/>
+                <div class="form-group">
+                    <label for="name" class="col-md-2 col-lg-2 control-label">Name: </label>
+                    <div class="col-md-9 col-lg-9">
+                        <input type="text" name="name" id="name" placeholder="Your Name"
+                               data-toggle="tooltip" title="Your name is required"
+                               ng-model="tutor.name" required
+                               class="form-control placeholder"/>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label for="phone" class="col-md-2 col-lg-2 control-label">Contact: </label>
-                <div class="col-md-9 col-lg-9">
-                    <input type="text" name="phone" id="phone" placeholder="Your Phone"
-                           data-toggle="tooltip" title="Your Phone is required"
-                           ng-model="tutor.phone" required
-                           class="form-control placeholder"/>
+                <div class="form-group">
+                    <label for="phone" class="col-md-2 col-lg-2 control-label">Contact: </label>
+                    <div class="col-md-9 col-lg-9">
+                        <input type="text" name="phone" id="phone" placeholder="Your Phone"
+                               data-toggle="tooltip" title="Your Phone is required"
+                               ng-model="tutor.phone" required
+                               class="form-control placeholder"/>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label for="gender" class="col-md-2 control-label">Gender: </label>
-                <div class="col-md-7">
-                    <select class="form-control" ng-model="tutor.gender" id="gender"
-                            ng-options="gender for gender in genderOptions track by gender"
-                    required>
-                        <option value="">Please select gender...</option>
-                    </select>
+                <div class="form-group">
+                    <label for="gender" class="col-md-2 control-label">Gender: </label>
+                    <div class="col-md-7">
+                        <select class="form-control" ng-model="tutor.gender" id="gender"
+                                ng-options="gender for gender in genderOptions track by gender"
+                                required>
+                            <option value="">Please select gender...</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label  class="col-md-2 control-label">Rate: </label>
-                <div class="col-md-7">
-                <slider ng-model="rate" min="rateOptions.min" step="rateOptions.step" max="rateOptions.max"
-                        value="rateOptions.value" range="true" formatter="format(tutor.rate)"></slider>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Rate: </label>
+                    <div class="col-md-7">
+                        <slider ng-model="rate" min="rateOptions.min" step="rateOptions.step" max="rateOptions.max"
+                                value="rateOptions.value" range="true" formatter="formatRate(rate)"></slider>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label for="location" class="col-md-2 control-label">Location: </label>
+                <div class="form-group">
+                    <label for="location" class="col-md-2 control-label">Location: </label>
                     <div class="col-md-9">
 
-                        <p ng-model="tutor.locations[$index]" ng-repeat="location in tutor.locations track by location.id">
+                        <p ng-model="tutor.locations[$index]"
+                           ng-repeat="location in tutor.locations track by location.id">
                             <label>{{location.text}}</label>
-                            <span class="btn btn-danger btn-sm pull-right fa fa-times" ng-click="removeOption($index, 'locations')">
+                            <span class="btn btn-danger btn-sm pull-right fa fa-times"
+                                  ng-click="removeOption($index, 'locations')">
                             </span>
                         </p>
 
-                        <ui-select ng-model="location.selected" theme="bootstrap"
-                                   reset-search-input="true" ng-if="tutor.locationEditable"
-
-                                   on-select="addOption(location.selected, 'locations')"
-                                   focus-on="SetFocus">
-                            <ui-select-match placeholder="Search a location...">
-                                {{$select.selected.text}}
-                            </ui-select-match   >
-                            <ui-select-choices repeat="location in locations"
-                                               refresh="getLocations($select.search)"
-                                               refresh-delay="0">
-                                <span ng-bind-html="location.text | highlight: $select.search"></span>
-                            </ui-select-choices>
-                        </ui-select>
-
-                        <button ng-click="toggleEditable('locationEditable')" class="btn btn-theme btn-theme-sm btn-theme-transparent">{{tutor.locationEditable ? "Cancel" : "Add another location"}}</button>
+                        <div ng-if="locationEditable">
+                            <input type="text" class="form-control"
+                                   placeholder="Search locations..."
+                                   id="location"
+                                   ng-model="location"
+                                   uib-typeahead="location as location.text for location in getLocations($viewValue)"
+                                   typeahead-on-select="addOption($item, 'locations')"
+                                   typeahead-input-formatter="format($model)"
+                                   autocomplete="off"/>
+                        </div>
+                        <button ng-click="toggleEditable('locationEditable')"
+                                class="btn btn-theme btn-theme-sm btn-theme-transparent">{{locationEditable ? "Cancel" :
+                            "Add another location"}}
+                        </button>
 
                     </div>
-            </div>
+                </div>
 
-            <div class="form-group">
-                <label for="subject" class="col-md-2 control-label">Subject: </label>
-                <div class="col-md-9">
+                <div class="form-group">
+                    <label for="subject" class="col-md-2 control-label">Subject: </label>
+                    <div class="col-md-9">
 
-                    <div ng-model="tutor.subjects[$index]" ng-repeat="subject in tutor.subjects">
-                        <p>{{subject}}
-                        <span class="btn btn-danger btn-sm pull-right fa fa-times" ng-click="removeOption($index, 'subjects')">
+                        <div ng-model="tutor.subjects[$index]" ng-repeat="subject in tutor.subjects">
+                            <p>{{subject}}
+                        <span class="btn btn-danger btn-sm pull-right fa fa-times"
+                              ng-click="removeOption($index, 'subjects')">
                         </span>
-                        </p>
+                            </p>
+                        </div>
+
+                        <div ng-if="subjectEditable">
+                            <input type="text" class="form-control"
+                                   placeholder="Search subjects..."
+                                   id="subject"
+                                   ng-model="subject"
+                                   uib-typeahead="subject as subject.text for subject in getSubjects($viewValue)"
+                                   typeahead-on-select="addOption($item, 'subjects')"
+                                   typeahead-input-formatter="format($model)"
+                                   autocomplete="off"/>
+                        </div>
+
+                        <button ng-click="toggleEditable('subjectEditable')"
+                                class="btn btn-theme btn-theme-sm btn-theme-transparent">{{subjectEditable ? "Cancel" :
+                            "Add another Subject"}}
+                        </button>
+
                     </div>
-
-
-                    <div class="input-group" ng-if="tutor.subjectEditable">
-                        <input type="text" name="subject" id="subject" placeholder="subject"
-                               data-toggle="tooltip" title="subject is required"
-                               class="form-control placeholder" ng-model="subject"
-                               autocomplete="off"
-                               typeahead-select-on-exact="true"/>
-                             <span class="input-group-btn">
-                                <button class="btn btn-theme btn-theme-md btn-theme-transparent" type="button" ng-click="addOption(subject, 'subjects')">Add</button>
-                              </span>
-                    </div>
-
-                    <button ng-click="toggleEditable('subjectEditable')" class="btn btn-theme btn-theme-sm btn-theme-transparent">{{tutor.subjectEditable ? "Cancel" : "Add another Subject"}}</button>
-
                 </div>
-            </div>
 
-            <div class="form-group ">
-                <label for="subject" class="col-md-2 control-label">Description: </label>
-                <div class="col-md-9">
-                <textarea name="description"placeholder="Type Your Description..." rows="6" cols="50"
-                data-toggle="tooltip" title="Description is required"
+                <div class="form-group">
+                    <label for="description" class="col-md-2 control-label">Description: </label>
+                    <div class="col-md-9">
+                <textarea id="description" placeholder="Type Your Description..." rows="6" cols="50"
+                          data-toggle="tooltip" title="Description is required"
                           ng-model="tutor.description"
-                class="form-control placeholder"></textarea>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-11">
-                <input type="submit" class="btn btn-theme btn-theme-md btn-theme-transparent pull-right"
-                        value="Submit" ng-click="updateProfile(tutor)"/>
-                </div>
-            </div>
-
-        </section>
-        <!-- Sidebar -->
-        <aside id="sidebar" class="sidebar col-sm-4 col-md-3">
-
-            <div class="widget google-map-widget">
-                <!-- Google map -->
-                <div class="google-map1">
-                    <div style="background: grey">
-                        <img  ngf-src="picFile" class="thumb">
+                          class="form-control placeholder"></textarea>
                     </div>
                 </div>
-                <!-- /Google map -->
-                <div class="btn btn-theme btn-theme-sm btn-file">
-                    Select..
-                <input type="file" ngf-select ng-model="tutor.picFile" name="file"
-                       accept="image/*" ngf-max-size="2MB" required
-                       class="btn"
-                       data-filename-placement="inside">
-                    </div>
-                <button ng-click="tutor.picFile = null" ng-show="tutor.picFile" class="btn btn-theme-danger btn-theme-sm">Remove</button>
-            </div>
 
-        </aside>
-        <!-- /Sidebar -->
+                <div class="form-group">
+                    <div class="col-md-11">
+                        <input type="submit" class="btn btn-theme btn-theme-md btn-theme-transparent pull-right"
+                               value="Save" ng-click="updateProfile(tutor)"/>
+                    </div>
+                </div>
+
+            </section>
+            <!-- Sidebar -->
+            <!--<aside id="sidebar" class="sidebar col-sm-4 col-md-3">-->
+
+                <!--<div class="widget google-map-widget">-->
+                    <!--&lt;!&ndash; Google map &ndash;&gt;-->
+                    <!--<div class="google-map1">-->
+                        <!--<div style="background: grey">-->
+                            <!--<img ngf-src="picFile" class="thumb">-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash; /Google map &ndash;&gt;-->
+                    <!--<div class="btn btn-theme btn-theme-sm btn-file">-->
+                        <!--Select..-->
+                        <!--<input type="file" ngf-select ng-model="tutor.picFile" name="file"-->
+                               <!--accept="image/*" ngf-max-size="2MB" required-->
+                               <!--class="btn"-->
+                               <!--data-filename-placement="inside">-->
+                    <!--</div>-->
+                    <!--<button ng-click="tutor.picFile = null" ng-show="tutor.picFile"-->
+                            <!--class="btn btn-theme-danger btn-theme-sm">Remove-->
+                    <!--</button>-->
+                <!--</div>-->
+
+            <!--</aside>-->
+            <!-- /Sidebar -->
         </form>
     </div>
 </section>

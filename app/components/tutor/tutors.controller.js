@@ -271,7 +271,7 @@ module.exports = ['$scope', '$stateParams', '$state', 'TutorApiService', functio
     function getLocationByGeohash(facet, geohash) {
       var location;
       if (facet.location) {
-        location = _.find(facet.location, function(location){
+        location = _.find(facet.location, function(location) {
           return location.geohash == geohash;
         });
       }
