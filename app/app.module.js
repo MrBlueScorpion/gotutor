@@ -81,21 +81,21 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
     $stateProvider
       .state('home', {
         url: '/',
-        templateUrl: 'components/home/home.view.html',
+        templateUrl: 'components/home/home.html',
         controller : 'HomeController'
       })
       .state('tutors', {
         url : '/tutors?subject&subjectids&geohash&location&gender&page',
-        templateUrl: 'components/tutor/tutors.view.html',
+        templateUrl: 'components/tutor/tutors.html',
         controller: 'TutorsListController'
       })
       .state('about-us', {
         url : '/about-us',
-        templateUrl: 'components/about/about.view.html'
+        templateUrl: 'components/about/about.html'
       })
       .state('tutor', {
         url: '/tutor/:tutorId',
-        templateUrl: 'components/tutor/tutor.view.html',
+        templateUrl: 'components/tutor/tutor.html',
         controller: 'TutorController',
         resolve: {
           tutorId : ['$stateParams', function($stateParams) {
@@ -105,29 +105,29 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
       })
       .state('register', {
         url: '/register',
-        templateUrl: 'components/auth/register.view.html',
+        templateUrl: 'components/auth/register.html',
         controller : 'RegisterController'
       })
       .state('login', {
         url: '/login',
-        templateUrl: 'components/auth/login.view.html',
+        templateUrl: 'components/auth/login.html',
         controller : 'LoginController'
       })
       .state('user', {
         abstract : true,
-        templateUrl : 'components/user/user.view.html',
+        templateUrl : 'components/user/user.html',
         data : {
           authorizedRoles: [USER_ROLES.tutor]
         }
       })
       .state('user.profile', {
         url: '/profile',
-        templateUrl: 'components/user/profile.view.html',
+        templateUrl: 'components/user/profile.html',
         controller : 'ProfileController'
       })
       .state('user.messages', {
         url : '/messages',
-        templateUrl : 'components/user/messages.view.html',
+        templateUrl : 'components/user/messages.html',
         controller : 'MessageController'
       })
       .state('404', {

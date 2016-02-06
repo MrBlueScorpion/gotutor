@@ -594,7 +594,15 @@ p {
     /*hyphens: auto;*/
     margin-bottom: 20px;
 }
-
+ul, ol {
+    padding-left: 0;
+    list-style: none;
+    margin-bottom: 20px;
+}
+ul ul, ol ol,
+ul ol, ol ul {
+    padding-left: 20px;
+}
 .dropcap {
     display: block;
     float: left;

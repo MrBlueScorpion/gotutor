@@ -43,10 +43,10 @@
         <div class="top-line">
             <div class="container">
                 <ul class="user-menu">
-                    <li ng-hide="isLoggedIn" class="ng-cloak"><a ui-sref="register"><i class="glyphicon glyphicon-tag"></i> Register Now</a></li>
-                    <li ng-hide="isLoggedIn" class="ng-cloak"><a ui-sref="login"><i class="glyphicon glyphicon-log-in"></i> Login</a></li>
+                    <li ng-hide="isLoggedIn" class="ng-cloak"><a ui-sref="register"><i class="glyphicon glyphicon-tag"></i> Become A Tutor</a></li>
+                    <li ng-hide="isLoggedIn" class="ng-cloak"><a ui-sref="login"><i class="glyphicon glyphicon-log-in"></i> Tutor Login</a></li>
                     <li ng-show="isLoggedIn" class="ng-cloak"></i> Welcome, {{currentUser.displayName}}</li>
-                    <li ng-show="isLoggedIn" class="ng-cloak"><a ui-sref="login" ng-click="auth.logoutUser()"><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
+                    <li ng-show="isLoggedIn" class="ng-cloak"><a ui-sref="login" ng-click="auth.logoutUser()"><i class="glyphicon glyphicon-log-out"></i> Tutor Logout</a></li>
                 </ul>
             </div>
         </div>
@@ -154,12 +154,12 @@
     "use strict";
     jQuery(document).ready(function () {
         theme.init();
-        theme.initMainSlider();
+        //theme.initMainSlider();
        // theme.initCountDown();
-        theme.initPartnerSlider();
-        theme.initTestimonials();
-        theme.initCorouselSlider4();
-        theme.initCorouselSlider3();
+//        theme.initPartnerSlider();
+//        theme.initTestimonials();
+//        theme.initCorouselSlider4();
+//        theme.initCorouselSlider3();
        // theme.initGoogleMap();
     });
 //    jQuery(window).load(function () {
