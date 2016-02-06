@@ -164,7 +164,7 @@ module.exports = ['$scope', '$stateParams', '$state', 'TutorApiService', functio
           //generate pagination
           $scope.updatePagination($scope.mainQuery.page, $scope.totalCount);
           //generate filters
-          $scope.generateFilterAlt();
+          //$scope.generateFilterAlt();
         } else {
           //panic
           //console.log(data);

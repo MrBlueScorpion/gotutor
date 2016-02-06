@@ -28,11 +28,11 @@ angular.element().ready(function() {
   angular.bootstrap(document, ['app']);
 });
 
-$(document).ready(function() {
-    $('#tutors-filter input').change(function(){
-        $('#tutors-filter').submit();
-    })
-});
+//$(document).ready(function() {
+//    $('#tutors-filter input').change(function(){
+//        $('#tutors-filter').submit();
+//    })
+//});
 
 require('./theme.js');
 

@@ -17,13 +17,28 @@ module.exports = ['$scope', 'TutorApiService', 'toastr', '$http', '$state',
   };
 
   $scope.searchTutors = function() {
+    var query = {};
 
-    var query = {
-      geohash: $scope.location.geohash
+    if (angular.isDefined($scope.location)) {
+      if (angular.isObject($scope.location)) {
+        query.geohash = $scope.location.geohash;
+      } else {
+
+      }
+    }
+
+    if (angular.isDefined($scope.subject)) {
+      if (angular.isObject($scope.subject)) {
+        query.subjectIds = $scope.subject;
+      } else {
+        query.subject = $scope.subject;
+      }
+    }
+    console.log(query);
+
       //location: $scope.location,
       //locationIds: $scope.location.id
-    };
-    console.log($scope.location);
+
     $state.go('tutors', query);
   }
 

@@ -22,6 +22,9 @@ var TutorApiService = require('./shared/services/api/tutor.service'),
 
 var SliderDirective = require('./shared/directives/slider.directive');
 
+var HighlightFilter = require('./shared/filters/highlight.filter'),
+    Nl2brFilter = require('./shared/filters/nl2br.filter');
+
 var app = angular.module('app', [
   'ui.router',
   'ngAnimate',
@@ -39,8 +42,10 @@ var app = angular.module('app', [
 ]);
 
 app.service('TutorApiService', TutorApiService)
-    .service('AuthService', AuthService)
-    .directive('slider', SliderDirective);
+   .service('AuthService', AuthService)
+   .directive('slider', SliderDirective)
+   .filter('highlight', HighlightFilter)
+   .filter('nl2br', Nl2brFilter);
 
 app.constant('AUTH_EVENTS', {
   loginSuccess : 'auth-login-success',
@@ -55,15 +60,6 @@ app.constant('AUTH_EVENTS', {
   admin: 'admin',
   tutor: 'tutor',
   user: 'user'
-});
-
-app.filter('nl2br', function($sce) {
-  return function(msg, is_xhtml) {
-    is_xhtml = is_xhtml || true;
-    var breakTag = (is_xhtml) ? '<br />' : '<br>';
-    msg = (msg + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ breakTag +'$2');
-    return $sce.trustAsHtml(msg);
-  }
 });
 
 app.factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS) {
