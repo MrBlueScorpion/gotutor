@@ -3,7 +3,7 @@
 var utility = require('../../helpers/utility');
 
 module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', function ($q, $http, $rootScope, AUTH_EVENTS) {
-  var _isLoggedIn = false;
+  var _isLoggedIn;
   var currentUser = null;
 
   /**
@@ -21,10 +21,12 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', function ($q, $htt
       password: password
     }).then(function (response) {
       _isLoggedIn = true;
-      deferred.resolve(response.data);
+      currentUser = response.data;
+      deferred.resolve(currentUser);
       $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
     }, function (response) {
       _isLoggedIn = false;
+      currentUser = null
       deferred.resolve({error: response.data.displayMessage})
     });
 
@@ -37,19 +39,26 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', function ($q, $htt
    */
   var isAuthenticated = function() {
     var deferred = $q.defer();
-    var url = utility.generateApiUrl('users/me');
+    
+    if (angular.isDefined(_isLoggedIn)) {
+      console.log(_isLoggedIn, currentUser)
+      deferred.resolve(_isLoggedIn && currentUser);
+    } else {
+      var url = utility.generateApiUrl('users/me');
 
-    $http.get(url).then(function(response) {
-      deferred.resolve(response.data);
-      _isLoggedIn = true;
-    }, function() {
-      _isLoggedIn = false;
-      deferred.resolve(_isLoggedIn);
-    });
-
+      $http.get(url).then(function(response) {
+        deferred.resolve(response.data);
+        _isLoggedIn = true;
+      }, function() {
+        _isLoggedIn = false;
+        deferred.resolve(_isLoggedIn);
+      });
+    }
+    
     return deferred.promise;
   };
 
+/*
   var isAuthorized = function (authorizedRoles) {
     if (!angular.isArray(authorizedRoles)) {
       authorizedRoles = [authorizedRoles];
@@ -57,7 +66,7 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', function ($q, $htt
     //return (this.isAuthenticated() &&
     //authorizedRoles.indexOf(Session.userRole) !== -1);
   };
-
+*/
   /**
    * User log in
    *
@@ -78,10 +87,12 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', function ($q, $htt
       }
     }).then(function(response) {
       _isLoggedIn = true;
-      deferred.resolve(response.data);
+      currentUser = response.data;
+      deferred.resolve(currentUser);
       $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
     }, function(response) {
       _isLoggedIn = false;
+      currentUser = null;
       deferred.resolve({error: 'Unexpected error happened!'});
       $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
     });
@@ -99,13 +110,9 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', function ($q, $htt
 
     $http.get(url).then(function(response) {
       _isLoggedIn = false;
+      currentUser = null;
       $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
-    }, function(response) {
-      _isLoggedIn = true;
     });
-
-
-    return _isLoggedIn;
   };
 
 
@@ -115,7 +122,7 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', function ($q, $htt
     isAuthenticated : isAuthenticated,
     loginUser : loginUser,
     logoutUser : logoutUser,
-    isAuthorized : isAuthorized,
+    //isAuthorized : isAuthorized,
     //getTutorProfile: getTutorProfile
   }
 
