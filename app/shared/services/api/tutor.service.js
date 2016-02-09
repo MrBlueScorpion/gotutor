@@ -134,7 +134,7 @@ module.exports = ['$q', '$http', function ($q, $http) {
 
     $http.delete(url, {params: {ids: messageIds}})
       .then(function(response) {
-        deferred.resolve({success: 'Enquiry deleted successfully'})
+        deferred.resolve({success: 'Enquiry deleted'})
       });
 
     return deferred.promise;
@@ -168,7 +168,37 @@ module.exports = ['$q', '$http', function ($q, $http) {
       url : url,
       data : tutor
     }).then(function(response) {
-      deferred.resolve({'success' : 'Your profile updated successfully'});
+      deferred.resolve({success : 'Profile updated'});
+    });
+
+    return deferred.promise;
+  };
+
+  var sendFeedback = function(feedback) {
+    var deferred = $q.defer();
+    var url = utility.generateApiUrl('feedback');
+
+    $http({
+      method : 'POST',
+      url: url,
+      data: feedback
+    }).then(function(response) {
+      deferred.resolve({success: 'Feedback sent'})
+    });
+
+    return deferred.promise;
+  };
+
+  var claimTutor = function(tutor) {
+    var deferred = $q.defer();
+    var url = utility.generateApiUrl('tutors/claim');
+
+    $http({
+      method: 'POST',
+      url: url,
+      data: tutor
+    }).then(function(response) {
+      deferred.resolve(response.data);
     });
 
     return deferred.promise;
@@ -184,6 +214,8 @@ module.exports = ['$q', '$http', function ($q, $http) {
     getMessages : getMessages,
     deleteMessages : deleteMessages,
     getTutorProfile : getTutorProfile,
-    updateTutorProfile : updateTutorProfile
+    updateTutorProfile : updateTutorProfile,
+    sendFeedback : sendFeedback,
+    claimTutor : claimTutor
   }
 }];

@@ -3,8 +3,7 @@
 var utility = require('../../helpers/utility');
 
 module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', function ($q, $http, $rootScope, AUTH_EVENTS) {
-  var _isLoggedIn;
-  var currentUser = null;
+  var currentUser;
 
   /**
    * Register a user
@@ -20,14 +19,12 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', function ($q, $htt
       email: email,
       password: password
     }).then(function (response) {
-      _isLoggedIn = true;
       currentUser = response.data;
-      deferred.resolve(currentUser);
+      deferred.resolve({user: currentUser});
       $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
     }, function (response) {
-      _isLoggedIn = false;
-      currentUser = null
-      deferred.resolve({error: response.data.displayMessage})
+      currentUser = null;
+      deferred.resolve({error: response.data.displayMessage, user: currentUser})
     });
 
     return deferred.promise;
@@ -40,18 +37,16 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', function ($q, $htt
   var isAuthenticated = function() {
     var deferred = $q.defer();
     
-    if (angular.isDefined(_isLoggedIn)) {
-      console.log(_isLoggedIn, currentUser)
-      deferred.resolve(_isLoggedIn && currentUser);
+    if (currentUser) {
+      deferred.resolve({user: currentUser});
     } else {
-      var url = utility.generateApiUrl('users/me');
 
+      var url = utility.generateApiUrl('users/me');
       $http.get(url).then(function(response) {
-        deferred.resolve(response.data);
-        _isLoggedIn = true;
+        currentUser = response.data;
+        deferred.resolve({user: currentUser});
       }, function() {
-        _isLoggedIn = false;
-        deferred.resolve(_isLoggedIn);
+        deferred.resolve({user: null});
       });
     }
     
@@ -86,12 +81,12 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', function ($q, $htt
         password : password
       }
     }).then(function(response) {
-      _isLoggedIn = true;
+
       currentUser = response.data;
-      deferred.resolve(currentUser);
+      console.log(currentUser);
+      deferred.resolve({user: currentUser});
       $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
     }, function(response) {
-      _isLoggedIn = false;
       currentUser = null;
       deferred.resolve({error: 'Unexpected error happened!'});
       $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
@@ -109,7 +104,6 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', function ($q, $htt
     var url = utility.generateApiUrl('users/logout');
 
     $http.get(url).then(function(response) {
-      _isLoggedIn = false;
       currentUser = null;
       $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
     });
@@ -121,7 +115,7 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', function ($q, $htt
     registerUser : registerUser,
     isAuthenticated : isAuthenticated,
     loginUser : loginUser,
-    logoutUser : logoutUser,
+    logoutUser : logoutUser
     //isAuthorized : isAuthorized,
     //getTutorProfile: getTutorProfile
   }

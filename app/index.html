@@ -43,10 +43,10 @@
         <div class="top-line">
             <div class="container">
                 <ul class="user-menu">
-                    <li ng-hide="isLoggedIn" class="ng-cloak"><a ui-sref="register"><i class="glyphicon glyphicon-tag"></i> Become A Tutor</a></li>
-                    <li ng-hide="isLoggedIn" class="ng-cloak"><a ui-sref="login"><i class="glyphicon glyphicon-log-in"></i> Tutor Login</a></li>
-                    <li ng-show="isLoggedIn" class="ng-cloak"></i> Welcome, {{currentUser.displayName}}</li>
-                    <li ng-show="isLoggedIn" class="ng-cloak"><a ui-sref="login" ng-click="auth.logoutUser()"><i class="glyphicon glyphicon-log-out"></i> Tutor Logout</a></li>
+                    <li ng-hide="currentUser" class="ng-cloak"><a ui-sref="register"><i class="glyphicon glyphicon-tag"></i> Become A Tutor</a></li>
+                    <li ng-hide="currentUser" class="ng-cloak"><a ui-sref="login"><i class="glyphicon glyphicon-log-in"></i> Tutor Login</a></li>
+                    <li ng-show="currentUser" class="ng-cloak"></i> Welcome, {{currentUser.displayName}}</li>
+                    <li ng-show="currentUser" class="ng-cloak"><a ui-sref="login" ng-click="auth.logoutUser()"><i class="glyphicon glyphicon-log-out"></i> Tutor Logout</a></li>
                 </ul>
             </div>
         </div>
@@ -86,7 +86,7 @@
                         <li ui-sref-active="active">
                             <a ui-sref="about-us">About Us</a>
                         </li>
-                        <li ng-if="isLoggedIn">
+                        <li ng-if="currentUser">
                             <a href="#" class="sf-with-ul ng-cloak">My Account</a>
                             <ul>
                                 <li><a ui-sref="user.profile"><i class="glyphicon glyphicon-user"></i> Profile</a></li>
@@ -119,7 +119,6 @@
                         <ul class="footer-menu">
                             <li><a ui-sref="about-us" >About</a></li>
                             <li><a ui-sref="tutors" >Tutors</a></li>
-                            <li><a href="#">Privacy</a></li>
                             <li>All Rights Reserved</li>
                         </ul>
                     </div>

@@ -91,7 +91,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
       })
       .state('about-us', {
         url : '/about-us',
-        templateUrl: 'components/about/about.html'
+        templateUrl: 'components/about/about.html',
+        controller: 'AboutController'
       })
       .state('tutor', {
         url: '/tutor/:tutorId',
@@ -190,18 +191,15 @@ app.run(['$rootScope', '$state', 'AuthService', 'toastr', 'AUTH_EVENTS',
 
     $rootScope.$on(AUTH_EVENTS.notAuthenticated, function(event) {
      // AuthService.logout();
-      $rootScope.isLoggedIn = false;
       $rootScope.currentUser = null;
 
     });
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-
-      AuthService.isAuthenticated().then(function(user) {
+      AuthService.isAuthenticated().then(function(response) {
         $rootScope.auth = AuthService;
-        if (angular.isDefined(user.id)) {
-          $rootScope.isLoggedIn = true;
-          $rootScope.currentUser = user;
+        if (response.user) {
+          $rootScope.currentUser = response.user;
           $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
         } else {
           if(('data' in toState) && toState.data.authorizedRoles) {

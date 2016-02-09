@@ -3,7 +3,6 @@
 module.exports = ['$scope', 'TutorApiService', 'toastr', function($scope, TutorApiService, toastr) {
   $scope.messages = [];
   TutorApiService.getMessages().then(function(response) {
-    console.log(response);
     $scope.messages = response;
   });
 
@@ -45,6 +44,8 @@ module.exports = ['$scope', 'TutorApiService', 'toastr', function($scope, TutorA
       return message.id;
     });
     TutorApiService.deleteMessages(messageIds).then(function(response) {
+      console.log($scope.messages);
+      console.log($scope.checkedMessages);
       $scope.messages = _.difference($scope.messages, $scope.checkedMessages);
       if(!_.isUndefined(response.success)) {
         toastr.success(response.success)

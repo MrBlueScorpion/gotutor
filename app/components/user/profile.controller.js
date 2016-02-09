@@ -1,6 +1,7 @@
 'use strict';
 
-module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', function($scope, toastr, $http, TutorApiService){
+module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
+  function($scope, toastr, $http, TutorApiService, AuthService){
  $scope.tutor = {
     name : null,
     gender : null,
@@ -13,17 +14,21 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', function($scop
   };
   $scope.locationEditable = false;
   $scope.subjectEditable = false;
-  TutorApiService.getTutorProfile().then(function(response) {
-    if (angular.isDefined(response.error)) {
-      toastr.info(response.error);
 
-    } else {
-
-      $scope.tutor = response;
-      $scope.tutor.locations = [];
-      $scope.rate = [$scope.tutor.rate.min, $scope.tutor.rate.max];
+  AuthService.isAuthenticated().then(function(response) {
+    if (response.user) {
+      TutorApiService.getTutorProfile().then(function(response) {
+        if (angular.isDefined(response.error)) {
+          toastr.info(response.error);
+        } else {
+          $scope.tutor = response;
+          $scope.tutor.locations = [];
+          $scope.rate = [$scope.tutor.rate.min, $scope.tutor.rate.max];
+        }
+      });
     }
   });
+
   $scope.genderOptions = ['Male', 'Female'];
 
   $scope.rateOptions = {

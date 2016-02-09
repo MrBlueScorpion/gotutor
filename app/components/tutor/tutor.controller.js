@@ -14,9 +14,7 @@ module.exports = ['$scope', '$stateParams', 'tutorId', 'TutorApiService', 'toast
 
   $scope.sendEnquiry = function() {
     $scope.enquiry.tutorId = tutorId;
-    console.log($scope.enquiry);
     TutorApiService.sendMessage($scope.enquiry).then(function(response) {
-      console.log(response);
       if (!_.isUndefined(response.success)) {
         toastr.success(response.success);
         $scope.enquiry = {};

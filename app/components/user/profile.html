@@ -45,10 +45,14 @@
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Rate: </label>
-                    <div class="col-md-7">
+                    <div class="col-md-1">
+                        $15/h
+                    </div>
+                    <div class="col-md-5">
                         <slider ng-model="rate" min="rateOptions.min" step="rateOptions.step" max="rateOptions.max"
                                 value="rateOptions.value" range="true" formatter="formatRate(rate)"></slider>
                     </div>
+                    <div class="col-md-1">$100/h</div>
                 </div>
 
                 <div class="form-group">

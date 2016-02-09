@@ -40,6 +40,7 @@
 
 
 
+
 <section class="page-section">
     <div class="container">
 
@@ -111,5 +112,63 @@
 
             </div>
         </div>
+    </div>
+</section>
+
+<section class="page-section">
+    <div class="container">
+        <h1 class="section-title">
+            <span data-animation="flipInY" data-animation-delay="100" class="icon-inner"><span class="fa-stack"><i class="fa rhex fa-stack-2x"></i><i class="fa fa-plus fa-stack-1x"></i></span></span>
+            <span data-animation="fadeInRight" data-animation-delay="100" class="title-inner">Contact Us<small> / tell us your feedback</small></span>
+        </h1>
+
+        <form class="row" name="feedbackForm" ng-submit="sendFeedback()" novalidate>
+        <div class="row">
+            <div class="col-sm-12 af-outer af-required">
+                <div class="form-group af-inner with-icon">
+                    <i class="fa fa-globe"></i>
+                    <input
+                            type="text" name="title" placeholder="Title"
+                            ng-model="feedback.title" required="required"
+                            class="form-control placeholder"/>
+                </div>
+            </div>
+
+            <div class="col-sm-12 af-outer af-required">
+                <div class="form-group af-inner with-icon">
+                    <i class="fa fa-user"></i>
+                    <input
+                            type="text" name="name" placeholder="Name"
+                            ng-model="feedback.name" required="required"
+                            class="form-control placeholder"/>
+                </div>
+            </div>
+
+            <div class="col-sm-12 af-outer af-required">
+                <div class="form-group af-inner with-icon">
+                    <i class="fa fa-globe"></i>
+                    <input
+                            type="text" name="contact"  placeholder="Contact"
+                            ng-model="feedback.contact" required="required"
+                            class="form-control placeholder"/>
+                </div>
+            </div>
+
+            <div class="col-sm-12 af-outer af-required">
+                <div class="form-group af-inner">
+                    <textarea
+                        name="message" id="input-message" placeholder="Your Message..." rows="6" cols="50"
+                        ng-model="feedback.message" required="required"
+                        class="form-control placeholder"></textarea>
+                </div>
+            </div>
+
+            <div class="col-sm-12  text-center">
+                <div class="form-group af-inner">
+                    <input type="submit" ng-disabled="feedbackForm.$invalid" class="form-button form-button-submit btn btn-theme btn-theme-lg btn-theme-transparent"  value="Send" />
+                </div>
+            </div>
+        </div>
+        </form>
     </div>
 </section>
