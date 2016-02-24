@@ -124,8 +124,8 @@
 
         <form class="row" name="feedbackForm" ng-submit="sendFeedback()" novalidate>
         <div class="row">
-            <div class="col-sm-12 af-outer af-required">
-                <div class="form-group af-inner with-icon">
+            <div class="col-sm-12">
+                <div class="form-group with-icon">
                     <i class="fa fa-globe"></i>
                     <input
                             type="text" name="title" placeholder="Title"
@@ -134,8 +134,8 @@
                 </div>
             </div>
 
-            <div class="col-sm-12 af-outer af-required">
-                <div class="form-group af-inner with-icon">
+            <div class="col-sm-12">
+                <div class="form-group with-icon">
                     <i class="fa fa-user"></i>
                     <input
                             type="text" name="name" placeholder="Name"
@@ -144,8 +144,8 @@
                 </div>
             </div>
 
-            <div class="col-sm-12 af-outer af-required">
-                <div class="form-group af-inner with-icon">
+            <div class="col-sm-12">
+                <div class="form-group with-icon">
                     <i class="fa fa-globe"></i>
                     <input
                             type="text" name="contact"  placeholder="Contact"
@@ -154,8 +154,8 @@
                 </div>
             </div>
 
-            <div class="col-sm-12 af-outer af-required">
-                <div class="form-group af-inner">
+            <div class="col-sm-12">
+                <div class="form-group">
                     <textarea
                         name="message" id="input-message" placeholder="Your Message..." rows="6" cols="50"
                         ng-model="feedback.message" required="required"
@@ -163,8 +163,8 @@
                 </div>
             </div>
 
-            <div class="col-sm-12  text-center">
-                <div class="form-group af-inner">
+            <div class="col-sm-12 text-center">
+                <div class="form-group">
                     <input type="submit" ng-disabled="feedbackForm.$invalid" class="form-button form-button-submit btn btn-theme btn-theme-lg btn-theme-transparent"  value="Send" />
                 </div>
             </div>

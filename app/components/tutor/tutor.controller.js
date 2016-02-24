@@ -3,7 +3,7 @@ module.exports = ['$scope', '$stateParams', 'tutorId', 'TutorApiService', 'toast
 
   TutorApiService.getTutorById(tutorId).then(function(tutor) {
     if (!_.isUndefined(tutor.error)) {
-      //$state.go('tutors');
+      $scope.tutor = null;
     } else {
       $scope.tutor = tutor;
       $scope.enquiry = {};
@@ -20,6 +20,11 @@ module.exports = ['$scope', '$stateParams', 'tutorId', 'TutorApiService', 'toast
         $scope.enquiry = {};
       }
     });
+  };
+
+  $scope.claimTutor = function(claim) {
+    console.log(claim);
+
   }
 
 

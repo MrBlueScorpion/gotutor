@@ -40,6 +40,38 @@
                     <p class="text-justify" ng-bind-html="tutor.description | nl2br"></p>
                 </div>
             </div>
+
+            <hr class="page-divider line large"/>
+
+            <div class="row">
+                <div class="col-lg-11">
+                    <h3 class="section-title"><span class="title-inner">How to claim?</span></h3>
+                    <p>If this tutor profile matches yours, you can claim this tutor and register your account by filling the tutor's last name:</p>
+
+                    <form class="form-horizontal" ng-submit="claimTutor(claim)" name="tutorClaim">
+                        <div class="row">
+                            <div class="col-lg-12">
+                        <label class="radio-inline">
+                            <input type="radio" name="claimOption" value="lastName" ng-model="claim.option" required> Last Name
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="claimOption" value="email" ng-model="claim.option" required> Email
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="claimOption"  value="contact" ng-model="claim.option" required> Contact Number
+                        </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control"  placeholder="Last Name/Email/Contact Number" ng-model="claim.value" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-theme btn-theme-md btn-theme-transparent" ng-disabled="tutorClaim.$invalid">Claim this tutor</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
             <!-- -->
             <hr class="page-divider line large"/>
             <!-- -->
@@ -106,32 +138,33 @@
             </form>
 
         </section>
+
         <!-- /Content -->
 
         <hr class="page-divider transparent visible-xs"/>
 
-        <!-- Sidebar -->
-        <aside id="sidebar" class="sidebar col-sm-4 col-md-3">
+        <!--&lt;!&ndash; Sidebar &ndash;&gt;-->
+        <!--<aside id="sidebar" class="sidebar col-sm-4 col-md-3">-->
 
-            <div class="widget google-map-widget">
-                <!-- Google map -->
-                <div class="google-map1">
-                    <div style="background: grey"></div>
-                </div>
+            <!--<div class="widget google-map-widget">-->
+                <!--&lt;!&ndash; Google map &ndash;&gt;-->
+                <!--<div class="google-map1">-->
+                    <!--<div style="background: grey"></div>-->
+                <!--</div>-->
 
-            </div>
+            <!--</div>-->
 
-<!--            <div class="widget google-map-widget">
-                &lt;!&ndash; Google map &ndash;&gt;
-                <div class="google-map1">
-                    <div id="map-canvas1" style="background: grey"></div>
-                </div>
-                &lt;!&ndash; /Google map &ndash;&gt;
-                <a href="#" class="link"><i class="fa fa-map-marker"></i> ISTANBUL, TURKEY</a>
-            </div>-->
+<!--&lt;!&ndash;            <div class="widget google-map-widget">-->
+                <!--&lt;!&ndash; Google map &ndash;&gt;-->
+                <!--<div class="google-map1">-->
+                    <!--<div id="map-canvas1" style="background: grey"></div>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; /Google map &ndash;&gt;-->
+                <!--<a href="#" class="link"><i class="fa fa-map-marker"></i> ISTANBUL, TURKEY</a>-->
+            <!--</div>&ndash;&gt;-->
 
-        </aside>
-        <!-- /Sidebar -->
+        <!--</aside>-->
+        <!--&lt;!&ndash; /Sidebar &ndash;&gt;-->
     </div>
 </section>
 <!-- /PAGE -->

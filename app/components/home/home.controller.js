@@ -23,7 +23,7 @@ module.exports = ['$scope', 'TutorApiService', 'toastr', '$http', '$state',
       if (angular.isObject($scope.location)) {
         query.geohash = $scope.location.geohash;
       } else {
-
+        query.location = $scope.location;
       }
     }
 
