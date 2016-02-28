@@ -150,56 +150,28 @@
 <!--[if lt IE 9]><script src="/assets/plugins/jquery/jquery-1.11.1.min.js"></script><![endif]-->
 
 <script type="text/javascript">
-    "use strict";
-    jQuery(document).ready(function () {
-        theme.init();
-        //theme.initMainSlider();
-       // theme.initCountDown();
-//        theme.initPartnerSlider();
-//        theme.initTestimonials();
-//        theme.initCorouselSlider4();
-//        theme.initCorouselSlider3();
-       // theme.initGoogleMap();
-    });
-//    jQuery(window).load(function () {
-//       theme.initAnimation();
-//    });
+  "use strict";
+  jQuery(document).ready(function () {
+      theme.init();
+  });
 
-//    jQuery(window).load(function () {
-//        jQuery('body').scrollspy({offset: 100, target: '.navigation'});
-//    });
-//    jQuery(window).load(function () {
-//        jQuery('body').scrollspy('refresh');
-//    });
-//    jQuery(window).resize(function () {
-//        jQuery('body').scrollspy('refresh');
-//    });
+  jQuery(document).ready(function () {
+      theme.onResize();
+  });
+  jQuery(window).load(function () {
+      theme.onResize();
+  });
+  jQuery(window).resize(function () {
+      theme.onResize();
+  });
 
-    jQuery(document).ready(function () {
-        theme.onResize();
-    });
-    jQuery(window).load(function () {
-        theme.onResize();
-    });
-    jQuery(window).resize(function () {
-        theme.onResize();
-    });
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-    jQuery(window).load(function () {
-//        if (location.hash != '') {
-//            var hash = '#' + window.location.hash.substr(1);
-//            if (hash.length) {
-//                jQuery('html,body').delay(0).animate({
-//                    scrollTop: jQuery(hash).offset().top - 44 + 'px'
-//                }, {
-//                    duration: 1200,
-//                    easing: "easeInOutExpo"
-//                });
-//            }
-//        }
-    });
-
+  ga('create', 'UA-74241203-1', 'auto');
+  ga('send', 'pageview');
 </script>
-
 </body>
 </html>
