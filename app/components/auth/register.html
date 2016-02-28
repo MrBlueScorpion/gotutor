@@ -79,7 +79,9 @@
                         </div>
                         <div class="col-sm-6 col-sm-offset-3">
                             <div class="form-group">
-                            <checkbox ng-model="privacy"></checkbox> I accept the <a href="#" ng-click="viewTerms('lg')">terms and conditions</a>.
+                              <small>
+                            Upon registeration you agree to accept the <a href="#" ng-click="viewTerms('lg')">terms and conditions</a>.
+                              </small>
                             </div>
                         </div>
 
@@ -88,7 +90,7 @@
                                 <input type="submit" name="submit"
                                        class="form-button form-button-submit btn btn-theme btn-theme-md btn-theme-transparent btn-block"
                                        id="submit_btn" value="Register"
-                                ng-disabled="registerForm.$invalid || !privacy"/>
+                                ng-disabled="registerForm.$invalid"/>
                             </div>
                         </div>
                     </div>

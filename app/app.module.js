@@ -140,7 +140,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
     $urlRouterProvider.otherwise('/');
 
     // use the HTML5 History API
-    $locationProvider.html5Mode(true);
+    $locationProvider.html5Mode(true).hashPrefix('!');
 
     //angular toast configuration
     angular.extend(toastrConfig, {
