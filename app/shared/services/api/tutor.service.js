@@ -199,6 +199,15 @@ module.exports = ['$q', '$http', function ($q, $http) {
       data: tutor
     }).then(function(response) {
       deferred.resolve(response.data);
+    },function(response) {
+      if (response.status == 401) {
+        deferred.resolve({error: 'Tutor details incorrect'})
+      };
+
+      if (response.status == 500) {
+        deferred.resolve({error: 'System error, please try again'})
+      };
+
     });
 
     return deferred.promise;

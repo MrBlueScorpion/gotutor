@@ -22,7 +22,7 @@
                                                                placeholder="FIND SUBJECT"
                                                                name="subject"
                                                                ng-model="subject" required="required"
-                                                               uib-typeahead="subject for subject in getSubjects($viewValue)"
+                                                               uib-typeahead="subject as subject.text for subject in getSubjects($viewValue)"
                                                                autocomplete="off"/>
                                                     </div>
                                                 </div>

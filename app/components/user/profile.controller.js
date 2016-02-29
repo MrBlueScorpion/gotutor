@@ -39,7 +39,7 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
 
   $scope.formatRate = function(value) {
     if (!_.isUndefined(value))
-    return 'From $' + value[0] + '/hr  to  $' + value[1] + '/hr';
+    return '$' + value[0] + '/hr  to  $' + value[1] + '/hr';
   };
 
 
@@ -51,7 +51,7 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
     var duplicate = false;
     _.each($scope.tutor[modal], function(location) {
       if (location.id == option.id) {
-        toastr.error(option.text + ' already exits in the your list');
+        toastr.error(option.text + ' already exits in the your ' + modal + ' list');
         duplicate = true;
       }
     });
@@ -98,6 +98,12 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
   $scope.getLocations = function(location) {
     return TutorApiService.getLocations(location).then(function(locations) {
       return locations;
+    })
+  };
+
+    $scope.getSubjects = function(subject) {
+    return TutorApiService.getSubjects(subject).then(function(subjects) {
+      return subjects;
     })
   };
 

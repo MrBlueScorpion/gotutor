@@ -23,8 +23,16 @@ module.exports = ['$scope', '$stateParams', 'tutorId', 'TutorApiService', 'toast
   };
 
   $scope.claimTutor = function(claim) {
-    console.log(claim);
-
+    var data = {};
+    data.tutorId = tutorId;
+    data[claim.option] = claim.value;
+    TutorApiService.claimTutor(data).then(function(response) {
+     if (!_.isUndefined(response.error)) {
+        toastr.error(response.error);
+     } else {
+      $scope.link = response.link;
+     }
+    });
   }
 
 

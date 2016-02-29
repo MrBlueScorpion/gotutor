@@ -1,6 +1,7 @@
 <section class="page-section image breadcrumbs overlay">
     <div class="container">
-        <h1>TUTOR DETAIL PAGE</h1>
+        <h1 ng-if="tutor">TUTOR DETAIL PAGE</h1>
+        <h1 ng-if="!tutor">TUTOR NOT FOUND</h1>
         <ul class="breadcrumb">
             <li><a ui-sref="home"></a>Home</li>
             <li><a ui-sref="tutors"></a>Tutors</li>
@@ -15,7 +16,7 @@
     <div class="container">
 
         <!-- Content -->
-        <section id="content" class="content col-sm-12 col-md-8 col-lg-9">
+        <section id="content" class="content col-sm-12 col-md-8 col-lg-9" ng-if="tutor">
 
             <h1 class="section-title">
                 <span class="icon-inner"><span class="fa-stack"><i class="fa rhex fa-stack-2x"></i><i class="fa fa-user fa-stack-1x"></i></span></span>
@@ -25,11 +26,11 @@
             <div class="col-lg-10">
                <table class="table">
                    <tbody>
-                    <tr><td>Gender:</td><td>{{tutor.gender}}</td></tr>
-                    <tr><td>Rate:</td><td>${{tutor.rate.min}} - ${{tutor.rate.max}} per hour</td></tr>
+                    <tr ng-if="tutor.gender"><td>Gender:</td><td>{{tutor.gender}}</td></tr>
+                    <tr ng-if="tutor.rate.length"><td>Rate:</td><td>${{tutor.rate.min}} - ${{tutor.rate.max}} per hour</td></tr>
                     <tr ng-if="tutor.contact.email.length > 0"><td>Email:</td><td>{{tutor.contact.email.join(', ')}}</td></tr>
-                    <tr><td>Location:</td><td>Melbourne</td></tr>
-                    <tr><td>Subjects:</td><td>{{tutor.subjects.join(', ')}}</td></tr>
+                    <tr ng-if="tutor.locations"><td>Location:</td><td>{{tutor.locations.join(', ')}}</td></tr>
+                    <tr ng-if="tutor.subjects"><td>Subjects:</td><td>{{tutor.subjects.join(', ')}}</td></tr>
                    </tbody>
                </table>
             </div>
@@ -41,37 +42,7 @@
                 </div>
             </div>
 
-            <hr class="page-divider line large"/>
 
-            <div class="row">
-                <div class="col-lg-11">
-                    <h3 class="section-title"><span class="title-inner">How to claim?</span></h3>
-                    <p>If this tutor profile matches yours, you can claim this tutor and register your account by filling the tutor's last name:</p>
-
-                    <form class="form-horizontal" ng-submit="claimTutor(claim)" name="tutorClaim">
-                        <div class="row">
-                            <div class="col-lg-12">
-                        <label class="radio-inline">
-                            <input type="radio" name="claimOption" value="lastName" ng-model="claim.option" required> Last Name
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" name="claimOption" value="email" ng-model="claim.option" required> Email
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" name="claimOption"  value="contact" ng-model="claim.option" required> Contact Number
-                        </label>
-                            </div>
-                        </div>
-                        <div class="row">
-                        <div class="col-lg-6">
-                            <input type="text" class="form-control"  placeholder="Last Name/Email/Contact Number" ng-model="claim.value" required>
-                        </div>
-
-                        <button type="submit" class="btn btn-theme btn-theme-md btn-theme-transparent" ng-disabled="tutorClaim.$invalid">Claim this tutor</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
             <!-- -->
             <hr class="page-divider line large"/>
             <!-- -->
@@ -137,11 +108,59 @@
                 </div>
             </form>
 
+
+        <hr class="page-divider line large"/>
+
+        <div class="row">
+            <div class="col-lg-11">
+
+
+                <a data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    <h3 class="section-title"><span class="title-inner">How to claim?</span></h3>
+                </a>
+                
+                <div class="collapse" id="collapseExample">
+                    <div class="well">
+                        <p>If this tutor profile matches yours, you can claim this tutor and register your account by filling the tutor's last name:</p>
+                <form class="" ng-submit="claimTutor(claim)" name="tutorClaim">
+                    <div class="row">
+                        <div class="col-lg-12">
+
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="claimOption" value="fullname" ng-model="claim.option" checked＝"checked" required>
+                                    Full Name
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="claimOption" value="email" ng-model="claim.option" required>
+                                    Email    
+                                </label>
+                            </div>
+                            <div class="radio disabled">
+                                <label>
+                                    <input type="radio" name="claimOption" value="phone" ng-model="claim.option" required>
+                                    Contact Number
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control"  placeholder="Full Name/Email/Contact Number" ng-model="claim.value" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-theme btn-theme-md btn-theme-transparent" ng-disabled="tutorClaim.$invalid">Claim this tutor</button>
+                </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         </section>
 
         <!-- /Content -->
 
-        <hr class="page-divider transparent visible-xs"/>
 
         <!--&lt;!&ndash; Sidebar &ndash;&gt;-->
         <!--<aside id="sidebar" class="sidebar col-sm-4 col-md-3">-->

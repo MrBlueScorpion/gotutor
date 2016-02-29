@@ -17,7 +17,7 @@
                     <label for="name" class="col-md-2 col-lg-2 control-label">Name: </label>
                     <div class="col-md-9 col-lg-9">
                         <input type="text" name="name" id="name" placeholder="Your Name"
-                               data-toggle="tooltip" title="Your name is required"
+                               title="Your name is required"
                                ng-model="tutor.name" required
                                class="form-control placeholder"/>
                     </div>
@@ -27,7 +27,7 @@
                     <label for="phone" class="col-md-2 col-lg-2 control-label">Contact: </label>
                     <div class="col-md-9 col-lg-9">
                         <input type="text" name="phone" id="phone" placeholder="Your Phone"
-                               data-toggle="tooltip" title="Your Phone is required"
+                               title="Your Phone is required"
                                ng-model="tutor.phone" required
                                class="form-control placeholder"/>
                     </div>
@@ -45,14 +45,14 @@
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Rate: </label>
-                    <div class="col-md-2">
-                        $15/h
+                    <div class="col-md-1">
+                        ${{rate[0]}}
                     </div>
                     <div class="col-md-5">
                         <slider ng-model="rate" min="rateOptions.min" step="rateOptions.step" max="rateOptions.max"
                                 value="rateOptions.value" range="true" formatter="formatRate(rate)"></slider>
                     </div>
-                    <div class="col-md-2">$100/h</div>
+                    <div class="col-md-2">${{rate[1]}} hourly</div>
                 </div>
 
                 <div class="form-group">
@@ -89,13 +89,13 @@
                     <label for="subject" class="col-md-2 control-label">Subject: </label>
                     <div class="col-md-9">
 
-                        <div ng-model="tutor.subjects[$index]" ng-repeat="subject in tutor.subjects">
-                            <p>{{subject}}
-                        <span class="btn btn-danger btn-sm pull-right fa fa-times"
-                              ng-click="removeOption($index, 'subjects')">
-                        </span>
-                            </p>
-                        </div>
+                        <p ng-model="tutor.subjects[$index]"
+                           ng-repeat="subject in tutor.subjects track by subject.id">
+                            <label>{{subject.text}}</label>
+                            <span class="btn btn-danger btn-sm pull-right fa fa-times"
+                                  ng-click="removeOption($index, 'subjects')">
+                            </span>
+                        </p>
 
                         <div ng-if="subjectEditable">
                             <input type="text" class="form-control"
@@ -125,11 +125,10 @@
                           class="form-control placeholder"></textarea>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <div class="col-md-11">
                         <input type="submit" class="btn btn-theme btn-theme-md btn-theme-transparent pull-right"
-                               value="Save" ng-click="updateProfile(tutor)"/>
+                               value="Save" ng-click="updateProfile(tutor)" ng-disabled="profileForm.$invalid || !tutor.locations.length || !tutor.subjects.length"/>
                     </div>
                 </div>
 
