@@ -164,7 +164,7 @@ module.exports = ['$scope', '$stateParams', '$state', 'TutorApiService', functio
           //generate pagination
           $scope.updatePagination($scope.mainQuery.page, $scope.totalCount);
           //generate filters
-          //$scope.generateFilterAlt();
+          $scope.generateFilterAlt();
         } else {
           //panic
           //console.log(data);
@@ -188,9 +188,9 @@ module.exports = ['$scope', '$stateParams', '$state', 'TutorApiService', functio
           (function () {
             var subjectId = parseInt($stateParams.subjectids);
             if (subjectId > 0) {
-              var subject = getSubjectById($scope.facet, subjectId);
+              var subject = $stateParams.subject;
               if (subject) {
-                $scope.filtersAlt.push({ type: FilterEnum.SUBJECT_IDS, key: subjectId, text: subject.subject });
+                $scope.filtersAlt.push({ type: FilterEnum.SUBJECT_IDS, key: subjectId, text: subject });
               }
             }
           }())
@@ -234,6 +234,7 @@ module.exports = ['$scope', '$stateParams', '$state', 'TutorApiService', functio
           case FilterEnum.SUBJECT_IDS:
             if (typeof currentStateParams.subjectids === 'string') {//is a string
               currentStateParams.subjectids = null;
+              currentStateParams.subject = null;
             } else {//is a array
               currentStateParams.subjectids = _.reject(currentStateParams.subjectids, function(id){
                 return id == '' + filter.key;
