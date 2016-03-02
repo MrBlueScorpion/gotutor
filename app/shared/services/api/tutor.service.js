@@ -60,9 +60,9 @@ module.exports = ['$q', '$http', function ($q, $http) {
       //use keywords
       url += '?keywords=' + query.keywords;
     }
-    if (query.geohash && query.range) {
-      //use geohash
-      url += '&geohash=' + query.geohash + '&range=' + query.range;
+    if (query.locationid) {
+      //use locationid
+      url += '&locationid=' + query.locationid;
     } else {
       //use location
       url += '&location=' + query.location;

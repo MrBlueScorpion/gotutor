@@ -21,7 +21,7 @@ module.exports = ['$scope', 'TutorApiService', 'toastr', '$http', '$state',
 
     if (angular.isDefined($scope.location)) {
       if (angular.isObject($scope.location)) {
-        query.geohash = $scope.location.geohash;
+        query.locationid = $scope.location.id;
       } else {
         query.location = $scope.location;
       }

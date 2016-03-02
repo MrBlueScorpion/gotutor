@@ -63,21 +63,6 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
 
 
   $scope.updateProfile = function(tutor) {
-  /*  {
-      "name": "John Smith",
-      "locationIds": ["1", "2"],
-      "subjects": ["Math", "English"],
-      "gender": "Male",
-      "description": "I am specialized in teaching...",
-      "rate": {
-        "min": 20,
-        "max": 50
-    },
-      "contact": {
-      "phone": [ "0412345678", "0456788765" ],
-
-    }
-    }*/
     tutor.locationIds = _.map(tutor.locations, function(location) {
       return location.id;
     });
