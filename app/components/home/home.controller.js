@@ -30,9 +30,8 @@ module.exports = ['$scope', 'TutorApiService', 'toastr', '$http', '$state',
     if (angular.isDefined($scope.subject)) {
       if (angular.isObject($scope.subject)) {
         query.subjectids = $scope.subject.id;
-        query.subject = $scope.subject.text;
       } else {
-        query.subject = $scope.subject;
+        query.keywords = $scope.subject;
       }
     }
     console.log(query);

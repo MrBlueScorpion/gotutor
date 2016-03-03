@@ -85,7 +85,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
         controller : 'HomeController'
       })
       .state('tutors', {
-        url : '/tutors?subject&subjectids&locationid&location&gender&page',
+        url : '/tutors?keywords&subjectids&locationid&location&gender&page',
         templateUrl: 'components/tutor/tutors.html',
         controller: 'TutorsListController'
       })
