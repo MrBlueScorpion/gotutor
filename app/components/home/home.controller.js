@@ -34,11 +34,7 @@ module.exports = ['$scope', 'TutorApiService', 'toastr', '$http', '$state',
         query.keywords = $scope.subject;
       }
     }
-    console.log(query);
-
-      //location: $scope.location,
-      //locationIds: $scope.location.id
-
+    
     $state.go('tutors', query);
   }
 

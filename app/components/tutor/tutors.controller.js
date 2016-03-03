@@ -129,7 +129,7 @@ module.exports = ['$scope', '$stateParams', '$state', 'TutorApiService', functio
   $scope.generateMainQuery = function () {
     //console.log($stateParams);
     if ($stateParams) {
-      $scope.mainQuery.keywords = $stateParams.subject ? $stateParams.subject : '';
+      $scope.mainQuery.keywords = $stateParams.keywords ? $stateParams.keywords : '';
       $scope.mainQuery.location = $stateParams.location ? $stateParams.location : '';
       $scope.mainQuery.subjectids = ($stateParams.subjectids && $stateParams.subjectids.length > 0) ? $stateParams.subjectids : [];
       $scope.mainQuery.locationid = $stateParams.locationid ? $stateParams.locationid : '';
@@ -181,13 +181,15 @@ module.exports = ['$scope', '$stateParams', '$state', 'TutorApiService', functio
 
     //generate alternative filters
     $scope.generateFilterAlt = function () {
+      // TODO Rewrite this function
+      
       //keywords or subject
       if ($stateParams.subjectids) {//using subject
         if (typeof $stateParams.subjectids === 'string') {//single id
           (function () {
             var subjectId = parseInt($stateParams.subjectids);
             if (subjectId > 0) {
-              var subject = $stateParams.subject;
+              var subject = $stateParams.keywords;
               if (subject) {
                 $scope.filtersAlt.push({ type: FilterEnum.SUBJECT_IDS, key: subjectId, text: subject });
               }
