@@ -8,7 +8,6 @@ module.exports = ['$scope', '$stateParams', 'tutorId', 'TutorApiService', 'toast
       $scope.tutor = tutor;
       $scope.enquiry = {};
     }
-
   });
 
 

@@ -50,7 +50,6 @@ module.exports = ['$q', '$http', function ($q, $http) {
     var deferred = $q.defer();
     var url = utility.generateQueryUrl('search');
     //process query and generate url
-    //console.log(query);
     if (query.subjectids && query.subjectids.length > 0) {
       //got subjectids, do not use keywords
       for (var i = 0; i < query.subjectids.length; i++) {
@@ -91,6 +90,8 @@ module.exports = ['$q', '$http', function ($q, $http) {
     var url = utility.generateQueryUrl('tutors/' + id);
 
     $http.get(url).then(function(response) {
+      var tutor = response.data;
+      tutor.subjects = _.map(tutor.subjects, function(x) { return x.subject }).join(', ')
       deferred.resolve(response.data);
     }, function(response) {
       deferred.resolve({'error': 'Invalid tutor Id'})

@@ -55,7 +55,7 @@ module.exports = ['$parse', '$timeout', '$rootScope', function($parse, $timeout,
         setOption('orientation', attrs.orientation, 'horizontal');
         setOption('selection', attrs.selection, 'before');
         setOption('handle', attrs.handle, 'round');
-        setOption('tooltip', attrs.sliderTooltip || attrs.tooltip, 'show');
+        setOption('tooltip', attrs.sliderTooltip || attrs.tooltip, 'hide');
         setOption('tooltip_position', attrs.sliderTooltipPosition, 'top');
         setOption('tooltipseparator', attrs.tooltipseparator, ':');
         setOption('ticks', $scope.ticks);

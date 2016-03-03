@@ -29,8 +29,8 @@
                       <tr ng-if="tutor.gender"><td>Gender:</td><td>{{tutor.gender}}</td></tr>
                       <tr ng-if="tutor.rate.length"><td>Rate:</td><td>${{tutor.rate.min}} - ${{tutor.rate.max}} per hour</td></tr>
                       <tr ng-if="tutor.contact.email.length > 0"><td>Email:</td><td>{{tutor.contact.email.join(', ')}}</td></tr>
-                      <tr ng-if="tutor.locations"><td>Location:</td><td>{{tutor.locations.join(', ')}}</td></tr>
-                      <tr ng-if="tutor.subjects"><td>Subjects:</td><td>{{tutor.subjects.join(', ')}}</td></tr>
+                      <tr ng-if="tutor.locations"><td>Location:</td><td>{{tutor.locations}}</td></tr>
+                      <tr ng-if="tutor.subjects"><td>Subjects:</td><td>{{tutor.subjects}}</td></tr>
                     </tbody>
                 </table>
               </div>
@@ -49,7 +49,7 @@
 
             <h1 class="section-title">
                 <span class="icon-inner"><span class="fa-stack"><i class="fa rhex fa-stack-2x"></i><i class="fa fa-ticket fa-stack-1x"></i></span></span>
-                <span class="title-inner">Enquiry now <small> / don't mıss your tutor!</small></span>
+                <span class="title-inner">Enquiry now <small> / don't miss out your tutor!</small></span>
             </h1>
 
 
@@ -115,7 +115,7 @@
             <div class="col-lg-11">
 
                 <h3 class="section-title"><span class="title-inner">Is this your profile?</span></h3>
-                    <p>You can claim this profile and register an account with us by filling in one of these information</p>
+                    <p>You can claim this profile and register an account with us by filling in one of the following information</p>
                 <form class="" ng-submit="claimTutor(claim)" name="tutorClaim">
                     <div class="row">
                         <div class="col-lg-12">

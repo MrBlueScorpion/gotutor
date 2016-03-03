@@ -67,10 +67,13 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
       return location.id;
     });
 
+    tutor.subjectIds = _.map(tutor.subjects, function(s) {
+      return s.id;
+    });
+
     tutor.rate.min = $scope.rate[0];
     tutor.rate.max = $scope.rate[1];
-
-    console.log(tutor);
+    
     TutorApiService.updateTutorProfile(tutor).then(function(response) {
       toastr.success(response.success);
     });
