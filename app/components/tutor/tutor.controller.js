@@ -10,7 +10,6 @@ module.exports = ['$scope', '$stateParams', 'tutorId', 'TutorApiService', 'toast
     }
   });
 
-
   $scope.sendEnquiry = function() {
     $scope.enquiry.tutorId = tutorId;
     TutorApiService.sendMessage($scope.enquiry).then(function(response) {

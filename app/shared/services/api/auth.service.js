@@ -1,8 +1,8 @@
 'use strict';
 
-var utility = require('../../helpers/utility');
+var config = require('../../../app.constant');
 
-module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', function ($q, $http, $rootScope, AUTH_EVENTS) {
+module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', 'TestService', function ($q, $http, $rootScope, AUTH_EVENTS, TestService) {
   var currentUser;
 
   /**
@@ -13,8 +13,10 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', function ($q, $htt
    */
   var registerUser = function(email, password) {
     var deferred = $q.defer();
-    var url = utility.generateApiUrl('users/register');
-
+    var url = config.TUTOR_API + 'users/register';
+    var test = TestService.getTest();
+    if (test) url += '?test=' + test;
+    
     $http.post(url, {
       email: email,
       password: password
@@ -41,7 +43,7 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', function ($q, $htt
       deferred.resolve({user: currentUser});
     } else {
 
-      var url = utility.generateApiUrl('users/me');
+      var url = config.TUTOR_API + 'users/me';
       $http.get(url).then(function(response) {
         currentUser = response.data;
         deferred.resolve({user: currentUser});
@@ -71,7 +73,7 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', function ($q, $htt
    */
   var loginUser = function(email, password) {
     var deferred = $q.defer(),
-        url = utility.generateApiUrl('users/login');
+        url = config.TUTOR_API + 'users/login';
 
     $http({
       method : 'POST',
@@ -100,8 +102,7 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', function ($q, $htt
    * @returns {*}
    */
   var logoutUser = function() {
-    var deferred = $q.defer();
-    var url = utility.generateApiUrl('users/logout');
+    var url = config.TUTOR_API + 'users/logout';
 
     $http.get(url).then(function(response) {
       currentUser = null;
@@ -109,15 +110,11 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', function ($q, $htt
     });
   };
 
-
-
   return {
     registerUser : registerUser,
     isAuthenticated : isAuthenticated,
     loginUser : loginUser,
     logoutUser : logoutUser
-    //isAuthorized : isAuthorized,
-    //getTutorProfile: getTutorProfile
   }
 
 }];

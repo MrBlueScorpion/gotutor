@@ -18,7 +18,8 @@ require('./components/tutor/tutor.module');
 require('./angular-templates');
 
 var TutorApiService = require('./shared/services/api/tutor.service'),
-    AuthService = require('./shared/services/api/auth.service');
+    AuthService = require('./shared/services/api/auth.service'),
+    TestService = require('./shared/services/api/test.service');
 
 var SliderDirective = require('./shared/directives/slider.directive');
 
@@ -43,6 +44,7 @@ var app = angular.module('app', [
 
 app.service('TutorApiService', TutorApiService)
    .service('AuthService', AuthService)
+   .service('TestService', TestService)
    .directive('slider', SliderDirective)
    .filter('highlight', HighlightFilter)
    .filter('nl2br', Nl2brFilter);
@@ -85,7 +87,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
         controller : 'HomeController'
       })
       .state('tutors', {
-        url : '/tutors?keywords&subjectids&locationid&location&gender&page',
+        url : '/tutors?keywords&subjectids&locationid&location&gender&page&test',
         templateUrl: 'components/tutor/tutors.html',
         controller: 'TutorsListController'
       })
@@ -105,7 +107,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
         }
       })
       .state('register', {
-        url: '/register',
+        url: '/register?test',
         templateUrl: 'components/auth/register.html',
         controller : 'RegisterController'
       })
@@ -190,9 +192,7 @@ app.run(['$rootScope', '$state', 'AuthService', 'toastr', 'AUTH_EVENTS',
     });
 
     $rootScope.$on(AUTH_EVENTS.notAuthenticated, function(event) {
-     // AuthService.logout();
       $rootScope.currentUser = null;
-
     });
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
@@ -210,7 +210,7 @@ app.run(['$rootScope', '$state', 'AuthService', 'toastr', 'AUTH_EVENTS',
           }
         }
       });
-
+      if (toParams.test) toastr.warning('Test mode!');
     });
 }]);
 

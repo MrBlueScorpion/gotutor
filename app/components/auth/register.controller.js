@@ -17,11 +17,6 @@ module.exports = ['$scope', 'AuthService', 'toastr', '$state', '$uibModal', func
       templateUrl: 'components/auth/termsAndConditions.html',
       controller: 'TermsAndConditionsController',
       size: size
-      //resolve: {
-      //  items: function () {
-      //    return $scope.items;
-      //  }
-      //}
     });
 
     modalInstance.result.then(function (selectedItem) {

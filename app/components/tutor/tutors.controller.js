@@ -1,5 +1,5 @@
 'use strict';
-module.exports = ['$scope', '$stateParams', '$state', 'TutorApiService', function ($scope, $stateParams, $state, TutorApiService) {
+module.exports = ['$scope', '$stateParams', '$state', 'TutorApiService', 'toastr', function ($scope, $stateParams, $state, TutorApiService, toastr) {
 
   var FilterEnum = {
       SUBJECT: 10,
@@ -127,7 +127,6 @@ module.exports = ['$scope', '$stateParams', '$state', 'TutorApiService', functio
 
   //Generate main query obj
   $scope.generateMainQuery = function () {
-    //console.log($stateParams);
     if ($stateParams) {
       $scope.mainQuery.keywords = $stateParams.keywords ? $stateParams.keywords : '';
       $scope.mainQuery.location = $stateParams.location ? $stateParams.location : '';
@@ -138,7 +137,6 @@ module.exports = ['$scope', '$stateParams', '$state', 'TutorApiService', functio
       $scope.mainQuery.page = (page && page > 0) ? page : 1;
       $scope.mainQuery.pageSize = $scope.pagination.pageSize;
     }
-    //console.log($scope.mainQuery);
   };
 
     //search and display
@@ -146,9 +144,6 @@ module.exports = ['$scope', '$stateParams', '$state', 'TutorApiService', functio
       TutorApiService.getTutorsByQuery($scope.mainQuery)
       .then(function(data){
         if (data && data.hits > 0 && data.results && data.results.length > 0) {
-          //got results
-          //console.log(data);
-          //display tutor list
           $scope.tutors = data.results;
           $scope.totalCount = data.hits;
           //display filter

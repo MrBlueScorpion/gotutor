@@ -1,15 +1,15 @@
 'use strict';
 
-var utility = require('../../helpers/utility');
+var config = require('../../../app.constant');
 
 var getTutorsCanceler;
 
-module.exports = ['$q', '$http', function ($q, $http) {
+module.exports = ['$q', '$http', 'TestService', function ($q, $http, TestService) {
 
   var getRecommendedTutors = function () {
 
     var deferred = $q.defer();
-    var url = utility.generateQueryUrl('recommend');
+    var url = config.TUTOR_QUERY + 'recommend';
 
     $http.get(url).then(function(response) {
       deferred.resolve(response.data);
@@ -24,7 +24,7 @@ module.exports = ['$q', '$http', function ($q, $http) {
    */
   var getLocations = function(location) {
     var deferred = $q.defer();
-    var url = utility.generateQueryUrl('suggest/location?q=' + location);
+    var url = config.TUTOR_QUERY + 'suggest/location?q=' + location;
 
     $http.get(url).then(function(response) {
       deferred.resolve(response.data);
@@ -35,7 +35,7 @@ module.exports = ['$q', '$http', function ($q, $http) {
 
   var getSubjects = function(subject) {
     var deferred = $q.defer();
-    var url = utility.generateQueryUrl('suggest/subject?q=' + subject);
+    var url = config.TUTOR_QUERY + 'suggest/subject?q=' + subject;
 
     $http.get(url).then(function(response) {
       deferred.resolve(response.data);
@@ -48,25 +48,33 @@ module.exports = ['$q', '$http', function ($q, $http) {
     if (getTutorsCanceler) getTutorsCanceler.resolve();
     getTutorsCanceler = $q.defer();
     var deferred = $q.defer();
-    var url = utility.generateQueryUrl('search');
-    //process query and generate url
-    if (query.subjectids && query.subjectids.length > 0) {
-      //got subjectids, do not use keywords
+    var url = config.TUTOR_QUERY + 'search';
+    
+    if (query.subjectids && query.subjectids.length) {
       for (var i = 0; i < query.subjectids.length; i++) {
         url += (i == 0) ? '?subjectids=' + query.subjectids[i] : '&subjectids=' + query.subjectids[i];
       }
     } else {
-      //use keywords
       url += '?keywords=' + query.keywords;
     }
+    
     if (query.locationid) {
-      //use locationid
       url += '&locationid=' + query.locationid;
     } else {
-      //use location
       url += '&location=' + query.location;
     }
-    url += '&gender=' + query.gender + '&page=' + query.page + '&pagesize=' + query.pageSize;
+    
+    if (query.gender) {
+      url += '&gender=' + query.gender
+    }
+    
+    var test = TestService.getTest();
+    if (test) {
+      url += '&test=' + test
+    }
+    
+    url += '&page=' + query.page + '&pagesize=' + query.pageSize;
+
     $http({
       method: 'GET',
       url: url,
@@ -85,7 +93,7 @@ module.exports = ['$q', '$http', function ($q, $http) {
    */
   var getTutorById = function(id) {
     var deferred = $q.defer();
-    var url = utility.generateQueryUrl('tutors/' + id);
+    var url = config.TUTOR_QUERY + 'tutors/' + id;
 
     $http.get(url).then(function(response) {
       var tutor = response.data;
@@ -100,7 +108,7 @@ module.exports = ['$q', '$http', function ($q, $http) {
 
   var sendMessage = function(data) {
     var deferred = $q.defer();
-    var url = utility.generateApiUrl('enquiries');
+    var url = config.TUTOR_API + 'enquiries';
 
     $http({
       method : 'POST',
@@ -116,7 +124,7 @@ module.exports = ['$q', '$http', function ($q, $http) {
 
   var getMessages = function() {
     var deferred = $q.defer();
-    var url = utility.generateApiUrl('users/me/enquiries');
+    var url = config.TUTOR_API + 'users/me/enquiries';
 
     $http.get(url)
       .then(function(response) {
@@ -129,7 +137,7 @@ module.exports = ['$q', '$http', function ($q, $http) {
 
   var deleteMessages = function (messageIds) {
     var deferred = $q.defer();
-    var url = utility.generateApiUrl('users/me/enquiries');
+    var url = config.TUTOR_API + 'users/me/enquiries';
 
     $http.delete(url, {params: {ids: messageIds}})
       .then(function(response) {
@@ -147,7 +155,7 @@ module.exports = ['$q', '$http', function ($q, $http) {
    */
   var getTutorProfile = function() {
     var deferred = $q.defer();
-    var url = utility.generateApiUrl('users/me/tutor');
+    var url = config.TUTOR_API + 'users/me/tutor';
 
     $http.get(url).then(function(response) {
       deferred.resolve(response.data);
@@ -160,7 +168,7 @@ module.exports = ['$q', '$http', function ($q, $http) {
 
   var updateTutorProfile = function(tutor) {
     var deferred = $q.defer();
-    var url = utility.generateApiUrl('users/me/tutor');
+    var url = config.TUTOR_API + 'users/me/tutor';
 
     $http({
       method : 'POST',
@@ -175,7 +183,7 @@ module.exports = ['$q', '$http', function ($q, $http) {
 
   var sendFeedback = function(feedback) {
     var deferred = $q.defer();
-    var url = utility.generateApiUrl('feedback');
+    var url = config.TUTOR_API + 'feedback';
 
     $http({
       method : 'POST',
@@ -190,7 +198,7 @@ module.exports = ['$q', '$http', function ($q, $http) {
 
   var claimTutor = function(tutor) {
     var deferred = $q.defer();
-    var url = utility.generateApiUrl('tutors/claim');
+    var url = config.TUTOR_API + 'tutors/claim';
 
     $http({
       method: 'POST',
