@@ -22,8 +22,9 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
           toastr.info(response.error);
         } else {
           $scope.tutor = response;
-          $scope.tutor.locations = [];
-          $scope.rate = [$scope.tutor.rate.min, $scope.tutor.rate.max];
+          var minRate = $scope.tutor.rate.min ? $scope.tutor.rate.min : 15;
+          var maxRate = $scope.tutor.rate.max ? $scope.tutor.rate.max : 100;
+          $scope.rate = [minRate, maxRate];
         }
       });
     }

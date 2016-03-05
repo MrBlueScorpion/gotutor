@@ -99,8 +99,9 @@ module.exports = ['$q', '$http', 'TestService', function ($q, $http, TestService
 
     $http.get(url).then(function(response) {
       var tutor = response.data;
-      tutor.subjects = _.map(tutor.subjects, function(x) { return x.text }).join(', ')
-      deferred.resolve(response.data);
+      tutor.subjects = _.map(tutor.subjects, function(x) { return x.text }).join(', ');
+      tutor.locations = _.map(tutor.locations, function(x) { return x.text }).join(', ');
+      deferred.resolve(tutor);
     }, function(response) {
       deferred.resolve({'error': 'Invalid tutor Id'})
     });
