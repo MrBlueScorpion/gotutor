@@ -34,7 +34,7 @@
             <div class="row">
                     <div class="col-md-4">
                         <div  style="width:200px;height: 200px;border: 1px solid black; padding: 10px">
-                        <p>Recieve instant email notification when an enquiry is made</p>
+                        <p>Receive instant email notification when an enquiry is made</p>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -72,9 +72,13 @@
                         <div class="col-sm-6 col-sm-offset-3">
                             <div class="form-group with-icon">
                                 <i class="fa fa-key"></i>
-                                <input type="password" name="password" id="password" placeholder="Password (minimum 6 characters)" ng-model="user.password"
+                                <input type="password" name="password" id="password" placeholder="Password" ng-model="user.password"
                                         required title="Password is required" ng-minlength="6"
                                         class="form-control placeholder"/>
+                                <div ng-messages="registerForm.password.$error" ng-show="registerForm.password.$dirty" style="color:red" role="alert">
+                                  <div ng-message="required">Required</div>
+                                  <div ng-message="minlength">Password has minimum 6 characters</div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-sm-6 col-sm-offset-3">

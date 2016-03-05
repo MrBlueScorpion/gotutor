@@ -118,7 +118,7 @@ module.exports = ['$q', '$http', 'TestService', function ($q, $http, TestService
       url : url,
       data : data
     }).then(function (response) {
-      deferred.resolve({success: 'Your enquiry has been sent to the tutor'})
+      deferred.resolve({success: 'Your enquiry has been sent.'})
     });
 
     return deferred.promise;

@@ -42,7 +42,6 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', 'TestService', fun
     if (currentUser) {
       deferred.resolve({user: currentUser});
     } else {
-
       var url = config.TUTOR_API + 'users/me';
       $http.get(url).then(function(response) {
         currentUser = response.data;
@@ -103,14 +102,28 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', 'TestService', fun
 
   var setDisplayName = function(name) {
     currentUser && (currentUser.displayName = name)
-  };
+  }
+  
+  var changePassword = function(oldPassword, password) {
+    var url = config.TUTOR_API + 'users/updatepassword';
+
+    return $http.post(url, {
+      oldPassword: oldPassword,
+      password: password
+    }).catch(function(e) {
+      return (e.status == 401) ? 
+      $q.reject('Incorrect old password. Please try again.') : 
+      $q.reject(e.data && e.data.displayMessage || 'Server error. Please try again later.')
+    });
+  }
   
   return {
     registerUser : registerUser,
     isAuthenticated : isAuthenticated,
     loginUser : loginUser,
     logoutUser : logoutUser,
-    setDisplayName: setDisplayName
+    setDisplayName: setDisplayName,
+    changePassword: changePassword
   }
 
 }];

@@ -7,7 +7,8 @@ var TutorApiService = require('../../shared/services/api/tutor.service');
 var RegisterController = require('../auth/register.controller'),
     TermsAndConditionsController = require('../auth/termsAndConditions.controller'),
     ProfileController = require('../user/profile.controller'),
-    MessageController = require('../user/message.controller'),
+    EnquiryController = require('../user/enquiry.controller'),
+    AccountController = require('../user/account.controller'),
     TutorController = require('../tutor/tutor.controller'),
     LoginController = require('../auth/login.controller');
 
@@ -18,7 +19,8 @@ app.controller('TutorsListController', TutorsListController);
 app.controller('RegisterController', RegisterController)
     .controller('TermsAndConditionsController', TermsAndConditionsController)
     .controller('ProfileController', ProfileController)
-    .controller('MessageController', MessageController)
+    .controller('EnquiryController', EnquiryController)
+    .controller('AccountController', AccountController)
     .controller('TutorController', TutorController)
     .controller('LoginController', LoginController);
 

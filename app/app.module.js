@@ -3,6 +3,7 @@
 //vendor libraries
 require('angular-ui-router');
 require('angular-animate');
+require('angular-messages');
 require('angular-toastr');
 require('angular-sanitize');
 require('ng-file-upload');
@@ -22,6 +23,7 @@ var TutorApiService = require('./shared/services/api/tutor.service'),
     TestService = require('./shared/services/api/test.service');
 
 var SliderDirective = require('./shared/directives/slider.directive');
+var CompareToDirective = require('./shared/directives/compareto.directive');
 
 var HighlightFilter = require('./shared/filters/highlight.filter'),
     Nl2brFilter = require('./shared/filters/nl2br.filter');
@@ -29,6 +31,7 @@ var HighlightFilter = require('./shared/filters/highlight.filter'),
 var app = angular.module('app', [
   'ui.router',
   'ngAnimate',
+  'ngMessages',
   'toastr',
   'ngFileUpload',
   'angular-bootstrap-select',
@@ -46,6 +49,7 @@ app.service('TutorApiService', TutorApiService)
    .service('AuthService', AuthService)
    .service('TestService', TestService)
    .directive('slider', SliderDirective)
+   .directive('compareTo', CompareToDirective)
    .filter('highlight', HighlightFilter)
    .filter('nl2br', Nl2brFilter);
 
@@ -128,10 +132,15 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
         templateUrl: 'components/user/profile.html',
         controller : 'ProfileController'
       })
-      .state('user.messages', {
-        url : '/messages',
-        templateUrl : 'components/user/messages.html',
-        controller : 'MessageController'
+      .state('user.enquiries', {
+        url : '/enquiries',
+        templateUrl : 'components/user/enquiries.html',
+        controller : 'EnquiryController'
+      })
+      .state('user.account', {
+        url : '/account',
+        templateUrl : 'components/user/account.html',
+        controller : 'AccountController'
       })
       .state('404', {
         url: '/404',
@@ -203,7 +212,7 @@ app.run(['$rootScope', '$state', 'AuthService', 'toastr', 'AUTH_EVENTS',
           $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
         } else {
           if(('data' in toState) && toState.data.authorizedRoles) {
-            toastr.error("You need to login first");
+            //toastr.error("You need to login first");
             $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
             $state.go('login');
             event.preventDefault();

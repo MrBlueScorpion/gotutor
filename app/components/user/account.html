@@ -1,0 +1,73 @@
+<section class="page-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-5">
+        <h1 class="section-title">
+            <span data-animation="flipInY" data-animation-delay="100" class="icon-inner"><span class="fa-stack"><i class="fa rhex fa-stack-2x"></i><i class="fa fa-question-circle fa-stack-1x"></i></span></span>
+            <span data-animation="fadeInRight" data-animation-delay="100" class="title-inner">About Us</span>
+        </h1>
+        <form class="row" name="changePasswordForm" ng-submit="changePassword()" novalidate>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group with-icon">
+                    <i class="fa fa-user"></i>
+                    <input
+                            type="password" name="oldPass" placeholder="Your old password"
+                            ng-model="oldPass" ng-minlength="6" required
+                            class="form-control placeholder"/>
+                    <div ng-messages="changePasswordForm.oldPass.$error" ng-show="changePasswordForm.oldPass.$touched" style="color:red" role="alert">
+                      <div ng-message="required">Required</div>
+                      <div ng-message="minlength">Password has minimum 6 characters</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="form-group with-icon">
+                    <i class="fa fa-user"></i>
+                    <input
+                            type="password" name="newPass"  placeholder="Your new password"
+                            ng-model="newPass" ng-minlength="6" required 
+                            class="form-control placeholder"/>
+                    <div ng-messages="changePasswordForm.newPass.$error" ng-show="changePasswordForm.newPass.$touched" style="color:red" role="alert">
+                      <div ng-message="required">Required</div>
+                      <div ng-message="minlength">Password has minimum 6 characters</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="form-group with-icon">
+                    <i class="fa fa-user"></i>
+                    <input
+                            type="password" name="newPassConfirm"  placeholder="Confirm password"
+                            ng-model="newPassConfirm" ng-minlength="6" compare-to="newPass" required 
+                            class="form-control placeholder"/>
+                    <div ng-messages="changePasswordForm.newPassConfirm.$error" ng-show="changePasswordForm.newPassConfirm.$dirty" style="color:red" role="alert">
+                      <div ng-message="required">Required</div>
+                      <div ng-message="minlength">Password has minimum 6 characters</div>
+                      <div ng-message="compareTo">Confirmation must match password</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12 text-center">
+                <div class="form-group">
+                    <input type="submit" ng-disabled="feedbackForm.$invalid" class="form-button form-button-submit btn btn-theme btn-theme-lg btn-theme-transparent"  value="Update" />
+                </div>
+            </div>
+        </div>
+        </form>
+      </div>
+      <div class="col-sm-1"></div>
+      <div class="col-sm-6">
+        <h1 class="section-title">
+            <span data-animation="flipInY" data-animation-delay="100" class="icon-inner"><span class="fa-stack"><i class="fa rhex fa-stack-2x"></i><i class="fa fa-plus fa-stack-1x"></i></span></span>
+            <span data-animation="fadeInRight" data-animation-delay="100" class="title-inner">Delete this account</span>
+        </h1>
+        <p>The account will no longer be available, and all data in the account will be permanently deleted.</p>
+        <p><a href="mailto:info@gotute.com">info@gotute.com</a></p>
+      </div>
+    </div>
+  </div>
+</section>
