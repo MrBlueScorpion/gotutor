@@ -51,8 +51,10 @@ module.exports = ['$q', '$http', 'TestService', function ($q, $http, TestService
     var url = config.TUTOR_QUERY + 'search';
     
     if (query.subjectids && query.subjectids.length) {
-      for (var i = 0; i < query.subjectids.length; i++) {
-        url += (i == 0) ? '?subjectids=' + query.subjectids[i] : '&subjectids=' + query.subjectids[i];
+      if (typeof query.subjectids === 'string') {
+        url += '?subjectids=' + query.subjectids
+      } else {
+        url += ('?subjectids=' + _.map(query.subjectids, function(x) { return 'subjectids=' + x; }).join('&'))
       }
     } else {
       url += '?keywords=' + query.keywords;
