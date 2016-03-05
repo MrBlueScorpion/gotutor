@@ -200,27 +200,17 @@ module.exports = ['$q', '$http', 'TestService', function ($q, $http, TestService
   };
 
   var claimTutor = function(tutor) {
-    var deferred = $q.defer();
     var url = config.TUTOR_API + 'tutors/claim';
 
-    $http({
+    return $http({
       method: 'POST',
       url: url,
       data: tutor
     }).then(function(response) {
-      deferred.resolve(response.data);
-    },function(response) {
-      if (response.status == 401) {
-        deferred.resolve({error: 'Tutor details incorrect'})
-      };
-
-      if (response.status == 500) {
-        deferred.resolve({error: 'System error, please try again'})
-      };
-
+      return response.data;
+    }, function(response) {
+      return $q.reject(response.status == 401 ? 'Incorrect tutor details.' : 'System error, please try again')
     });
-
-    return deferred.promise;
   };
 
   return {

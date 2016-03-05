@@ -12,26 +12,40 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', 'TestService', fun
    * @returns {*}
    */
   var registerUser = function(email, password) {
-    var deferred = $q.defer();
     var url = config.TUTOR_API + 'users/register';
     var test = TestService.getTest();
     if (test) url += '?test=' + test;
     
-    $http.post(url, {
+    return $http.post(url, {
       email: email,
       password: password
-    }).then(function (response) {
-      currentUser = response.data;
-      deferred.resolve({user: currentUser});
+    }).then(function (res) {
+      currentUser = res.data;
       $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-    }, function (response) {
+      return { user: currentUser };
+    }, function (res) {
       currentUser = null;
-      deferred.resolve({error: response.data.displayMessage, user: currentUser})
+      return $q.reject(res.data && res.data.displayMessage || 'Server error, please try again')
     });
-
-    return deferred.promise;
   };
 
+  var registerUserWithLink = function(email, password, link) {
+    var url = config.TUTOR_API + 'users/registerlink/' + link;
+    var test = TestService.getTest();
+    if (test) url += '?test=' + test;
+    
+    return $http.post(url, {
+      email: email,
+      password: password
+    }).then(function (res) {
+      currentUser = res.data;
+      $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+      return { user: currentUser };
+    }, function (res) {
+      currentUser = null;
+      return $q.reject(res.data && res.data.displayMessage || 'Server error, please try again')
+    });
+  };
   /**
    * Check if a user has logged in
    * @returns {*}
@@ -119,6 +133,7 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', 'TestService', fun
   
   return {
     registerUser : registerUser,
+    registerUserWithLink: registerUserWithLink,
     isAuthenticated : isAuthenticated,
     loginUser : loginUser,
     logoutUser : logoutUser,

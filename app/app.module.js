@@ -111,7 +111,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
         }
       })
       .state('register', {
-        url: '/register?test',
+        url: '/register?test&link',
         templateUrl: 'components/auth/register.html',
         controller : 'RegisterController'
       })

@@ -1,15 +1,17 @@
-module.exports = ['$scope', 'AuthService', 'toastr', '$state', '$uibModal', function($scope, AuthService, toastr, $state, $uibModal) {
+module.exports = ['$scope', '$state', '$stateParams', 'AuthService', 'toastr', '$uibModal', function($scope, $state, $stateParams, AuthService, toastr, $uibModal) {
   $scope.signUp = function(user) {
-    AuthService.registerUser(user.email, user.password).then(function(response) {
-      if (_.isUndefined(response.error)) {
+    if ($scope.link) {
+      AuthService.registerUserWithLink(user.email, user.password, $scope.link)
+      .then(function() {
         $state.go('user.profile');
-        toastr.success('Registration successful');
-      } else {
-        toastr.error(response.error);
-      }
-    });
+      }, toastr.error.bind(toastr));  
+    } else {
+      AuthService.registerUser(user.email, user.password)
+      .then(function() {
+        $state.go('user.profile');
+      }, toastr.error.bind(toastr));
+    }
   };
-
 
   $scope.viewTerms = function(size) {
     var modalInstance = $uibModal.open({
@@ -25,7 +27,6 @@ module.exports = ['$scope', 'AuthService', 'toastr', '$state', '$uibModal', func
       //$log.info('Modal dismissed at: ' + new Date());
     });
   }
-
-
-
+  
+  $scope.link = $stateParams.link
 }];

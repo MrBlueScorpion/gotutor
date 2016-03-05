@@ -24,14 +24,9 @@ module.exports = ['$scope', '$stateParams', 'tutorId', 'TutorApiService', 'toast
     var data = {};
     data.tutorId = tutorId;
     data[claim.option] = claim.value;
-    TutorApiService.claimTutor(data).then(function(response) {
-     if (!_.isUndefined(response.error)) {
-        toastr.error(response.error);
-     } else {
-      $scope.link = response.link;
-     }
-    });
+    TutorApiService.claimTutor(data)
+    .then(function(data) {
+      $state.go('register', data);
+    }, toastr.error.bind(toastr));
   }
-
-
 }];
