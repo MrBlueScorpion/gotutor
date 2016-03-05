@@ -257,7 +257,6 @@ module.exports = ['$scope', '$stateParams', '$state', 'TutorApiService', 'toastr
       var subject;
       if (facet.subject) {
         subject = _.find(facet.subject, function(subject){
-          console.log(subject);
           return subject.id == id;
         });
       }

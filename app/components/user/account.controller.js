@@ -11,4 +11,8 @@ module.exports = ['$scope', 'AuthService', 'toastr', '$http',
         toastr.error(e);
       })
     };
+    
+    $scope.deleteAccount = function() {
+      AuthService.deleteAccount().catch(toastr.error.bind(toastr))
+    }
 }];

@@ -7,7 +7,6 @@ module.exports = ['$scope', 'AuthService', 'toastr', '$state', 'AUTH_EVENTS', '$
       if (_.isUndefined(response.error)) {
         $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
         $state.go('user.profile');
-        toastr.success('Welcome back, ' + response.user.displayName);
       } else {
         $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
         toastr.error(response.error);

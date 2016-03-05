@@ -51,21 +51,17 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', 'TestService', fun
    * @returns {*}
    */
   var isAuthenticated = function() {
-    var deferred = $q.defer();
-    
-    if (currentUser) {
-      deferred.resolve({user: currentUser});
+    if (angular.isDefined(currentUser)) {
+      return currentUser ? $q.resolve(currentUser) : $q.reject();
     } else {
       var url = config.TUTOR_API + 'users/me';
-      $http.get(url).then(function(response) {
+      return $http.get(url).then(function(response) {
         currentUser = response.data;
-        deferred.resolve({user: currentUser});
-      }, function() {
-        deferred.resolve({user: null});
+        return currentUser;
+      }, function(e) {
+        return $q.reject(e);
       });
     }
-    
-    return deferred.promise;
   };
 
   /**
@@ -88,7 +84,6 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', 'TestService', fun
       }
     }).then(function(res) {
       currentUser = res.data;
-      console.log(currentUser);
       deferred.resolve({user: currentUser});
       $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
     }, function(res) {
@@ -131,6 +126,18 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', 'TestService', fun
     });
   }
   
+  var deleteAccount = function() {
+    var url = config.TUTOR_API + 'users/me';
+    var test = TestService.getTest();
+    if (test) url += '?test=' + test;
+    return $http.delete(url).then(function(response) {
+      currentUser = null;
+      $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+    }, function(e) {
+      return $q.reject('Server error. Please try again later.');
+    });
+  };
+  
   return {
     registerUser : registerUser,
     registerUserWithLink: registerUserWithLink,
@@ -138,7 +145,8 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', 'TestService', fun
     loginUser : loginUser,
     logoutUser : logoutUser,
     setDisplayName: setDisplayName,
-    changePassword: changePassword
+    changePassword: changePassword,
+    deleteAccount: deleteAccount
   }
 
 }];

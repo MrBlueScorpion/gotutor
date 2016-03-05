@@ -157,16 +157,15 @@ module.exports = ['$q', '$http', 'TestService', function ($q, $http, TestService
    * @returns {*}
    */
   var getTutorProfile = function() {
-    var deferred = $q.defer();
     var url = config.TUTOR_API + 'users/me/tutor';
 
-    $http.get(url).then(function(response) {
-      deferred.resolve(response.data);
-    }, function(error) {
-      deferred.resolve({error: 'Please update your profile'});
+    return $http.get(url).then(function(res) {
+      return res.data;
+    }, function(e) {
+      return $q.reject(e.status == 404 ? 
+      'Please complete your tutor profile.' : 
+      'Failed to retrieve your details, please try again')
     });
-
-    return deferred.promise;
   };
 
   var updateTutorProfile = function(tutor) {

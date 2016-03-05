@@ -138,7 +138,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
         controller : 'EnquiryController'
       })
       .state('user.account', {
-        url : '/account',
+        url : '/account?test',
         templateUrl : 'components/user/account.html',
         controller : 'AccountController'
       })
@@ -191,36 +191,39 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
 app.run(['$rootScope', '$state', 'AuthService', 'toastr', 'AUTH_EVENTS',
   function($rootScope, $state, AuthService, toastr, AUTH_EVENTS) {
 
-    $rootScope.$on(AUTH_EVENTS.notAuthorized, function(event) {
-
+    $rootScope.$on(AUTH_EVENTS.notAuthorized, function(ev) {
+      $state.go('login');
+      ev.preventDefault();
     });
 
 
-    $rootScope.$on(AUTH_EVENTS.loginSuccess, function(event) {
-
+    $rootScope.$on(AUTH_EVENTS.loginSuccess, function(ev, user) {
+      $rootScope.currentUser = user;
     });
 
-    $rootScope.$on(AUTH_EVENTS.notAuthenticated, function(event) {
+    $rootScope.$on(AUTH_EVENTS.notAuthenticated, function(ev, toState) {
       $rootScope.currentUser = null;
+      if (
+        (toState && toState.data && toState.data.authorizedRoles) ||
+        ($state.current.data && $state.current.data.authorizedRoles)) {
+        $rootScope.$broadcast(AUTH_EVENTS.notAuthorized)
+      }
     });
 
-    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-      AuthService.isAuthenticated().then(function(response) {
-        $rootScope.auth = AuthService;
-        if (response.user) {
-          $rootScope.currentUser = response.user;
-          $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-        } else {
-          if(('data' in toState) && toState.data.authorizedRoles) {
-            //toastr.error("You need to login first");
-            $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
-            $state.go('login');
-            event.preventDefault();
-          }
-        }
-      });
+    $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
       if (toParams.test) toastr.warning('Test mode!');
+      
+      AuthService.isAuthenticated().then(function(user) {
+        $rootScope.$broadcast(AUTH_EVENTS.loginSuccess, user);
+      }, function(e) {
+        $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated, toState);
+      });
+      
     });
+    
+    $rootScope.logoutUser = function() {
+      AuthService.logoutUser()
+    }
 }]);
 
 module.exports = app;

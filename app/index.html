@@ -46,7 +46,7 @@
                     <li ng-hide="currentUser" class="ng-cloak"><a ui-sref="register"><i class="glyphicon glyphicon-tag"></i> Become A Tutor</a></li>
                     <li ng-hide="currentUser" class="ng-cloak"><a ui-sref="login"><i class="glyphicon glyphicon-log-in"></i> Tutor Login</a></li>
                     <li ng-show="currentUser" class="ng-cloak"></i> Welcome, {{currentUser.displayName}}</li>
-                    <li ng-show="currentUser" class="ng-cloak"><a ui-sref="login" ng-click="auth.logoutUser()"><i class="glyphicon glyphicon-log-out"></i> Tutor Logout</a></li>
+                    <li ng-show="currentUser" class="ng-cloak"><a ui-sref="login" ng-click="logoutUser()"><i class="glyphicon glyphicon-log-out"></i> Tutor Logout</a></li>
                 </ul>
             </div>
         </div>

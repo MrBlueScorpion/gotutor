@@ -15,19 +15,15 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
   $scope.locationEditable = false;
   $scope.subjectEditable = false;
 
-  AuthService.isAuthenticated().then(function(response) {
-    if (response.user) {
-      TutorApiService.getTutorProfile().then(function(response) {
-        if (angular.isDefined(response.error)) {
-          toastr.info(response.error);
-        } else {
-          $scope.tutor = response;
-          var minRate = $scope.tutor.rate.min ? $scope.tutor.rate.min : 15;
-          var maxRate = $scope.tutor.rate.max ? $scope.tutor.rate.max : 100;
-          $scope.rate = [minRate, maxRate];
-        }
-      });
-    }
+  AuthService.isAuthenticated().then(function(user) {
+    TutorApiService.getTutorProfile().then(function(data) {
+      $scope.tutor = data;
+      if (data) {
+        var minRate = $scope.tutor.rate.min ? $scope.tutor.rate.min : 15;
+        var maxRate = $scope.tutor.rate.max ? $scope.tutor.rate.max : 100;
+        $scope.rate = [minRate, maxRate];
+      }
+    }, toastr.info.bind(toastr));
   });
 
   $scope.genderOptions = ['Male', 'Female'];
@@ -91,7 +87,7 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
     })
   };
 
-    $scope.getSubjects = function(subject) {
+  $scope.getSubjects = function(subject) {
     return TutorApiService.getSubjects(subject).then(function(subjects) {
       return subjects;
     })
