@@ -3,7 +3,7 @@ module.exports = ['$scope', 'AuthService', 'toastr', '$state', '$uibModal', func
     AuthService.registerUser(user.email, user.password).then(function(response) {
       if (_.isUndefined(response.error)) {
         $state.go('user.profile');
-        toastr.success('Your have successfully register a tutor account', 'Congratulations!');
+        toastr.success('Registration successful');
       } else {
         toastr.error(response.error);
       }
