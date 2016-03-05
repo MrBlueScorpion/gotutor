@@ -55,15 +55,6 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', 'TestService', fun
     return deferred.promise;
   };
 
-/*
-  var isAuthorized = function (authorizedRoles) {
-    if (!angular.isArray(authorizedRoles)) {
-      authorizedRoles = [authorizedRoles];
-    }
-    //return (this.isAuthenticated() &&
-    //authorizedRoles.indexOf(Session.userRole) !== -1);
-  };
-*/
   /**
    * User log in
    *
@@ -82,15 +73,15 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', 'TestService', fun
         email : email,
         password : password
       }
-    }).then(function(response) {
-
-      currentUser = response.data;
+    }).then(function(res) {
+      currentUser = res.data;
       console.log(currentUser);
       deferred.resolve({user: currentUser});
       $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-    }, function(response) {
+    }, function(res) {
       currentUser = null;
-      deferred.resolve({error: 'Unexpected error happened!'});
+      if (res.status == 401) deferred.resolve({error: 'Invalid username or password. Please try again.'});
+      else deferred.resolve({error: 'Server error, please try again later.'});
       $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
     });
 
@@ -110,11 +101,16 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', 'TestService', fun
     });
   };
 
+  var setDisplayName = function(name) {
+    currentUser && (currentUser.displayName = name)
+  };
+  
   return {
     registerUser : registerUser,
     isAuthenticated : isAuthenticated,
     loginUser : loginUser,
-    logoutUser : logoutUser
+    logoutUser : logoutUser,
+    setDisplayName: setDisplayName
   }
 
 }];

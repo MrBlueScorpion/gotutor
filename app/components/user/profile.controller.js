@@ -77,6 +77,7 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
     
     TutorApiService.updateTutorProfile(tutor).then(function(response) {
       toastr.success(response.success);
+      AuthService.setDisplayName(tutor.name)
     });
   };
 
@@ -99,5 +100,4 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
   $scope.format = function ($model) {
     return '';
   }
-  
 }];
