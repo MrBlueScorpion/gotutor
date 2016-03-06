@@ -68,18 +68,6 @@ app.constant('AUTH_EVENTS', {
   user: 'user'
 });
 
-app.factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS) {
-    return {
-      responseError: function (response) {
-        $rootScope.$broadcast({
-          401: AUTH_EVENTS.notAuthenticated,
-          403: AUTH_EVENTS.notAuthorized
-        }[response.status], response);
-        return $q.reject(response);
-      }
-    };
-  });
-
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastrConfig', '$httpProvider', 'USER_ROLES',
   function ($stateProvider, $urlRouterProvider, $locationProvider, toastrConfig, $httpProvider, USER_ROLES) {
 
@@ -189,9 +177,6 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
       titleClass: 'toast-title',
       toastClass: 'toast'
     });
-
-    //session expiry configuration
-    $httpProvider.interceptors.push('AuthInterceptor');
 
     $httpProvider.defaults.withCredentials = true;
 

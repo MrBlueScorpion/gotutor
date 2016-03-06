@@ -37,11 +37,7 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', 'TestService', fun
     return $http.post(url, {
       email: email,
       password: password
-    }).then(function (res) {
-      currentUser = res.data;
-      $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-      return { user: currentUser };
-    }, function (res) {
+    }).catch(function (res) {
       currentUser = null;
       return $q.reject(res.data && res.data.displayMessage || 'Server error, please try again')
     });

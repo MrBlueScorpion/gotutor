@@ -3,7 +3,9 @@ module.exports = ['$scope', '$state', '$stateParams', 'AuthService', 'toastr', '
     if ($scope.link) {
       AuthService.registerUserWithLink(user.email, user.password, $scope.link)
       .then(function() {
-        $state.go('user.profile');
+        // Somehow chrome browser failed to set cookie, hence we require user to log in again
+        $state.go('login');
+        toastr.success("Registration succeeded. Please log in again to see your profile")
       }, toastr.error.bind(toastr));  
     } else {
       AuthService.registerUser(user.email, user.password)
