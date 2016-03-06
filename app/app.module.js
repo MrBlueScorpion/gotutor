@@ -12,6 +12,8 @@ require('ui-select');
 require('angular-bootstrap-checkbox');
 require('angular-cookies');
 require('angular-bootstrap');
+require('angular-file-upload');
+require('ng-img-crop');
 
 // app components
 require('./components/home/home.module');
@@ -33,6 +35,7 @@ var app = angular.module('app', [
   'ngAnimate',
   'ngMessages',
   'toastr',
+  'angularFileUpload',
   'ngFileUpload',
   'angular-bootstrap-select',
   'ui.select',
@@ -42,7 +45,8 @@ var app = angular.module('app', [
   'ngCookies',
   'templateCache',
   'app.home',
-  'app.tutor'
+  'app.tutor',
+  'ngImgCrop'
 ]);
 
 app.service('TutorApiService', TutorApiService)

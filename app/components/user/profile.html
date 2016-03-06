@@ -125,39 +125,48 @@
                           class="form-control placeholder"></textarea>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-md-11">
-                        <input type="submit" class="btn btn-theme btn-theme-md btn-theme-transparent pull-right"
-                               value="Save" ng-click="updateProfile(tutor)" ng-disabled="profileForm.$invalid || !tutor.locations.length || !tutor.subjects.length"/>
-                    </div>
-                </div>
+
+
+
 
             </section>
             <!-- Sidebar -->
-            <!--<aside id="sidebar" class="sidebar col-sm-4 col-md-3">-->
+            <aside id="sidebar" class="sidebar col-sm-4 col-md-3">
 
-                <!--<div class="widget google-map-widget">-->
-                    <!--&lt;!&ndash; Google map &ndash;&gt;-->
-                    <!--<div class="google-map1">-->
-                        <!--<div style="background: grey">-->
-                            <!--<img ngf-src="picFile" class="thumb">-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--&lt;!&ndash; /Google map &ndash;&gt;-->
-                    <!--<div class="btn btn-theme btn-theme-sm btn-file">-->
-                        <!--Select..-->
-                        <!--<input type="file" ngf-select ng-model="tutor.picFile" name="file"-->
-                               <!--accept="image/*" ngf-max-size="2MB" required-->
-                               <!--class="btn"-->
-                               <!--data-filename-placement="inside">-->
-                    <!--</div>-->
-                    <!--<button ng-click="tutor.picFile = null" ng-show="tutor.picFile"-->
-                            <!--class="btn btn-theme-danger btn-theme-sm">Remove-->
-                    <!--</button>-->
-                <!--</div>-->
+                <div class="widget google-map-widget">
+                    <!-- Google map -->
+                    <div class="google-map1">
+                        <div style="background: grey">
+                            <img ng-src="{{croppedImage}}" class="thumb"/>
+                        </div>
+                    </div>
 
-            <!--</aside>-->
+
+                    <!-- /Google map -->
+                    <div class="btn btn-theme btn-theme-sm btn-file">
+                        Select..
+                        <input type="file" nv-file-select="" uploader="uploader" multiple/>
+                    </div>
+                    <button ng-click="image = null" ng-show="image"
+                            class="btn btn-theme-danger btn-theme-sm">Remove
+                    </button>
+                </div>
+
+                <div>
+                    <h4>Crop your image</h4>
+                <div class="cropArea">
+                    <img-crop image="image" result-image="croppedImage" area-type="square"></img-crop>
+                </div>
+                </div>
+            </aside>
             <!-- /Sidebar -->
+
+            <div class="form-group">
+                <div class="col-sm-12 col-md-8 col-lg-8">
+                    <input type="submit" class="btn btn-theme btn-theme-md btn-theme-transparent pull-right"
+                           value="Save" ng-click="updateProfile(tutor)" ng-disabled="profileForm.$invalid || !tutor.locations.length || !tutor.subjects.length"/>
+                </div>
+            </div>
         </form>
     </div>
 </section>
