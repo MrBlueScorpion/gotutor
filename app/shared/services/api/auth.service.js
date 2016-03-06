@@ -126,6 +126,30 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', 'TestService', fun
     });
   }
   
+  var forgotPassword = function(email) {
+    var url = config.TUTOR_API + 'users/forgotpassword';
+
+    return $http.post(url, {
+      email: email
+    }).catch(function(e) {
+      return (e.status == 404) ? 
+      $q.reject('User not found.') : 
+      $q.reject(e.data && e.data.displayMessage || 'Server error. Please try again later.')
+    });
+  }
+  
+  var resetPassword = function(link, password) {
+    var url = config.TUTOR_API + 'users/updatepassword?link=' + link;
+
+    return $http.post(url, {
+      password: password
+    }).catch(function(e) {
+      return (e.status == 401) ? 
+      $q.reject('This link to reset your password has expired.') : 
+      'Server error. Please try again later.'
+    });
+  }
+  
   var deleteAccount = function() {
     var url = config.TUTOR_API + 'users/me';
     var test = TestService.getTest();
@@ -146,7 +170,9 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', 'TestService', fun
     logoutUser : logoutUser,
     setDisplayName: setDisplayName,
     changePassword: changePassword,
-    deleteAccount: deleteAccount
+    deleteAccount: deleteAccount,
+    forgotPassword: forgotPassword,
+    resetPassword: resetPassword
   }
 
 }];

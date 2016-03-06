@@ -76,8 +76,8 @@
                                         required title="Password is required" ng-minlength="6"
                                         class="form-control placeholder"/>
                                 <div ng-messages="registerForm.password.$error" ng-show="registerForm.password.$dirty" style="color:red" role="alert">
-                                  <div ng-message="required">Required</div>
-                                  <div ng-message="minlength">Password has minimum 6 characters</div>
+                                  <small ng-message="required">Required</small>
+                                  <small ng-message="minlength">Passwords must be at least 6 characters in length</small>
                                 </div>
                             </div>
                         </div>

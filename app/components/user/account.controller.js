@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports = ['$scope', 'AuthService', 'toastr', '$http',
-  function($scope, AuthService, toastr, $http) {
+module.exports = ['$scope', 'AuthService', 'toastr',
+  function($scope, AuthService, toastr) {
 
     $scope.changePassword = function() {
       AuthService.changePassword($scope.oldPass, $scope.newPass)

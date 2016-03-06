@@ -120,6 +120,16 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
         templateUrl: 'components/auth/login.html',
         controller : 'LoginController'
       })
+      .state('forgotpassword', {
+        url: '/forgotpassword',
+        templateUrl: 'components/auth/forgotpassword.html',
+        controller : 'LoginController'
+      })
+      .state('resetpassword', {
+        url: '/resetpassword/:link',
+        templateUrl: 'components/auth/resetpassword.html',
+        controller : 'LoginController'
+      })
       .state('user', {
         abstract : true,
         templateUrl : 'components/user/user.html',

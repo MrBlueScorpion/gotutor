@@ -4,7 +4,7 @@
       <div class="col-sm-5">
         <h1 class="section-title">
             <span data-animation="flipInY" data-animation-delay="100" class="icon-inner"><span class="fa-stack"><i class="fa rhex fa-stack-2x"></i><i class="fa fa-question-circle fa-stack-1x"></i></span></span>
-            <span data-animation="fadeInRight" data-animation-delay="100" class="title-inner">About Us</span>
+            <span data-animation="fadeInRight" data-animation-delay="100" class="title-inner">Change password</span>
         </h1>
         <form class="row" name="changePasswordForm" ng-submit="changePassword()" novalidate>
         <div class="row">
@@ -30,8 +30,8 @@
                             ng-model="newPass" ng-minlength="6" required 
                             class="form-control placeholder"/>
                     <div ng-messages="changePasswordForm.newPass.$error" ng-show="changePasswordForm.newPass.$touched" style="color:red" role="alert">
-                      <div ng-message="required">Required</div>
-                      <div ng-message="minlength">Password has minimum 6 characters</div>
+                      <small ng-message="required">Required</small>
+                      <small ng-message="minlength">Passwords must be at least 6 characters in length</small>
                     </div>
                 </div>
             </div>
@@ -44,9 +44,9 @@
                             ng-model="newPassConfirm" ng-minlength="6" compare-to="newPass" required 
                             class="form-control placeholder"/>
                     <div ng-messages="changePasswordForm.newPassConfirm.$error" ng-show="changePasswordForm.newPassConfirm.$dirty" style="color:red" role="alert">
-                      <div ng-message="required">Required</div>
-                      <div ng-message="minlength">Password has minimum 6 characters</div>
-                      <div ng-message="compareTo">Confirmation must match password</div>
+                      <small ng-message="required">Required</small>
+                      <small ng-message="minlength">Passwords must be at least 6 characters in length</small>
+                      <small ng-message="compareTo">Confirmation must match password</small>
                     </div>
                 </div>
             </div>
@@ -59,8 +59,7 @@
         </div>
         </form>
       </div>
-      <div class="col-sm-1"></div>
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-sm-offset-1">
         <h1 class="section-title">
             <span data-animation="flipInY" data-animation-delay="100" class="icon-inner"><span class="fa-stack"><i class="fa rhex fa-stack-2x"></i><i class="fa fa-plus fa-stack-1x"></i></span></span>
             <span data-animation="fadeInRight" data-animation-delay="100" class="title-inner">Delete this account</span>
