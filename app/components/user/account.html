@@ -53,7 +53,7 @@
 
             <div class="col-sm-12 text-center">
                 <div class="form-group">
-                    <input type="submit" ng-disabled="feedbackForm.$invalid" class="form-button form-button-submit btn btn-theme btn-theme-lg btn-theme-transparent"  value="Update" />
+                    <input type="submit" ng-disabled="changePasswordForm.$invalid" class="form-button form-button-submit btn btn-theme btn-theme-lg btn-theme-transparent"  value="Update" />
                 </div>
             </div>
         </div>
@@ -65,7 +65,14 @@
             <span data-animation="fadeInRight" data-animation-delay="100" class="title-inner">Delete this account</span>
         </h1>
         <p>The account will no longer be available, and all data in the account will be permanently deleted.</p>
-        <button class="btn btn-theme btn-theme-md btn-theme-transparent" ng-click="deleteAccount()">Delete this account</button>
+        <form class="row" name="deleteAccountForm" ng-submit="deleteAccount()" novalidate>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" required ng-model="deleteConfirm"> I understand the consequences, delete my account.
+          </label>
+        </div>
+        <input type="submit" class="btn btn-theme btn-theme-md btn-theme-transparent" ng-disabled="deleteAccountForm.$invalid" value="Delete this account" />
+        </form>
       </div>
     </div>
   </div>
