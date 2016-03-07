@@ -53,7 +53,7 @@
             </h1>
 
 
-            <form class="row" name="enquiryForm" ng-submit="sendEnquiry()" novalidate>
+            <form name="enquiryForm" ng-submit="sendEnquiry()" novalidate>
 
                 <div class="row">
 
@@ -102,39 +102,31 @@
 
         <div class="row" ng-if="!tutor.isRegistered">
             <div class="col-lg-11">
-
                 <h3 class="section-title"><span class="title-inner">Is this your profile?</span></h3>
-                    <p>You can claim this profile and register an account with us by filling in one of the following information</p>
+                <p>You can claim this profile and register an account with us by filling in one of the following
+                    information</p>
                 <form class="" ng-submit="claimTutor(claim)" name="tutorClaim">
                     <div class="row">
-                        <div class="col-lg-12">
-
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="claimOption" value="fullname" ng-model="claim.option" checked＝"checked" required>
-                                    Full Name
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="claimOption" value="email" ng-model="claim.option" required>
-                                    Email    
-                                </label>
-                            </div>
-                            <div class="radio disabled">
-                                <label>
-                                    <input type="radio" name="claimOption" value="phone" ng-model="claim.option" required>
-                                    Contact Number
-                                </label>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <select name="claimOption" ng-model="claim.option" class="form-control" required>
+                                    <option value="fullname">Full Name</option>
+                                    <option value="email">Email</option>
+                                    <option value="phone">Contact Number</option>
+                                </select>
                             </div>
 
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Full Name/Email/Contact Number"
+                                       ng-model="claim.value" required>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-theme btn-theme-md btn-theme-transparent"
+                                        ng-disabled="tutorClaim.$invalid">Claim this tutor
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <input type="text" class="form-control"  placeholder="Full Name/Email/Contact Number" ng-model="claim.value" required>
-                    </div>
-
-                    <button type="submit" class="btn btn-theme btn-theme-md btn-theme-transparent" ng-disabled="tutorClaim.$invalid">Claim this tutor</button>
                 </form>
             </div>
         </div>
