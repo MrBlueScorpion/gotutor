@@ -133,19 +133,20 @@
             <!-- Sidebar -->
             <aside id="sidebar" class="sidebar col-sm-4 col-md-3">
                 <div>
-                    <div>
-                        <img ng-src="{{uploader.queue[0].croppedImage}}" class="thumb"/>
-                    </div>
-
-                    <h4>Crop your image</h4>
                     <div class="cropArea">
-                        <img-crop image="uploader.queue[0].image" result-image="uploader.queue[0].croppedImage" area-type="square"></img-crop>
+                        <img src="assets/img/default-avatar.jpg" ng-show="!originImage"/>
+                        <img-crop image="originImage" result-image="croppedImage" area-type="square" ng-show="originImage"></img-crop>
                     </div>
 
                     <div class="btn btn-theme btn-theme-sm btn-file">
-                        Select..
-                        <input type="file" nv-file-select uploader="uploader" filters="" multiple/>
+                        Upload photo<input type="file" nv-file-select uploader="uploader" filters="" />
                     </div>
+                    <div>
+                        <img ng-src="{{croppedImage}}" class="thumb" ng-show="originImage"/>
+                    </div>
+                    <button ng-show="originImage" ng-click="upload()" class="btn btn-theme btn-theme-sm btn-file">
+                        Confirm
+                    </button>
                 </div>
 
             </aside>

@@ -94,60 +94,9 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
       return '';
     };
 
-    //image crop and upload
-    $scope.uploader = new FileUploader({
-      url : 'upload.php',
-      queueLimit: 1
-    });
+    $scope.originImage = null
+    $scope.croppedImage = ''
 
-    // FILTERS
-    $scope.uploader.filters.push({
-      name: 'imageFilter',
-      fn: function(item /*{File|FileLikeObject}*/, options) {
-        var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
-        return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
-      }
-    });
-
-    // CALLBACKS
-    /**
-     * Show preview with cropping
-     */
-    $scope.uploader.onAfterAddingFile = function(item) {
-      //$scope.croppedImage = '';
-      item.croppedImage = '';
-      var reader = new FileReader();
-      reader.onload = function(event) {
-        $scope.$apply(function(){
-          item.image = event.target.result;
-        });
-      };
-      reader.readAsDataURL(item._file);
-    };
-
-    $scope.upload = function () {
-      $scope.uploader.uploadAll();
-    };
-
-    /**
-     * Upload Blob (cropped image) instead of file.
-     * @see
-     *   https://developer.mozilla.org/en-US/docs/Web/API/FormData
-     *   https://github.com/nervgh/angular-file-upload/issues/208
-     */
-    $scope.uploader.onBeforeUploadItem = function(item) {
-      var blob = dataURItoBlob(item.croppedImage);
-      item._file = blob;
-      console.log('before upload');
-    };
-
-    /**
-     * Converts data uri to Blob. Necessary for uploading.
-     * @see
-     *   http://stackoverflow.com/questions/4998908/convert-data-uri-to-file-then-append-to-formdata
-     * @param  {String} dataURI
-     * @return {Blob}
-     */
     var dataURItoBlob = function(dataURI) {
       var binary = atob(dataURI.split(',')[1]);
       var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
@@ -158,33 +107,42 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
       return new Blob([new Uint8Array(array)], {type: mimeString});
     };
 
-    $scope.uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
-      console.info('onWhenAddingFileFailed', item, filter, options);
+    $scope.uploader = new FileUploader({
+      url : 'upload.php',
+      queueLimit: 2
+    });
+
+    // FILTERS
+    $scope.uploader.filters.push({
+      name: 'imageFilter',
+      fn: function(item, options) {
+        var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+        return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+      }
+    });
+
+    var hasItemInQueue;
+
+    $scope.uploader.onAfterAddingFile = function(item) {
+      var reader = new FileReader();
+      reader.onload = function() {
+        $scope.originImage = reader.result;
+        if (!hasItemInQueue) hasItemInQueue = true;
+        else $scope.uploader.removeFromQueue(0)
+      };
+      reader.readAsDataURL(item._file);
     };
-    $scope.uploader.onAfterAddingAll = function(addedFileItems) {
-      console.info('onAfterAddingAll', addedFileItems);
+
+    $scope.upload = function () {
+      $scope.uploader.uploadItem(0);
     };
-    $scope.uploader.onProgressItem = function(fileItem, progress) {
-      console.info('onProgressItem', fileItem, progress);
-    };
-    $scope.uploader.onProgressAll = function(progress) {
-      console.info('onProgressAll', progress);
-    };
-    $scope.uploader.onSuccessItem = function(fileItem, response, status, headers) {
-      console.info('onSuccessItem', fileItem, response, status, headers);
-    };
-    $scope.uploader.onErrorItem = function(fileItem, response, status, headers) {
-      console.info('onErrorItem', fileItem, response, status, headers);
-    };
-    $scope.uploader.onCancelItem = function(fileItem, response, status, headers) {
-      console.info('onCancelItem', fileItem, response, status, headers);
-    };
-    $scope.uploader.onCompleteItem = function(fileItem, response, status, headers) {
-      console.info('onCompleteItem', fileItem, response, status, headers);
+
+    $scope.uploader.onBeforeUploadItem = function(item) {
+      var blob = dataURItoBlob($scope.croppedImage);
+      item._file = blob;
+      console.log(item, $scope.uploader.isFileLikeObject(item))
     };
     $scope.uploader.onCompleteAll = function() {
       toastr.success('Image uploaded');
     };
-
-    console.log($scope.uploader);
   }];
