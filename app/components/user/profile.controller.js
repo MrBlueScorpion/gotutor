@@ -95,12 +95,13 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
     };
 
     //image crop and upload
-    var uploader = $scope.uploader = new FileUploader({
-      url : 'api/gotute.com/'
+    $scope.uploader = new FileUploader({
+      url : 'upload.php',
+      queueLimit: 1
     });
 
     // FILTERS
-    uploader.filters.push({
+    $scope.uploader.filters.push({
       name: 'imageFilter',
       fn: function(item /*{File|FileLikeObject}*/, options) {
         var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
@@ -112,17 +113,20 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
     /**
      * Show preview with cropping
      */
-    uploader.onAfterAddingFile = function(item) {
-      $scope.croppedImage = '';
+    $scope.uploader.onAfterAddingFile = function(item) {
+      //$scope.croppedImage = '';
       item.croppedImage = '';
       var reader = new FileReader();
       reader.onload = function(event) {
         $scope.$apply(function(){
-          $scope.image = event.target.result;
+          item.image = event.target.result;
         });
       };
-      console.log(item);
       reader.readAsDataURL(item._file);
+    };
+
+    $scope.upload = function () {
+      $scope.uploader.uploadAll();
     };
 
     /**
@@ -131,9 +135,10 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
      *   https://developer.mozilla.org/en-US/docs/Web/API/FormData
      *   https://github.com/nervgh/angular-file-upload/issues/208
      */
-    uploader.onBeforeUploadItem = function(item) {
+    $scope.uploader.onBeforeUploadItem = function(item) {
       var blob = dataURItoBlob(item.croppedImage);
       item._file = blob;
+      console.log('before upload');
     };
 
     /**
@@ -153,33 +158,33 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
       return new Blob([new Uint8Array(array)], {type: mimeString});
     };
 
-    uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+    $scope.uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
       console.info('onWhenAddingFileFailed', item, filter, options);
     };
-    uploader.onAfterAddingAll = function(addedFileItems) {
+    $scope.uploader.onAfterAddingAll = function(addedFileItems) {
       console.info('onAfterAddingAll', addedFileItems);
     };
-    uploader.onProgressItem = function(fileItem, progress) {
+    $scope.uploader.onProgressItem = function(fileItem, progress) {
       console.info('onProgressItem', fileItem, progress);
     };
-    uploader.onProgressAll = function(progress) {
+    $scope.uploader.onProgressAll = function(progress) {
       console.info('onProgressAll', progress);
     };
-    uploader.onSuccessItem = function(fileItem, response, status, headers) {
+    $scope.uploader.onSuccessItem = function(fileItem, response, status, headers) {
       console.info('onSuccessItem', fileItem, response, status, headers);
     };
-    uploader.onErrorItem = function(fileItem, response, status, headers) {
+    $scope.uploader.onErrorItem = function(fileItem, response, status, headers) {
       console.info('onErrorItem', fileItem, response, status, headers);
     };
-    uploader.onCancelItem = function(fileItem, response, status, headers) {
+    $scope.uploader.onCancelItem = function(fileItem, response, status, headers) {
       console.info('onCancelItem', fileItem, response, status, headers);
     };
-    uploader.onCompleteItem = function(fileItem, response, status, headers) {
+    $scope.uploader.onCompleteItem = function(fileItem, response, status, headers) {
       console.info('onCompleteItem', fileItem, response, status, headers);
     };
-    uploader.onCompleteAll = function() {
-      console.info('onCompleteAll');
+    $scope.uploader.onCompleteAll = function() {
+      toastr.success('Image uploaded');
     };
 
-    console.info('uploader', uploader);
+    console.log($scope.uploader);
   }];
