@@ -264,7 +264,6 @@ body.boxed {
     padding-top: 100px;
     padding-bottom: 100px;
     background-attachment: fixed;
-    background-color: #18bc9c;
     background-size: cover !important;
     background-position: 50% 0 !important;
     background-repeat: no-repeat;
@@ -317,7 +316,7 @@ body.boxed {
 .wide .page-section.first-section,
 .boxed .page-section.first-section > .container {padding-top: 50px;}
 .wide .page-section.first-section.with-sidebar,
-.boxed .page-section.first-section.with-sidebar > .container {padding-top: 70px;}
+.boxed .page-section.first-section.with-sidebar > .container {padding-top: 40px;}
 /*.page-section.no-padding {padding: 0;}
 .page-section.xs-padding {padding-top: 12px; padding-bottom: 12px;}
 .page-section.sm-padding {padding-top: 20px; padding-bottom: 20px;}
@@ -342,8 +341,7 @@ body.boxed {
 
 .wide.multipage .page-section.breadcrumbs,
 .boxed.multipage .page-section.breadcrumbs > .container {
-    padding-top: 190px;
-    padding-bottom: 35px;
+    padding: 45px;
 }
 
 .wide .page-section.overlay:before,
@@ -964,7 +962,7 @@ textarea {
 .boxed.multipage .header > .container {
     background-color: #ffffff;
     padding-top: 0;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
 }
 .sub-page .header {
     background-color: rgba(129, 134, 140, 1);
@@ -1006,7 +1004,7 @@ textarea {
 }
 
 .multipage .header .header-wrapper {
-    padding: 30px 0 0 0;
+    padding: 15px 0 0 0;
 }
 
 .multipage .header.shrink .header-wrapper {
@@ -1070,7 +1068,7 @@ textarea {
 .multipage .shrink .logo a {margin-top: 6px;}
 .shrink .logo a .logo-fa {font-size: 15px;}
 .shrink .logo .fa-stack {width: 27px; height: 31px; line-height: 31px;}
-
+.shrink .logo a img {height: 40px;}
 .logo .fa-stack,
 .shrink .logo .fa-stack {
     -webkit-transition: all 0.2s ease-in-out;
@@ -1159,7 +1157,7 @@ textarea {
 .top-line .hot-line span {color: #dc143c;}
 .top-line .user-menu {float: right; border-right: solid 1px #c3c9ce; margin: 0 0 0 30px;}
 .boxed .top-line .user-menu {margin-right: -15px; border-right: none;}
-.top-line .user-menu li {float: left; border-left: solid 1px #c3c9ce; padding: 0 10px; line-height: 50px;}
+.top-line .user-menu li {float: left; border-left: solid 1px #c3c9ce; padding: 0 10px; line-height: 35px;}
 .top-line .user-menu li a {color: #96a0aa;}
 .top-line .user-menu li a:hover {color: #435469;}
 
@@ -1653,7 +1651,7 @@ textarea {
     padding-top: 100px;
     padding-bottom: 60px;
 }
-.multipage #main-slider .caption > .container {padding-top: 200px;}
+.multipage #main-slider .caption > .container {padding-top: 100px;}
 #main-slider .caption .div-table {
     width: 100%;
 }
