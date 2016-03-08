@@ -100,8 +100,8 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
     $scope.croppedImage = ''
 
     $scope.uploader = new FileUploader({
-      url : 'upload.php',
-      queueLimit: 2
+      url : 'https://api.gotute.com/users/me/tutor/image',
+      queueLimit: 1
     });
 
     // FILTERS
@@ -113,12 +113,8 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
       }
     });
 
-    var hasItemInQueue;
-
     $scope.uploader.onAfterAddingFile = function(item) {
       $scope.originImage = window.URL.createObjectURL(item._file);
-      if (!hasItemInQueue) hasItemInQueue = true;
-      else $scope.uploader.removeFromQueue(0)
     };
 
     $scope.onImageLoaded = function() {
@@ -130,7 +126,7 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
       window.URL.revokeObjectURL($scope.croppedImageUri);
     }
 
-    $scope.upload = function () {
+    $scope.upload = function (){
       $scope.uploader.uploadItem(0);
     };
 
@@ -140,9 +136,9 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
     };
 
     $scope.uploader.onBeforeUploadItem = function(item) {
-      var blob = $scope.croppedImage;
-      item._file = blob;
-      console.log(item, $scope.uploader.isFileLikeObject(item))
+      item.file.name = "image.png";
+      item.file.type = "image/png";
+      item._file = $scope.croppedImage;
     };
     $scope.uploader.onCompleteAll = function() {
       toastr.success('Image uploaded');

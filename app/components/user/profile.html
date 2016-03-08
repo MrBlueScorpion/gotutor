@@ -132,12 +132,13 @@
                 <p>
                     <div class="cropArea">
                         <img src="{{ defaultImageUrl }}" ng-show="!originImage"/>
-                        <img-crop image="originImage" result-blob="croppedImage" url-blob="croppedImageUri" area-type="square" on-load-done="onImageLoaded()" ng-show="originImage"></img-crop>
+                        <img-crop image="originImage" result-blob="croppedImage" url-blob="croppedImageUri"
+                                  area-type="square" on-load-done="onImageLoaded()" ng-show="originImage"></img-crop>
                     </div>
                     <br/>
                     <div class="text-center">
                         <div class="btn btn-theme btn-theme-sm btn-file" ng-show="!originImage">
-                            Select photo<input type="file" nv-file-select uploader="uploader" filters="" />
+                            Select photo<input type="file" nv-file-select uploader="uploader" />
                         </div>
 
                         <div ng-show="originImage">
