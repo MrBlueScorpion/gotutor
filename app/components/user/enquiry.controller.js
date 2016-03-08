@@ -30,7 +30,10 @@ module.exports = ['$scope', 'TutorApiService', 'toastr', function($scope, TutorA
   $scope.checkAll = function (check) {
     $scope.getPagedResults().forEach(function(message) {
       message.checked = !check;
-    })
+    });
+    $scope.checkedMessages = $scope.getPagedResults().filter(function(message) {
+      return message.checked;
+    });
   };
 
   $scope.getPagedResults = function() {
