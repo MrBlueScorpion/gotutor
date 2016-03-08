@@ -15,6 +15,7 @@ module.exports = ['$scope', '$stateParams', 'tutorId', 'TutorApiService', 'toast
       TutorApiService.sendMessage($scope.enquiry).then(function (response) {
         if (!_.isUndefined(response.success)) {
           toastr.success(response.success);
+          $scope.$$childHead.enquiryForm.$setUntouched(); // maybe not a good way
           $scope.enquiry = {};
         }
       });
