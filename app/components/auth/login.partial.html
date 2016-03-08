@@ -1,7 +1,7 @@
 <div class="col-sm-6 col-sm-offset-3">
     <div class="form-group with-icon" ng-class="{'has-error':form.email.$invalid && form.email.$touched}">
         <i class="fa fa-envelope"></i>
-        <input type="email" name="email" placeholder="Email" ng-model="user.email"
+        <input type="email" name="email" placeholder="Email" ng-model="$parent.user.email"
                required title="Email is required"
                class="form-control placeholder"/>
         <div class="text-danger" ng-messages="form.email.$error" ng-show="form.email.$touched" role="alert">
@@ -14,7 +14,7 @@
 <div class="col-sm-6 col-sm-offset-3">
     <div class="form-group with-icon" ng-class="{'has-error':form.password.$invalid && form.password.$touched}">
         <i class="fa fa-key"></i>
-        <input type="password" name="password" id="password" placeholder="Password" ng-model="user.password"
+        <input type="password" name="password" id="password" placeholder="Password" ng-model="$parent.user.password"
                required title="Password is required" ng-minlength="6"
                class="form-control placeholder"/>
         <div class="text-danger" ng-messages="form.password.$error" ng-show="form.password.$touched" role="alert">
