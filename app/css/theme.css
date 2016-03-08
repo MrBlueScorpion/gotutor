@@ -845,13 +845,13 @@ p.btn-row .btn {margin-top: 10px; margin-right: 10px;}
     border: 1px solid #c8cdd2;
     font-size: 18px;
     color: #6d7a83;
-    -webkit-appearance: none; /* ios */
+    /*-webkit-appearance: none; !* ios *!*/
     -webkit-box-shadow: none;
     box-shadow: none;
 }
 .form-control:focus {
     border-color: #ea032d;
-    -webkit-appearance: none; /* ios */
+    /*-webkit-appearance: none; !* ios *!*/
     -webkit-box-shadow: none;
     box-shadow: none;
 }

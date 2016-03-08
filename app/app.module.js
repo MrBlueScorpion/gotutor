@@ -104,13 +104,29 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
       })
       .state('register', {
         url: '/register?test&link',
-        templateUrl: 'components/auth/register.html',
-        controller : 'RegisterController'
+        views: {
+          '': {
+            templateUrl: 'components/auth/register.html',
+            controller : 'RegisterController'
+          },
+          'partial@register': {
+            templateUrl: 'components/auth/login.partial.html'
+          }
+        }
+
       })
       .state('login', {
         url: '/login',
-        templateUrl: 'components/auth/login.html',
-        controller : 'LoginController'
+        views: {
+          '': {
+            templateUrl: 'components/auth/login.html',
+            controller : 'LoginController'
+          },
+          'partial@login': {
+            templateUrl: 'components/auth/login.partial.html'
+          }
+        }
+
       })
       .state('forgotpassword', {
         url: '/forgotpassword',

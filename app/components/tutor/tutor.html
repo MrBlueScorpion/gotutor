@@ -57,6 +57,9 @@
                                     data-toggle="tooltip" title="Name is required"
                                     ng-model="enquiry.name" required="required"
                                     class="form-control placeholder"/>
+                            <div ng-if="enquiryForm.name.$touched" ng-messages="enquiryForm.name.$error">
+                                <small ng-message="required">Please enter a value for this field.</small>
+                            </div>
                         </div>
                     </div>
 
@@ -101,16 +104,15 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <select name="claimOption" ng-model="claim.option" class="form-control" required>
-                                    <option value="fullname">Full Name</option>
-                                    <option value="email">Email</option>
-                                    <option value="phone">Contact Number</option>
+                                <select name="claimOption" ng-model="claim.option" class="form-control" required
+                                        ng-options="key as value for (key, value) in claim.options">
+                                    <option value="">Please select...</option>
+
                                 </select>
                             </div>
-
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="Full Name/Email/Contact Number"
-                                       ng-model="claim.value" required>
+                                       ng-model="claim.value" required ng-disabled="!claim.option">
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-theme btn-theme-md btn-theme-transparent"

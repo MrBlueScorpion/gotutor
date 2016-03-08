@@ -13,36 +13,19 @@
             <hr class="page-divider half"/>
             <!-- use ng-submit to catch the form submission and use our Angular function -->
 
-            <form id="login" ng-submit="login(user)" name="loginForm">
+            <form id="login" ng-submit="login(user)" name="form">
 
                 <!-- our nested state views will be injected here -->
                 <!-- register.html -->
                 <div class="row">
-
-                    <div class="col-sm-6 col-sm-offset-3">
-                        <div class="form-group with-icon">
-                            <i class="fa fa-envelope"></i>
-                            <input type="email" name="email" id="email" placeholder="Email" ng-model="user.email"
-                                   required title="Email is required"
-                                   class="form-control placeholder"/>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-sm-offset-3">
-                        <div class="form-group with-icon">
-                            <i class="fa fa-key"></i>
-                            <input type="password" name="password" id="password" placeholder="Password" ng-model="user.password"
-                                   required title="Password is required"
-                                   class="form-control placeholder"/>
-                        </div>
-                    </div>
-
+                    <div ui-view="partial"></div>
+                    
                     <div class="col-sm-6  col-sm-offset-3">
                         <div class="form-group">
                             <input type="submit" name="submit"
                                    class="form-button form-button-submit btn btn-theme btn-theme-md btn-theme-transparent btn-block"
                                    id="submit_btn" value="Log in"
-                                   ng-disabled="loginForm.$invalid"/>
+                                   ng-disabled="form.$invalid"/>
                         </div>
                     </div>
                     <div class="col-sm-6  col-sm-offset-3">

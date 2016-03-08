@@ -31,7 +31,11 @@ module.exports = ['$scope', '$stateParams', 'tutorId', 'TutorApiService', 'toast
     };
 
     $scope.claim = {
-      option : 'fullname'
+      options : {
+        fullname : 'Full Name',
+        email: 'Email',
+        phone: 'Contact Number'
+      }
     }
 
   }];
