@@ -49,35 +49,38 @@
 
                 <div class="row">
 
-                    <div class="col-sm-12 af-outer af-required">
-                        <div class="form-group af-inner with-icon">
+                    <div class="col-sm-12">
+                        <div class="form-group with-icon" ng-class="{'has-error': enquiryForm.name.$invalid && enquiryForm.name.$touched}">
                             <i class="fa fa-user"></i>
                             <input
                                     type="text" name="name" id="name" placeholder="Name" size="30"
                                     data-toggle="tooltip" title="Name is required"
                                     ng-model="enquiry.name" required="required"
                                     class="form-control placeholder"/>
-                            <div ng-if="enquiryForm.name.$touched" ng-messages="enquiryForm.name.$error">
+                            <div class="text-danger" ng-if="enquiryForm.name.$touched" ng-messages="enquiryForm.name.$error">
                                 <small ng-message="required">Please enter a value for this field.</small>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-sm-12 af-outer af-required">
-                        <div class="form-group af-inner with-icon">
+                    <div class="col-sm-12">
+                        <div class="form-group with-icon" ng-class="{'has-error': enquiryForm.contact.$invalid && enquiryForm.contact.$touched}">
                             <i class="fa fa-globe"></i>
                             <input
-                                    type="text" name="email" id="email" placeholder="Email / Phone number" size="30"
-                                    data-toggle="tooltip" title="Contact method is required"
+                                    type="text" name="contact" placeholder="Email / Phone number" size="30"
+                                     title="Contact method is required"
                                     ng-model="enquiry.contact" required="required"
                                     class="form-control placeholder"/>
+                            <div class="text-danger" ng-if="enquiryForm.contact.$touched" ng-messages="enquiryForm.contact.$error">
+                                <small ng-message="required">Please enter a value for this field.</small>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="col-sm-12 af-outer af-required">
-                        <div class="form-group af-inner">
+                    <div class="col-sm-12">
+                        <div class="form-group af-inner" ng-class="{'has-error': enquiryForm.message.$invalid && enquiryForm.message.$touched}">
                                     <textarea
-                                            name="message" id="input-message" placeholder="Message" rows="6" cols="50"
+                                            name="message"  placeholder="Message" rows="6" cols="50"
                                             data-toggle="tooltip" title="Message is required"
                                             ng-model="enquiry.message" required="required"
                                             class="form-control placeholder"></textarea>

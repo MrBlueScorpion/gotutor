@@ -13,7 +13,7 @@
                 </h1>
 
 
-                <div class="form-group">
+                <div class="form-group" ng-class="{'has-error': profileForm.name.$invalid && profileForm.name.$dirty}">
                     <label for="name" class="col-md-2 col-lg-2 control-label">Name: </label>
                     <div class="col-md-9 col-lg-9">
                         <input type="text" name="name" id="name" placeholder="Your Name"
@@ -23,7 +23,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" ng-class="{'has-error': profileForm.phone.$invalid && profileForm.phone.$dirty}">
                     <label for="phone" class="col-md-2 col-lg-2 control-label">Phone: </label>
                     <div class="col-md-9 col-lg-9">
                         <input type="text" name="phone" id="phone" placeholder="Your Phone"
@@ -33,7 +33,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" ng-class="{'has-error': profileForm.gender.$invalid && profileForm.gender.$dirty}">
                     <label for="gender" class="col-md-2 control-label">Gender: </label>
                     <div class="col-md-7">
                         <select class="form-control" ng-model="tutor.gender" id="gender"
@@ -116,18 +116,15 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" ng-class="{'has-error': profileForm.description.$invalid && profileForm.description.$dirty}">
                     <label for="description" class="col-md-2 control-label">Description: </label>
                     <div class="col-md-9">
                 <textarea id="description" placeholder="Type Your Description..." rows="6" cols="50"
-                          data-toggle="tooltip" title="Description is required"
+                          data-toggle="tooltip" title="Description is required" name="description"
                           ng-model="tutor.description"
                           class="form-control placeholder"></textarea>
                     </div>
                 </div>
-
-
-
 
             </section>
             <!-- Sidebar -->

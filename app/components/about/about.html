@@ -116,33 +116,33 @@
             <span data-animation="fadeInRight" data-animation-delay="100" class="title-inner">Contact Us<small> / tell us your feedback</small></span>
         </h1>
 
-        <form class="row" name="feedbackForm" ng-submit="sendFeedback()" novalidate>
+        <form name="feedbackForm" ng-submit="sendFeedback()" novalidate>
         <div class="row">
             <div class="col-sm-12">
-                <div class="form-group with-icon">
+                <div class="form-group with-icon" ng-class="{'has-error': feedbackForm.name.$invalid && feedbackForm.name.$touched}">
                     <i class="fa fa-user"></i>
                     <input
                             type="text" name="name" placeholder="Your name"
-                            ng-model="feedback.name" required="required"
+                            ng-model="feedback.name" required
                             class="form-control placeholder"/>
                 </div>
             </div>
 
             <div class="col-sm-12">
-                <div class="form-group with-icon">
+                <div class="form-group with-icon" ng-class="{'has-error': feedbackForm.contact.$invalid && feedbackForm.contact.$touched}">
                     <i class="fa fa-globe"></i>
                     <input
                             type="text" name="contact"  placeholder="Your contact number / email"
-                            ng-model="feedback.contact" required="required"
+                            ng-model="feedback.contact" required
                             class="form-control placeholder"/>
                 </div>
             </div>
 
             <div class="col-sm-12">
-                <div class="form-group">
+                <div class="form-group" ng-class="{'has-error': feedbackForm.message.$invalid && feedbackForm.message.$touched}">
                     <textarea
                         name="message" id="input-message" placeholder="Your Message..." rows="6" cols="50"
-                        ng-model="feedback.message" required="required"
+                        ng-model="feedback.message" required
                         class="form-control placeholder"></textarea>
                 </div>
             </div>
