@@ -129,21 +129,31 @@
             </section>
             <!-- Sidebar -->
             <aside id="sidebar" class="sidebar col-sm-4 col-md-3">
-                <div>
+                <p>
                     <div class="cropArea">
-                        <img src="assets/img/default-avatar.jpg" ng-show="!originImage"/>
-                        <img-crop image="originImage" result-image="croppedImage" area-type="square" ng-show="originImage"></img-crop>
+                        <img src="{{ defaultImageUrl }}" ng-show="!originImage"/>
+                        <img-crop image="originImage" result-blob="croppedImage" url-blob="croppedImageUri" area-type="square" on-load-done="onImageLoaded()" ng-show="originImage"></img-crop>
+                    </div>
+                    <br/>
+                    <div class="text-center">
+                        <div class="btn btn-theme btn-theme-sm btn-file" ng-show="!originImage">
+                            Select photo<input type="file" nv-file-select uploader="uploader" filters="" />
+                        </div>
+
+                        <div ng-show="originImage">
+                            <button ng-click="upload()" class="btn btn-theme btn-theme-sm btn-file">
+                                Upload
+                            </button>
+                            <button ng-show="originImage" ng-click="cancel()" class="btn btn-theme btn-theme-sm btn-file">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                    <br/>
+                    <div>
+                        <img ng-src="{{croppedImageUri}}" gt-load="onCropped()" class="thumb" ng-show="originImage"/>
                     </div>
 
-                    <div class="btn btn-theme btn-theme-sm btn-file">
-                        Upload photo<input type="file" nv-file-select uploader="uploader" filters="" />
-                    </div>
-                    <div>
-                        <img ng-src="{{croppedImage}}" class="thumb" ng-show="originImage"/>
-                    </div>
-                    <button ng-show="originImage" ng-click="upload()" class="btn btn-theme btn-theme-sm btn-file">
-                        Confirm
-                    </button>
                 </div>
 
             </aside>

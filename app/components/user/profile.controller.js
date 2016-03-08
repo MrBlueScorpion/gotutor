@@ -15,6 +15,7 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
     AuthService.isAuthenticated().then(function (user) {
       TutorApiService.getTutorProfile().then(function (data) {
         $scope.tutor = data;
+        if ($scope.tutor.image) $scope.defaultImageUrl = $scope.tutor.image;
         if (data) {
           var minRate = $scope.tutor.rate.min ? $scope.tutor.rate.min : 15;
           var maxRate = $scope.tutor.rate.max ? $scope.tutor.rate.max : 100;
@@ -94,18 +95,9 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
       return '';
     };
 
-    $scope.originImage = null
+    $scope.defaultImageUrl = "assets/img/default-avatar.jpg"
+    $scope.originImage = null;
     $scope.croppedImage = ''
-
-    var dataURItoBlob = function(dataURI) {
-      var binary = atob(dataURI.split(',')[1]);
-      var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-      var array = [];
-      for(var i = 0; i < binary.length; i++) {
-        array.push(binary.charCodeAt(i));
-      }
-      return new Blob([new Uint8Array(array)], {type: mimeString});
-    };
 
     $scope.uploader = new FileUploader({
       url : 'upload.php',
@@ -124,21 +116,31 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
     var hasItemInQueue;
 
     $scope.uploader.onAfterAddingFile = function(item) {
-      var reader = new FileReader();
-      reader.onload = function() {
-        $scope.originImage = reader.result;
-        if (!hasItemInQueue) hasItemInQueue = true;
-        else $scope.uploader.removeFromQueue(0)
-      };
-      reader.readAsDataURL(item._file);
+      $scope.originImage = window.URL.createObjectURL(item._file);
+      if (!hasItemInQueue) hasItemInQueue = true;
+      else $scope.uploader.removeFromQueue(0)
     };
+
+    $scope.onImageLoaded = function() {
+      window.URL.revokeObjectURL($scope.originImage);
+    }
+
+    $scope.onCropped = function() {
+      // TODO: this is just for the initial load of the image. Need to release for every single update.
+      window.URL.revokeObjectURL($scope.croppedImageUri);
+    }
 
     $scope.upload = function () {
       $scope.uploader.uploadItem(0);
     };
 
+    $scope.cancel = function () {
+      $scope.uploader.clearQueue();
+      $scope.originImage = null;
+    };
+
     $scope.uploader.onBeforeUploadItem = function(item) {
-      var blob = dataURItoBlob($scope.croppedImage);
+      var blob = $scope.croppedImage;
       item._file = blob;
       console.log(item, $scope.uploader.isFileLikeObject(item))
     };
