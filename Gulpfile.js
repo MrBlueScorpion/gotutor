@@ -57,7 +57,7 @@ gulp.task('build:css', function () {
     './app/bower_components/ui-select/dist/select.css',
     './app/bower_components/seiyria-bootstrap-slider/css/bootstrap-slider.css',
     './app/bower_components/angular-toastr/dist/angular-toastr.css',
-    './app/bower_components/ng-img-crop/compile/minified/ng-img-crop.css',
+    './app/bower_components/ng-img-crop-full-extended/compile/minified/ng-img-crop.css',
     './app/css/*.css'
   ]).pipe(concat('app.main.css'))
   
