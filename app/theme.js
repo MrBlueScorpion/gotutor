@@ -125,10 +125,10 @@ window.theme = function () {
 
     // preloader
     // ---------------------------------------------------------------------------------------
-    $(window).load(function () {
-        $('#status').fadeOut();
-        $('#preloader').delay(200).fadeOut(100);
-    });
+//    $(window).load(function () {
+//        $('#status').fadeOut();
+//        $('#preloader').delay(200).fadeOut(100);
+//    });
 
     // Isotope
     $(window).load(function () {

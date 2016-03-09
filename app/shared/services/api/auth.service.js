@@ -157,6 +157,10 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', 'TestService', fun
       return $q.reject('Server error. Please try again later.');
     });
   };
+
+  var getCurrentUser = function() {
+    return currentUser;
+  }
   
   return {
     registerUser : registerUser,
@@ -168,7 +172,8 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', 'TestService', fun
     changePassword: changePassword,
     deleteAccount: deleteAccount,
     forgotPassword: forgotPassword,
-    resetPassword: resetPassword
+    resetPassword: resetPassword,
+    getCurrentUser: getCurrentUser
   }
 
 }];
