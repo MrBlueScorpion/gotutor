@@ -70,10 +70,10 @@
                                 <div class="col-md-2 hidden-sm hidden-xs">
                                     <a ui-sref="tutor({tutorId: tutor.id})">
                                         <div class="media">
-                                            <img ng-src="" ng-if="tutor.img">
-                                            <img ng-src="//placeholdit.imgix.net/~text/?txtsize=33&txt=Male&w=150&h=194" ng-if="tutor.gender && tutor.gender.toLowerCase() == 'male'">
-                                            <img ng-src="//placeholdit.imgix.net/~text/?txtsize=33&txt=Female&w=150&h=194" ng-if="tutor.gender && tutor.gender.toLowerCase() == 'female'">
-                                            <img ng-src="//placeholdit.imgix.net/~text/?txtsize=33&txt=Institute&w=150&h=194" ng-if="!tutor.img && !tutor.gender">
+                                            <img ng-src="{{'http://www.gotute.com/images/' + tutor.image}}" ng-if="tutor.image">
+                                            <img ng-src="//placeholdit.imgix.net/~text/?txtsize=33&txt=Male&w=150&h=194" ng-if="!tutor.image && tutor.gender && tutor.gender.toLowerCase() == 'male'">
+                                            <img ng-src="//placeholdit.imgix.net/~text/?txtsize=33&txt=Female&w=150&h=194" ng-if="!tutor.image && tutor.gender && tutor.gender.toLowerCase() == 'female'">
+                                            <img ng-src="//placeholdit.imgix.net/~text/?txtsize=33&txt=Institute&w=150&h=194" ng-if="!tutor.image && !tutor.gender">
                                             <div class="caption hovered"></div>
                                         </div>
                                     </a>
