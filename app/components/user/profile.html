@@ -135,7 +135,7 @@ ss
             </section>
             <!-- Sidebar -->
             <aside id="sidebar" class="sidebar col-sm-4 col-md-3">
-                <p>
+                <div>
                     <div class="cropArea">
                         <img src="{{ defaultImageUrl }}" ng-show="!originImage" width="250"/>
                         <img-crop image="originImage" result-blob="croppedImage" url-blob="croppedImageUri"
@@ -160,9 +160,7 @@ ss
                     <div>
                         <img ng-src="{{croppedImageUri}}" gt-load="onCropped()" class="thumb" ng-show="originImage"/>
                     </div>
-
                 </div>
-
             </aside>
             <!-- /Sidebar -->
 

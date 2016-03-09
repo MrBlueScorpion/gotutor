@@ -105,23 +105,20 @@
                     information</p>
                 <form class="" ng-submit="claimTutor(claim)" name="tutorClaim">
                     <div class="row">
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <select name="claimOption" ng-model="claim.option" class="form-control" required
-                                        ng-options="key as value for (key, value) in claim.options">
-                                    <option value="">Please select...</option>
-
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Full Name/Email/Contact Number"
-                                       ng-model="claim.value" required ng-disabled="!claim.option">
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-theme btn-theme-md btn-theme-transparent"
-                                        ng-disabled="tutorClaim.$invalid">Claim this tutor
-                                </button>
-                            </div>
+                        <div class="form-group col-lg-4">
+                            <select name="claimOption" ng-model="claim.option" class="form-control" required
+                                    ng-options="key as value for (key, value) in claim.options">
+                                <option value="">Please select...</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-5">
+                            <input type="text" class="form-control" placeholder="Name/Email/Contact Number"
+                                   ng-model="claim.value" required ng-disabled="!claim.option">
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <button type="submit" class="btn btn-theme btn-theme-md btn-theme-transparent"
+                                    ng-disabled="tutorClaim.$invalid">Claim this tutor
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -130,6 +127,17 @@
         </section>
 
         <!-- /Content -->
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar col-sm-4 col-md-3">
+            <div class="media">
+                <img ng-src="{{'http://www.gotute.com/images/' + tutor.image}}" ng-if="tutor.image">
+                <img ng-src="//placeholdit.imgix.net/~text/?txtsize=33&txt=Male&w=150&h=194" ng-if="!tutor.image && tutor.gender && tutor.gender.toLowerCase() == 'male'">
+                <img ng-src="//placeholdit.imgix.net/~text/?txtsize=33&txt=Female&w=150&h=194" ng-if="!tutor.image && tutor.gender && tutor.gender.toLowerCase() == 'female'">
+                <img ng-src="//placeholdit.imgix.net/~text/?txtsize=33&txt=Institute&w=150&h=194" ng-if="!tutor.image && !tutor.gender">
+                <div class="caption hovered"></div>
+            </div>
+        </aside>
+    <!-- /Sidebar -->
     </div>
 </section>
 <!-- /PAGE -->
