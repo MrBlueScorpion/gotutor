@@ -1,3 +1,9 @@
+<div id="preloader">
+    <div id="status">
+        <div class="spinner"></div>
+    </div>
+</div>
+ss
 <section class="page-section with-sidebar sidebar-right first-section">
 
     <div class="container">
@@ -13,7 +19,7 @@
                 </h1>
 
 
-                <div class="form-group">
+                <div class="form-group" ng-class="{'has-error': profileForm.name.$invalid && profileForm.name.$dirty}">
                     <label for="name" class="col-md-2 col-lg-2 control-label">Name: </label>
                     <div class="col-md-9 col-lg-9">
                         <input type="text" name="name" id="name" placeholder="Your Name"
@@ -23,7 +29,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" ng-class="{'has-error': profileForm.phone.$invalid && profileForm.phone.$dirty}">
                     <label for="phone" class="col-md-2 col-lg-2 control-label">Phone: </label>
                     <div class="col-md-9 col-lg-9">
                         <input type="text" name="phone" id="phone" placeholder="Your Phone"
@@ -33,7 +39,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" ng-class="{'has-error': profileForm.gender.$invalid && profileForm.gender.$dirty}">
                     <label for="gender" class="col-md-2 control-label">Gender: </label>
                     <div class="col-md-7">
                         <select class="form-control" ng-model="tutor.gender" id="gender"
@@ -116,39 +122,48 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" ng-class="{'has-error': profileForm.description.$invalid && profileForm.description.$dirty}">
                     <label for="description" class="col-md-2 control-label">Description: </label>
                     <div class="col-md-9">
                 <textarea id="description" placeholder="Type Your Description..." rows="6" cols="50"
-                          data-toggle="tooltip" title="Description is required"
+                          data-toggle="tooltip" title="Description is required" name="description"
                           ng-model="tutor.description"
                           class="form-control placeholder"></textarea>
                     </div>
                 </div>
 
-
-
-
             </section>
-            <!-- Sidebar
+            <!-- Sidebar -->
             <aside id="sidebar" class="sidebar col-sm-4 col-md-3">
-                <div>
-                    <div>
-                        <img ng-src="{{uploader.queue[0].croppedImage}}" class="thumb"/>
-                    </div>
-
-                    <h4>Crop your image</h4>
+                <p>
                     <div class="cropArea">
-                        <img-crop image="uploader.queue[0].image" result-image="uploader.queue[0].croppedImage" area-type="square"></img-crop>
+                        <img src="{{ defaultImageUrl }}" ng-show="!originImage" width="250"/>
+                        <img-crop image="originImage" result-blob="croppedImage" url-blob="croppedImageUri"
+                                  area-type="square" on-load-done="onImageLoaded()" ng-show="originImage"></img-crop>
+                    </div>
+                    <br/>
+                    <div class="text-center">
+                        <div class="btn btn-theme btn-theme-sm btn-file" ng-show="!originImage">
+                            Select photo<input type="file" nv-file-select uploader="uploader" />
+                        </div>
+
+                        <div ng-show="originImage">
+                            <button ng-click="upload()" class="btn btn-theme btn-theme-sm btn-file">
+                                Upload
+                            </button>
+                            <button ng-show="originImage" ng-click="cancel()" class="btn btn-theme btn-theme-sm btn-file">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                    <br/>
+                    <div>
+                        <img ng-src="{{croppedImageUri}}" gt-load="onCropped()" class="thumb" ng-show="originImage"/>
                     </div>
 
-                    <div class="btn btn-theme btn-theme-sm btn-file">
-                        Select..
-                        <input type="file" nv-file-select uploader="uploader" filters="" multiple/>
-                    </div>
                 </div>
 
-            </aside>-->
+            </aside>
             <!-- /Sidebar -->
 
             <div class="form-group">

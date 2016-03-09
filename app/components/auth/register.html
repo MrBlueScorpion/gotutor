@@ -48,33 +48,13 @@
             <hr class="page-divider half"/>
                 <!-- use ng-submit to catch the form submission and use our Angular function -->
 
-            <form id="registerForm" ng-submit="signUp(user)" name="registerForm">
+            <form id="form" ng-submit="signUp(user)" name="form">
 
                     <!-- our nested state views will be injected here -->
                     <!-- register.html -->
                     <div class="row">
 
-                        <div class="col-sm-6 col-sm-offset-3">
-                            <div class="form-group with-icon">
-                                <i class="fa fa-envelope"></i>
-                                <input type="email" name="email" id="email" placeholder="Email" ng-model="user.email"
-                                        required title="Email is required"
-                                        class="form-control placeholder"/>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 col-sm-offset-3">
-                            <div class="form-group with-icon">
-                                <i class="fa fa-key"></i>
-                                <input type="password" name="password" id="password" placeholder="Password" ng-model="user.password"
-                                        required title="Password is required" ng-minlength="6"
-                                        class="form-control placeholder"/>
-                                <div ng-messages="registerForm.password.$error" ng-show="registerForm.password.$dirty" style="color:red" role="alert">
-                                  <small ng-message="required">Required</small>
-                                  <small ng-message="minlength">Passwords must be at least 6 characters in length</small>
-                                </div>
-                            </div>
-                        </div>
+                        <div ui-view="partial"></div>
                         <div class="col-sm-6 col-sm-offset-3">
                             <div class="form-group">
                               <small>
@@ -88,7 +68,7 @@
                                 <input type="submit" name="submit"
                                        class="form-button form-button-submit btn btn-theme btn-theme-md btn-theme-transparent btn-block"
                                        id="submit_btn" value="Register"
-                                ng-disabled="registerForm.$invalid"/>
+                                ng-disabled="form.$invalid"/>
                             </div>
                         </div>
                     </div>

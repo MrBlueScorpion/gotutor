@@ -15,6 +15,7 @@ module.exports = ['$scope', '$stateParams', 'tutorId', 'TutorApiService', 'toast
       TutorApiService.sendMessage($scope.enquiry).then(function (response) {
         if (!_.isUndefined(response.success)) {
           toastr.success(response.success);
+          $scope.$$childHead.enquiryForm.$setUntouched(); // maybe not a good way
           $scope.enquiry = {};
         }
       });
@@ -31,7 +32,11 @@ module.exports = ['$scope', '$stateParams', 'tutorId', 'TutorApiService', 'toast
     };
 
     $scope.claim = {
-      option : 'fullname'
+      options : {
+        fullname : 'Full Name',
+        email: 'Email',
+        phone: 'Contact Number'
+      }
     }
 
   }];

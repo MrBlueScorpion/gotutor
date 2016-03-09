@@ -13,7 +13,7 @@ require('angular-bootstrap-checkbox');
 require('angular-cookies');
 require('angular-bootstrap');
 require('angular-file-upload');
-require('ng-img-crop');
+require('ng-img-crop-full-extended');
 
 // app components
 require('./components/home/home.module');
@@ -26,6 +26,7 @@ var TutorApiService = require('./shared/services/api/tutor.service'),
 
 var SliderDirective = require('./shared/directives/slider.directive');
 var CompareToDirective = require('./shared/directives/compareto.directive');
+var GtLoadDirective = require('./shared/directives/gt-load.directive');
 
 var HighlightFilter = require('./shared/filters/highlight.filter'),
     Nl2brFilter = require('./shared/filters/nl2br.filter');
@@ -54,6 +55,7 @@ app.service('TutorApiService', TutorApiService)
    .service('TestService', TestService)
    .directive('slider', SliderDirective)
    .directive('compareTo', CompareToDirective)
+    .directive('gtLoad', GtLoadDirective)
    .filter('highlight', HighlightFilter)
    .filter('nl2br', Nl2brFilter);
 
@@ -104,13 +106,29 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
       })
       .state('register', {
         url: '/register?test&link',
-        templateUrl: 'components/auth/register.html',
-        controller : 'RegisterController'
+        views: {
+          '': {
+            templateUrl: 'components/auth/register.html',
+            controller : 'RegisterController'
+          },
+          'partial@register': {
+            templateUrl: 'components/auth/login.partial.html'
+          }
+        }
+
       })
       .state('login', {
         url: '/login',
-        templateUrl: 'components/auth/login.html',
-        controller : 'LoginController'
+        views: {
+          '': {
+            templateUrl: 'components/auth/login.html',
+            controller : 'LoginController'
+          },
+          'partial@login': {
+            templateUrl: 'components/auth/login.partial.html'
+          }
+        }
+
       })
       .state('forgotpassword', {
         url: '/forgotpassword',
