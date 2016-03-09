@@ -112,7 +112,7 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
   uploader.onSuccessItem = function(item, resp) {
     uploader.clearQueue();
     $scope.originImage = null;
-    $scope.defaultImageUrl = "http://www.gotute.com/" + resp;
+    $scope.defaultImageUrl = "http://www.gotute.com" + resp;
     toastr.success('Image uploaded');
   };
 
