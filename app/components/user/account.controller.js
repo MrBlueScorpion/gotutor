@@ -4,7 +4,7 @@ module.exports = ['$scope', 'AuthService', 'toastr',
   function($scope, AuthService, toastr) {
 
     $scope.changePassword = function() {
-      AuthService.changePassword($scope.oldPass, $scope.newPass)
+      return AuthService.changePassword($scope.oldPass, $scope.newPass)
       .then(function(d, e) {
         toastr.success("Password updated.");
       }, function (e) {
@@ -13,6 +13,6 @@ module.exports = ['$scope', 'AuthService', 'toastr',
     };
     
     $scope.deleteAccount = function() {
-      AuthService.deleteAccount().catch(toastr.error.bind(toastr))
+      return AuthService.deleteAccount().catch(toastr.error.bind(toastr))
     }
 }];

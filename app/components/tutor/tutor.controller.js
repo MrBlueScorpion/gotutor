@@ -1,18 +1,26 @@
 module.exports = ['$scope', '$stateParams', 'tutorId', 'TutorApiService', 'toastr', '$location', '$state',
   function ($scope, $stateParams, tutorId, TutorApiService, toastr, $location, $state) {
-
-    TutorApiService.getTutorById(tutorId).then(function (tutor) {
-      if (!_.isUndefined(tutor.error)) {
-        $scope.tutor = null;
+    var showLoader = function (show) {
+      if (show) {
+        $('#status').show();
+        $('#preloader').show();
       } else {
-        $scope.tutor = tutor;
-        $scope.enquiry = {};
+        $('#status').hide();
+        $('#preloader').hide();
       }
-    });
+    };
+
+    showLoader(true);
+    TutorApiService.getTutorById(tutorId).then(function (tutor) {
+      $scope.tutor = tutor;
+      $scope.enquiry = {};
+    }, function() {
+      $scope.tutor = null;
+    }).finally(showLoader);
 
     $scope.sendEnquiry = function () {
       $scope.enquiry.tutorId = tutorId;
-      TutorApiService.sendMessage($scope.enquiry).then(function (response) {
+      return TutorApiService.sendMessage($scope.enquiry).then(function (response) {
         if (!_.isUndefined(response.success)) {
           toastr.success(response.success);
           $scope.$$childHead.enquiryForm.$setUntouched(); // maybe not a good way
@@ -25,7 +33,7 @@ module.exports = ['$scope', '$stateParams', 'tutorId', 'TutorApiService', 'toast
       var data = {};
       data.tutorId = tutorId;
       data[claim.option] = claim.value;
-      TutorApiService.claimTutor(data)
+      return TutorApiService.claimTutor(data)
         .then(function (data) {
           $state.go('register', data);
         }, toastr.error.bind(toastr));
@@ -38,5 +46,4 @@ module.exports = ['$scope', '$stateParams', 'tutorId', 'TutorApiService', 'toast
         phone: 'Contact Number'
       }
     }
-
   }];

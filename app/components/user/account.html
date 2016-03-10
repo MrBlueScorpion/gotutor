@@ -6,7 +6,7 @@
             <span data-animation="flipInY" data-animation-delay="100" class="icon-inner"><span class="fa-stack"><i class="fa rhex fa-stack-2x"></i><i class="fa fa-question-circle fa-stack-1x"></i></span></span>
             <span data-animation="fadeInRight" data-animation-delay="100" class="title-inner">Change password</span>
         </h1>
-        <form class="row" name="changePasswordForm" ng-submit="changePassword()" novalidate>
+        <form class="row" name="changePasswordForm">
         <div class="row">
             <div class="col-sm-12">
                 <div class="form-group with-icon">
@@ -53,7 +53,8 @@
 
             <div class="col-sm-12 text-center">
                 <div class="form-group">
-                    <input type="submit" ng-disabled="changePasswordForm.$invalid" class="form-button form-button-submit btn btn-theme btn-theme-lg btn-theme-transparent"  value="Update" />
+                    <input type="submit" ng-disabled="changePasswordForm.$invalid" value="Update" gt-action="changePassword()"
+                           class="form-button form-button-submit btn btn-theme btn-theme-lg btn-theme-transparent" />
                 </div>
             </div>
         </div>
@@ -65,13 +66,14 @@
             <span data-animation="fadeInRight" data-animation-delay="100" class="title-inner">Delete this account</span>
         </h1>
         <p>The account will no longer be available, and all data in the account will be permanently deleted.</p>
-        <form class="row" name="deleteAccountForm" ng-submit="deleteAccount()" novalidate>
+        <form class="row" name="deleteAccountForm">
         <div class="checkbox">
           <label>
             <input type="checkbox" required ng-model="deleteConfirm"> I understand the consequences, delete my account.
           </label>
         </div>
-        <input type="submit" class="btn btn-theme btn-theme-md btn-theme-transparent" ng-disabled="deleteAccountForm.$invalid" value="Delete this account" />
+        <input type="submit" gt-action="deleteAccount()" ng-disabled="deleteAccountForm.$invalid" value="Delete this account"
+               class="btn btn-theme btn-theme-md btn-theme-transparent" />
         </form>
       </div>
     </div>

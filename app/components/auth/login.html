@@ -13,7 +13,7 @@
             <hr class="page-divider half"/>
             <!-- use ng-submit to catch the form submission and use our Angular function -->
 
-            <form id="login" ng-submit="login(user)" name="form">
+            <form name="form">
 
                 <!-- our nested state views will be injected here -->
                 <!-- register.html -->
@@ -22,10 +22,8 @@
                     
                     <div class="col-sm-6  col-sm-offset-3">
                         <div class="form-group">
-                            <input type="submit" name="submit"
-                                   class="form-button form-button-submit btn btn-theme btn-theme-md btn-theme-transparent btn-block"
-                                   id="submit_btn" value="Log in"
-                                   ng-disabled="form.$invalid"/>
+                            <input type="submit" name="submit" value="Log in" gt-action="login(user)" ng-disabled="form.$invalid"
+                                   class="form-button form-button-submit btn btn-theme btn-theme-md btn-theme-transparent btn-block" />
                         </div>
                     </div>
                     <div class="col-sm-6  col-sm-offset-3">
