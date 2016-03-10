@@ -1535,7 +1535,7 @@ textarea {
 /* 3.1 - Slider / Owl sliders
 /* ========================================================================== */
 
-#main-slider .item {min-height: 800px;}
+#main-slider .item {min-height: 500px;}
 #main-slider .owl-wrapper {/*margin-top*/}
 #main-slider.owl-theme .owl-item {position: relative;}
 #main-slider.owl-carousel .owl-item {-webkit-backface-visibility: visible;}
