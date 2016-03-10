@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService', 'FileUploader',
-  function ($scope, toastr, $http, TutorApiService, AuthService, FileUploader) {
+module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService', 'FileUploader', "$q",
+  function ($scope, toastr, $http, TutorApiService, AuthService, FileUploader, $q) {
     $scope.tutor = {
       name: null,
       gender: null,
@@ -12,8 +12,7 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
     $scope.locationEditable = false;
     $scope.subjectEditable = false;
 
-    //show/hide loader
-    $scope.showLoader = function (show) {
+    var showLoader = function (show) {
       if (show) {
         $('#status').show();
         $('#preloader').show();
@@ -23,7 +22,7 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
       }
     };
 
-    $scope.showLoader(true);
+    showLoader(true);
     AuthService.isAuthenticated().then(function () {
       TutorApiService.getTutorProfile().then(function (data) {
         $scope.tutor = data;
@@ -36,7 +35,7 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
       }, toastr.info.bind(toastr))
       .finally(function() {
         uploader.url = 'https://api.gotute.com/users/me/tutor/image?token=' + AuthService.getCurrentUser().token;
-        $scope.showLoader(false);
+        showLoader(false);
       });
   });
 
@@ -52,7 +51,7 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
     tutor.rate.min = $scope.rate[0];
     tutor.rate.max = $scope.rate[1];
 
-    TutorApiService.updateTutorProfile(tutor).then(function (response) {
+    return TutorApiService.updateTutorProfile(tutor).then(function (response) {
       toastr.success(response.success);
       AuthService.setDisplayName(tutor.name)
     });
@@ -80,7 +79,7 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
 
   $scope.defaultImageUrl = "assets/img/default-avatar.jpg"
   $scope.originImage = null;
-  $scope.croppedImage = ''
+  $scope.croppedImage = '';
 
 
   var uploader = $scope.uploader = new FileUploader({
@@ -105,16 +104,40 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
     item._file = $scope.croppedImage;
   };
 
-  uploader.onErrorItem = function(item, resp, status, headers) {
+  var deferred;
+  uploader.onErrorItem = function(item, resp) {
     toastr.error('Upload failed. Please try again');
+    deferred.reject(resp);
   };
 
   uploader.onSuccessItem = function(item, resp) {
     uploader.clearQueue();
     $scope.originImage = null;
-    $scope.defaultImageUrl = "http://www.gotute.com/images/" + resp;
+    $scope.defaultImageUrl = "http://www.gotute.com" + resp;
     toastr.success('Image uploaded');
+    deferred.resolve(resp);
   };
+
+  $scope.onImageLoaded = function() {
+    window.URL.revokeObjectURL($scope.originImage);
+  }
+
+  $scope.onCropped = function() {
+    // TODO: this is just for the initial load of the image. Need to release for every single update.
+    window.URL.revokeObjectURL($scope.croppedImageUri);
+  }
+
+  $scope.upload = function () {
+    deferred = $q.defer()
+    uploader.uploadItem(0);
+    return deferred.promise;
+  };
+
+  $scope.cancel = function () {
+    uploader.clearQueue();
+    $scope.originImage = null;
+  };
+
 
   $scope.genderOptions = ['Male', 'Female'];
 
@@ -145,23 +168,5 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
     if (!duplicate) {
       $scope.tutor[modal].push(option);
     }
-  };
-
-  $scope.onImageLoaded = function() {
-    window.URL.revokeObjectURL($scope.originImage);
-  }
-
-  $scope.onCropped = function() {
-    // TODO: this is just for the initial load of the image. Need to release for every single update.
-    window.URL.revokeObjectURL($scope.croppedImageUri);
-  }
-
-  $scope.upload = function (){
-    uploader.uploadItem(0);
-  };
-
-  $scope.cancel = function () {
-    uploader.clearQueue();
-    $scope.originImage = null;
   };
 }];

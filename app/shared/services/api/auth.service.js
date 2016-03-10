@@ -68,10 +68,9 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', 'TestService', fun
    * @returns {*}
    */
   var loginUser = function(email, password) {
-    var deferred = $q.defer(),
-        url = config.TUTOR_API + 'users/login';
+    var url = config.TUTOR_API + 'users/login';
 
-    $http({
+    return $http({
       method : 'POST',
       url : url,
       data : {
@@ -80,16 +79,14 @@ module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', 'TestService', fun
       }
     }).then(function(res) {
       currentUser = res.data;
-      deferred.resolve({user: currentUser});
       $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+      return currentUser;
     }, function(res) {
       currentUser = null;
-      if (res.status == 401) deferred.resolve({error: 'Invalid username or password. Please try again.'});
-      else deferred.resolve({error: 'Server error, please try again later.'});
       $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+      if (res.status == 401) return $q.reject('Invalid username or password. Please try again.');
+      return $q.reject('Server error, please try again later.');
     });
-
-    return deferred.promise;
   };
 
   /**

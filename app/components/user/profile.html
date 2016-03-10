@@ -3,11 +3,11 @@
         <div class="spinner"></div>
     </div>
 </div>
-ss
+
 <section class="page-section with-sidebar sidebar-right first-section">
 
     <div class="container">
-        <form class="form-horizontal" novalidate name="profileForm">
+        <form class="form-horizontal" name="profileForm">
             <!-- profile.html -->
             <!-- Content -->
             <section id="content" class="content col-sm-12 col-md-8 col-lg-9">
@@ -135,7 +135,7 @@ ss
             </section>
             <!-- Sidebar -->
             <aside id="sidebar" class="sidebar col-sm-4 col-md-3">
-                <p>
+                <div>
                     <div class="cropArea">
                         <img src="{{ defaultImageUrl }}" ng-show="!originImage" width="250"/>
                         <img-crop image="originImage" result-blob="croppedImage" url-blob="croppedImageUri"
@@ -148,7 +148,7 @@ ss
                         </div>
 
                         <div ng-show="originImage">
-                            <button ng-click="upload()" class="btn btn-theme btn-theme-sm btn-file">
+                            <button gt-action="upload()" class="btn btn-theme btn-theme-sm btn-file">
                                 Upload
                             </button>
                             <button ng-show="originImage" ng-click="cancel()" class="btn btn-theme btn-theme-sm btn-file">
@@ -160,16 +160,14 @@ ss
                     <div>
                         <img ng-src="{{croppedImageUri}}" gt-load="onCropped()" class="thumb" ng-show="originImage"/>
                     </div>
-
                 </div>
-
             </aside>
             <!-- /Sidebar -->
 
             <div class="form-group">
                 <div class="col-sm-12 col-md-8 col-lg-8">
                     <input type="submit" class="btn btn-theme btn-theme-md btn-theme-transparent pull-right"
-                           value="Save" ng-click="updateProfile(tutor) && upload()" ng-disabled="profileForm.$invalid || !tutor.locations.length || !tutor.subjects.length"/>
+                           value="Save" gt-action="updateProfile(tutor)" ng-disabled="profileForm.$invalid || !tutor.locations.length || !tutor.subjects.length"/>
                 </div>
             </div>
         </form>

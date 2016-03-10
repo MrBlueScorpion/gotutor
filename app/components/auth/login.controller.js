@@ -1,21 +1,17 @@
 'use strict';
 
-module.exports = ['$scope', '$state', '$stateParams', 'AuthService', 'toastr', 'AUTH_EVENTS', '$rootScope',
-  function($scope, $state, $stateParams, AuthService, toastr, AUTH_EVENTS, $rootScope) {
+module.exports = ['$scope', '$state', '$stateParams', 'AuthService', 'toastr',
+  function($scope, $state, $stateParams, AuthService, toastr) {
   $scope.login = function(user) {
-    AuthService.loginUser(user.email, user.password).then(function(response) {
-      if (_.isUndefined(response.error)) {
-        $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-        $state.go('user.profile');
-      } else {
-        $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
-        toastr.error(response.error);
-      }
+    return AuthService.loginUser(user.email, user.password).then(function() {
+      $state.go('user.profile');
+    }, function(e) {
+      toastr.error(e);
     });
   }
   
   $scope.forgotPassword = function(user) {
-    AuthService.forgotPassword(user.email).then(function() {
+    return AuthService.forgotPassword(user.email).then(function() {
       $scope.emailSent = true;
     }, function(e) {
       toastr.error(e);
@@ -23,7 +19,7 @@ module.exports = ['$scope', '$state', '$stateParams', 'AuthService', 'toastr', '
   }
   
   $scope.resetPassword = function(password) {
-    AuthService.resetPassword($stateParams.link, password).then(function() {
+    return AuthService.resetPassword($stateParams.link, password).then(function() {
       toastr.success('Your password has been updated.');
       $state.go('login');
     }, function(e) {

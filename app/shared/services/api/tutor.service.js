@@ -94,19 +94,16 @@ module.exports = ['$q', '$http', 'TestService', function ($q, $http, TestService
    * @param id
    */
   var getTutorById = function(id) {
-    var deferred = $q.defer();
     var url = config.TUTOR_QUERY + 'tutors/' + id;
 
-    $http.get(url).then(function(response) {
+    return $http.get(url).then(function(response) {
       var tutor = response.data;
       tutor.subjects = _.map(tutor.subjects, function(x) { return x.text }).join(', ');
       tutor.locations = _.map(tutor.locations, function(x) { return x.text }).join(', ');
-      deferred.resolve(tutor);
-    }, function(response) {
-      deferred.resolve({'error': 'Invalid tutor Id'})
+      return tutor;
+    }, function() {
+      return $q.reject('Cannot find tutor')
     });
-
-    return deferred.promise;
   };
 
   var sendMessage = function(data) {

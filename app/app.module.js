@@ -27,6 +27,7 @@ var TutorApiService = require('./shared/services/api/tutor.service'),
 var SliderDirective = require('./shared/directives/slider.directive');
 var CompareToDirective = require('./shared/directives/compareto.directive');
 var GtLoadDirective = require('./shared/directives/gt-load.directive');
+var GtActionDirective = require('./shared/directives/gt-action.directive');
 
 var HighlightFilter = require('./shared/filters/highlight.filter'),
     Nl2brFilter = require('./shared/filters/nl2br.filter');
@@ -51,13 +52,14 @@ var app = angular.module('app', [
 ]);
 
 app.service('TutorApiService', TutorApiService)
-   .service('AuthService', AuthService)
-   .service('TestService', TestService)
-   .directive('slider', SliderDirective)
-   .directive('compareTo', CompareToDirective)
+    .service('AuthService', AuthService)
+    .service('TestService', TestService)
+    .directive('slider', SliderDirective)
+    .directive('compareTo', CompareToDirective)
     .directive('gtLoad', GtLoadDirective)
-   .filter('highlight', HighlightFilter)
-   .filter('nl2br', Nl2brFilter);
+    .directive('gtAction', GtActionDirective)
+    .filter('highlight', HighlightFilter)
+    .filter('nl2br', Nl2brFilter);
 
 app.constant('AUTH_EVENTS', {
   loginSuccess : 'auth-login-success',
