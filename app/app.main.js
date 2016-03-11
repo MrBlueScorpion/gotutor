@@ -1,6 +1,6 @@
 'use strict';
 
-var $ = jQuery = window.$ = window.jQuery = require('jquery');
+var $ = window.$ = window.jQuery = require('jquery');
 var _ = window._ = require('underscore');
 require('jquery-ui');
 require('jquery.easing');

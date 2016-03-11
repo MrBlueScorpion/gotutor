@@ -1,6 +1,6 @@
 'use strict';
 
-var config = require('../../../app.constant');
+var config = require('../app.constant');
 
 var getTutorsCanceler;
 
@@ -89,10 +89,6 @@ module.exports = ['$q', '$http', 'TestService', function ($q, $http, TestService
     return deferred.promise;
   };
 
-  /**
-   * Get a tutor details by id
-   * @param id
-   */
   var getTutorById = function(id) {
     var url = config.TUTOR_QUERY + 'tutors/' + id;
 
@@ -103,6 +99,16 @@ module.exports = ['$q', '$http', 'TestService', function ($q, $http, TestService
       return tutor;
     }, function() {
       return $q.reject('Cannot find tutor')
+    });
+  };
+
+  var getTutorPhone = function(id) {
+    var url = config.TUTOR_QUERY + 'tutors/' + id + '/phone';
+
+    return $http.get(url).then(function(response) {
+      return response.data.phone;
+    }, function() {
+      return $q.reject('Server error, please try again')
     });
   };
 
@@ -215,6 +221,7 @@ module.exports = ['$q', '$http', 'TestService', function ($q, $http, TestService
     getSubjects : getSubjects,
     getTutorsByQuery: getTutorsByQuery,
     getTutorById : getTutorById,
+    getTutorPhone : getTutorPhone,
     sendMessage : sendMessage,
     getMessages : getMessages,
     deleteMessages : deleteMessages,
