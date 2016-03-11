@@ -2,7 +2,7 @@
 
 var TutorsListController = require('./tutors.controller');
 
-var TutorApiService = require('../../shared/services/api/tutor.service');
+var TutorApiService = require('../../services/tutor');
 
 var RegisterController = require('../auth/register.controller'),
     TermsAndConditionsController = require('../auth/termsAndConditions.controller'),

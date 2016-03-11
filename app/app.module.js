@@ -20,14 +20,15 @@ require('./components/home/home.module');
 require('./components/tutor/tutor.module');
 require('./angular-templates');
 
-var TutorApiService = require('./shared/services/api/tutor.service'),
-    AuthService = require('./shared/services/api/auth.service'),
-    TestService = require('./shared/services/api/test.service');
+var TutorApiService = require('./services/tutor'),
+    AuthService = require('./services/auth'),
+    TestService = require('./services/test');
 
-var SliderDirective = require('./shared/directives/slider.directive');
-var CompareToDirective = require('./shared/directives/compareto.directive');
-var GtLoadDirective = require('./shared/directives/gt-load.directive');
-var GtActionDirective = require('./shared/directives/gt-action.directive');
+var SliderDirective = require('./directives/common/slider');
+var CompareToDirective = require('./directives/common/compareTo');
+var GtLoadDirective = require('./directives/common/gtLoad');
+var GtActionDirective = require('./directives/common/gtAction');
+var TutorShowPhoneNumber = require('./directives/tutor/showPhoneNumber');
 
 var HighlightFilter = require('./shared/filters/highlight.filter'),
     Nl2brFilter = require('./shared/filters/nl2br.filter');
@@ -58,6 +59,7 @@ app.service('TutorApiService', TutorApiService)
     .directive('compareTo', CompareToDirective)
     .directive('gtLoad', GtLoadDirective)
     .directive('gtAction', GtActionDirective)
+    .directive('showPhoneNumber', TutorShowPhoneNumber)
     .filter('highlight', HighlightFilter)
     .filter('nl2br', Nl2brFilter);
 

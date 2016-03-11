@@ -1,6 +1,6 @@
 'use strict';
 
-var config = require('../../../app.constant');
+var config = require('../app.constant');
 
 module.exports = ['$q', '$http', '$rootScope', 'AUTH_EVENTS', 'TestService', function ($q, $http, $rootScope, AUTH_EVENTS, TestService) {
   var currentUser;

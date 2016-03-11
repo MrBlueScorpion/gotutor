@@ -28,6 +28,9 @@
                       <tr ng-if="tutor.contact.email.length > 0"><td>Email:</td><td>{{tutor.contact.email.join(', ')}}</td></tr>
                       <tr ng-if="tutor.locations"><td>Location:</td><td>{{tutor.locations}}</td></tr>
                       <tr ng-if="tutor.subjects"><td>Subjects:</td><td>{{tutor.subjects}}</td></tr>
+                      <tr ng-if="tutor.isRegistered && tutor.hasPhone"><td>Phone:</td><td>
+                          <show-phone-number tutor-id="{{tutor.id}}"></show-phone-number>
+                      </td></tr>
                     </tbody>
                 </table>
               </div>

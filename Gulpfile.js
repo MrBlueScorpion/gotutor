@@ -26,7 +26,7 @@ gulp.task('build:assets', function () {
 })
 
 gulp.task('build:template', function () {
-  var stream = gulp.src('./app/components/**/*.html').pipe(sort())
+  var stream = gulp.src(['./app/components/**/*.html', './app/directives/**/*.html']).pipe(sort())
              
   if (!debug)
     stream = stream.pipe(minifyHTML())
