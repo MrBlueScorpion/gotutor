@@ -76,8 +76,9 @@
 /* 1.1  - Google fonts
 /* ========================================================================== */
 
-/* font-family: 'Raleway', sans-serif; */
+/* font-family: 'Raleway', sans-serif;
 @import url('http://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900');
+*/
 /* font-family: 'Roboto', sans-serif; */
 @import url('http://fonts.googleapis.com/css?family=Roboto:400,900italic,900,700italic,700,500italic,500,400italic,300,100,100italic,300italic');
 /* font-family: 'Roboto Slab', serif; */
@@ -162,7 +163,7 @@
 /* ========================================================================== */
 
 body {
-    font-family: 'Raleway', sans-serif;
+/*    font-family: 'Raleway', sans-serif;*/
     font-size: 18px;
     line-height: 1.33;
     background: #fbfbfb;
@@ -1693,7 +1694,7 @@ textarea {
 }
 
 #main-slider .caption-subtitle {
-    font-family: 'Raleway', sans-serif;
+/*    font-family: 'Raleway', sans-serif;*/
     font-size: 48px;
     font-weight: 900;
     color: #ffffff;
@@ -1832,7 +1833,7 @@ textarea {
     border-color: transparent;
 }
 .countdown-amount {
-    font-family: 'Raleway', sans-serif;
+/*    font-family: 'Raleway', sans-serif;*/
     font-size: 65px;
     font-weight: 900;
     color: #ffffff;
@@ -1859,15 +1860,15 @@ textarea {
     .countdown-period {font-size: 13px;}
 }
 
-.featured-line .countdown-wrapper.countdown-featured {font-family: 'Raleway', sans-serif; margin-top: 0;}
+.featured-line .countdown-wrapper.countdown-featured { /*font-family: 'Raleway', */ sans-serif; margin-top: 0;}
 .featured-line .countdown-wrapper.countdown-featured .defaultCountdown {}
 .featured-line .countdown-wrapper.countdown-featured .countdown-row {overflow: hidden; display: block;}
 .featured-line .countdown-wrapper.countdown-featured .countdown-section {border: solid 1px #6d7a83; border-radius: 4px;}
 .featured-line .countdown-wrapper.countdown-featured .countdown-section {}
 .featured-line .countdown-wrapper.countdown-featured .countdown-show4 .countdown-section {width: 22.75%;}
 .featured-line .countdown-wrapper.countdown-featured .countdown-show4 .countdown-section + .countdown-section {margin-left: 3%;}
-.featured-line .countdown-wrapper.countdown-featured .countdown-amount {text-shadow: none; font-family: 'Raleway', sans-serif; font-size: 36px; line-height: 36px; font-weight: bold; color: #6d7a83; display: block; margin: 5px 0 13px 0; vertical-align: middle;}
-.featured-line .countdown-wrapper.countdown-featured .countdown-period {text-shadow: none; font-family: 'Raleway', sans-serif; font-size: 12px; line-height: 12px; font-weight: bold; color: #6d7a83; border-top: solid 1px #6d7a83; padding: 8px 3px;}
+.featured-line .countdown-wrapper.countdown-featured .countdown-amount {text-shadow: none; /*font-family: 'Raleway', sans-serif; */font-size: 36px; line-height: 36px; font-weight: bold; color: #6d7a83; display: block; margin: 5px 0 13px 0; vertical-align: middle;}
+.featured-line .countdown-wrapper.countdown-featured .countdown-period {text-shadow: none; /*font-family: 'Raleway', sans-serif; */ font-size: 12px; line-height: 12px; font-weight: bold; color: #6d7a83; border-top: solid 1px #6d7a83; padding: 8px 3px;}
 .featured-line .btn-details {margin-top: 15px;}
 .featured-line .btn-details {
     font-size: 14px;
@@ -2075,15 +2076,15 @@ textarea {
 #main-slider .slide5 .caption-subtitle {color: #ffffff; font-size: 60px;}
 #main-slider .slide5 .btn-theme {border-radius: 5px;}
 
-#main-slider .slide5 .countdown-wrapper {font-family: 'Raleway', sans-serif; margin-top: 30px;}
+#main-slider .slide5 .countdown-wrapper {/*font-family: 'Raleway', sans-serif;*/ margin-top: 30px;}
 #main-slider .slide5 .countdown-wrapper .defaultCountdown {max-width: 400px; margin: 0 auto;}
 #main-slider .slide5 .countdown-wrapper .countdown-row {overflow: hidden; display: block;}
 #main-slider .slide5 .countdown-wrapper .countdown-section {border: solid 1px #ffffff; border-radius: 4px;}
 #main-slider .slide5 .countdown-wrapper .countdown-section {}
 #main-slider .slide5 .countdown-wrapper .countdown-show4 .countdown-section {width: 22.75%; background-color: rgba(255, 255, 255, .1);}
 #main-slider .slide5 .countdown-wrapper .countdown-show4 .countdown-section + .countdown-section {margin-left: 3%;}
-#main-slider .slide5 .countdown-wrapper .countdown-amount {text-shadow: none; font-family: 'Raleway', sans-serif; font-size: 36px; line-height: 36px; font-weight: bold; color: #ffffff; display: block; margin: 5px 0 13px 0; vertical-align: middle;}
-#main-slider .slide5 .countdown-wrapper .countdown-period {text-shadow: none; font-family: 'Raleway', sans-serif; font-size: 12px; line-height: 12px; font-weight: bold; color: #ffffff; border-top: solid 1px #ffffff; padding: 8px 3px;}
+#main-slider .slide5 .countdown-wrapper .countdown-amount {text-shadow: none; /*font-family: 'Raleway', sans-serif; */font-size: 36px; line-height: 36px; font-weight: bold; color: #ffffff; display: block; margin: 5px 0 13px 0; vertical-align: middle;}
+#main-slider .slide5 .countdown-wrapper .countdown-period {text-shadow: none; /*font-family: 'Raleway', sans-serif; */font-size: 12px; line-height: 12px; font-weight: bold; color: #ffffff; border-top: solid 1px #ffffff; padding: 8px 3px;}
 
 #main-slider .slide6 {text-align: left;}
 #main-slider .slide6 .event-image img {border: solid 5px #b9b6bf; border-radius: 9px;}
@@ -6233,9 +6234,6 @@ hr.page-divider.single {
 /* custom.css */
 /* BASIC STYLINGS
 ============================================================================= */
-body {
-    padding-top: 20px;
-}
 
 /* form styling */
 #form-container {

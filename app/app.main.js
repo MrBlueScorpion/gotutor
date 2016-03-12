@@ -8,17 +8,6 @@ require('owl.carousel');
 
 require('./vendor/superfish/dist/js/superfish.min.js');
 require('./vendor/superfish/dist/js/hoverIntent.js');
-require('./vendor/placeholdem.min.js');
-require('./vendor/prettyphoto/js/jquery.prettyPhoto.js');
-require('./vendor/jquery.smoothscroll.min.js');
-require('./vendor/smooth-scrollbar.min.js');
-require('./vendor/isotope/jquery.isotope.min.js');
-//var jQBridget = require('jquery-bridget');
-//var Isotope = require('isotope');
-// make Isotope a jQuery plugin
-//$.bridget('isotope', Isotope );
-
-//$.waypoints = require('waypoints')
 require('angular');
 require('bootstrap-select');
 
@@ -35,8 +24,3 @@ angular.element().ready(function() {
 //});
 
 require('./theme.js');
-
-
-
-
-//require('jquery.smooth-scroll')
