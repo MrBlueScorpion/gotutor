@@ -1,0 +1,6 @@
+<a ui-sref="tutor({tutorId: tutorId})">
+    <div class="media tutor-image">
+        <img ng-src="{{'/images/' + image}}" ng-if="image">
+        <div class="{{gender.toLowerCase()}}" ng-if="!image"></div>
+    </div>
+</a>

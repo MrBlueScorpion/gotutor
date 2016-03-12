@@ -137,13 +137,7 @@
         <!-- /Content -->
         <!-- Sidebar -->
         <aside id="sidebar" class="sidebar col-sm-4 col-md-3">
-            <div class="media">
-                <img ng-src="{{'http://www.gotute.com/images/' + tutor.image}}" ng-if="tutor.image">
-                <img ng-src="//placeholdit.imgix.net/~text/?txtsize=33&txt=Male&w=150&h=194" ng-if="!tutor.image && tutor.gender && tutor.gender.toLowerCase() == 'male'">
-                <img ng-src="//placeholdit.imgix.net/~text/?txtsize=33&txt=Female&w=150&h=194" ng-if="!tutor.image && tutor.gender && tutor.gender.toLowerCase() == 'female'">
-                <img ng-src="//placeholdit.imgix.net/~text/?txtsize=33&txt=Institute&w=150&h=194" ng-if="!tutor.image && !tutor.gender">
-                <div class="caption hovered"></div>
-            </div>
+            <tutor-image gender="{{tutor.gender}}" image="{{tutor.image}}" tutor-id="{{tutor.id}}"></tutor-image>
         </aside>
     <!-- /Sidebar -->
     </div>
