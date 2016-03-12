@@ -29,6 +29,7 @@ var CompareToDirective = require('./directives/common/compareTo');
 var GtLoadDirective = require('./directives/common/gtLoad');
 var GtActionDirective = require('./directives/common/gtAction');
 var TutorShowPhoneNumber = require('./directives/tutor/showPhoneNumber');
+var TutorImage = require('./directives/common/tutorImage');
 
 var HighlightFilter = require('./shared/filters/highlight.filter'),
     Nl2brFilter = require('./shared/filters/nl2br.filter');
@@ -60,6 +61,7 @@ app.service('TutorApiService', TutorApiService)
     .directive('gtLoad', GtLoadDirective)
     .directive('gtAction', GtActionDirective)
     .directive('showPhoneNumber', TutorShowPhoneNumber)
+    .directive('tutorImage', TutorImage)
     .filter('highlight', HighlightFilter)
     .filter('nl2br', Nl2brFilter);
 

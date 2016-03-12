@@ -4,3 +4,18 @@
     width:250px;
     height:250px;
 }
+
+.tutor-image:hover {
+    cursor: pointer;
+}
+.tutor-image .male {
+    width: 160px;
+    height: 160px;
+    background: #ffffff url("/assets/img/avatar-no-image.jpg") no-repeat 0 0;
+}
+
+.tutor-image .female {
+    width: 160px;
+    height: 160px;
+    background: #ffffff url("/assets/img/avatar-no-image.jpg") no-repeat -160px 0;
+}
