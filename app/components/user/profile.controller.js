@@ -142,8 +142,8 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
   $scope.genderOptions = ['Male', 'Female'];
 
   $scope.rateOptions = {
-    min: 15,
-    max: 100,
+    min: 10,
+    max: 200,
     step: 1
   };
 
