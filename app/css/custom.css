@@ -19,3 +19,28 @@
     height: 160px;
     background: #ffffff url("/assets/img/avatar-no-image.jpg") no-repeat -160px 0;
 }
+
+.max-line-1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    max-height: 20px;
+}
+
+.max-line-2 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    max-height: 40px;
+}
+
+.max-line-3 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    max-height: 60px;
+}
+
+.line-2 {
+    height: 40px;
+}

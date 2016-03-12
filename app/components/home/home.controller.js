@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports = ['$scope', 'TutorApiService', 'toastr', '$http', '$state',
-  function ($scope, TutorApiService, toastr, $http, $state) {
+module.exports = ['$scope', 'TutorApiService', '$state',
+  function ($scope, TutorApiService, $state) {
 
     // Any function returning a promise object can be used to load values asynchronously
     $scope.getLocations = function (location) {
