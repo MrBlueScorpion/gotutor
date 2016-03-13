@@ -63,22 +63,7 @@
             <div class="row thumbnails events vertical">
 
                 <div class="col-md-6 col-sm-6" ng-repeat="tutor in recommendedTutors">
-                    <div class="thumbnail no-border no-padding">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <tutor-image gender="{{tutor.gender}}" image="{{tutor.image}}" tutor-id="{{tutor.id}}"></tutor-image>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="caption">
-                                    <h3 class="caption-title"><a ui-sref="tutor({tutorId:tutor.id})">{{tutor.name}}</a></h3>
-                                    <p class="caption-category max-line-1"><i class="fa fa-file-text-o"></i> {{tutor.subjects}}</p>
-                                    <p class="caption-text max-line-2 line-2">{{tutor.location}}</p>
-                                    <p class="caption-text max-line-2 line-2">{{tutor.description}}</p>
-                                    <p class="caption-more"><a ui-sref="tutor({tutorId:tutor.id})" class="btn btn-theme">View details</a></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <tutor-detail tutor="tutor"></tutor-detail>
                 </div>
             </div>
         </div>

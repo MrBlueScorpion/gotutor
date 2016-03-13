@@ -7,7 +7,7 @@ module.exports = ['TutorApiService', 'toastr', function(TutorApiService, toastr)
             tutorId: '@'
         },
         templateUrl: "directives/tutor/showPhoneNumber/index.html",
-        link: function (scope, elem) {
+        link: function (scope) {
             scope.showPhoneNumber = function() {
                 return TutorApiService
                     .getTutorPhone(scope.tutorId)

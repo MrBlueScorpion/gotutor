@@ -26,11 +26,9 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
     AuthService.isAuthenticated().then(function () {
       TutorApiService.getTutorProfile().then(function (data) {
         $scope.tutor = data;
-        if ($scope.tutor.image) $scope.tutorImageUrl = "http://www.gotute.com/images/" + $scope.tutor.image;
+        if (data.image) $scope.tutorImageUrl = "http://www.gotute.com/images/" + data.image;
         if (data) {
-          var minRate = $scope.tutor.rate.min ? $scope.tutor.rate.min : 15;
-          var maxRate = $scope.tutor.rate.max ? $scope.tutor.rate.max : 100;
-          $scope.rate = [minRate, maxRate];
+          $scope.rate = [data.rate.min || 15, data.rate.max || 200];
         }
       }, toastr.info.bind(toastr))
       .finally(function() {

@@ -5,7 +5,7 @@ module.exports = ['AuthService', 'TutorApiService', 'toastr', "$q", 'FileUploade
         restrict: 'E',
         scope: {
             tutorImageUrl: '@',
-            token: '@'
+            token: '&'
         },
         templateUrl: "directives/user/uploadPhoto/index.html",
         link: function (scope) {
@@ -16,9 +16,6 @@ module.exports = ['AuthService', 'TutorApiService', 'toastr', "$q", 'FileUploade
                 queueLimit: 1
             });
 
-            scope.$watch('token', function(token) {
-                uploader.url = 'https://api.gotute.com/users/me/tutor/image?token=' + token
-            })
             uploader.filters.push({
                 name: 'imageFilter',
                 fn: function(item) {
@@ -36,6 +33,10 @@ module.exports = ['AuthService', 'TutorApiService', 'toastr', "$q", 'FileUploade
                 item.file.type = "image/png";
                 item._file = scope.croppedImage;
             };
+
+            scope.$watch('tutorImageUrl', function() {
+                uploader.url = 'https://api.gotute.com/users/me/tutor/image?token=' + scope.token();
+            });
 
             var deferred;
             uploader.onErrorItem = function(item, resp) {

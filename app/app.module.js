@@ -28,6 +28,7 @@ var SliderDirective = require('./directives/common/slider'),
     GtLoadDirective = require('./directives/common/gtLoad'),
     GtActionDirective = require('./directives/common/gtAction'),
     TutorShowPhoneNumber = require('./directives/tutor/showPhoneNumber'),
+    TutorDetail = require('./directives/tutor/tutorDetail'),
     TutorImage = require('./directives/common/tutorImage'),
     UserUploadPhoto = require('./directives/user/uploadPhoto');
 
@@ -60,6 +61,7 @@ app.service('TutorApiService', TutorApiService)
     .directive('gtLoad', GtLoadDirective)
     .directive('gtAction', GtActionDirective)
     .directive('showPhoneNumber', TutorShowPhoneNumber)
+    .directive('tutorDetail', TutorDetail)
     .directive('tutorImage', TutorImage)
     .directive('uploadPhoto', UserUploadPhoto)
     .filter('highlight', HighlightFilter)
