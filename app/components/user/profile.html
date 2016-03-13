@@ -135,32 +135,7 @@
             </section>
             <!-- Sidebar -->
             <aside id="sidebar" class="sidebar col-sm-4 col-md-3">
-                <div>
-                    <div class="cropArea">
-                        <img src="{{ defaultImageUrl }}" ng-show="!originImage" width="250"/>
-                        <img-crop image="originImage" result-blob="croppedImage" url-blob="croppedImageUri"
-                                  area-type="square" on-load-done="onImageLoaded()" ng-show="originImage"></img-crop>
-                    </div>
-                    <br/>
-                    <div class="text-center">
-                        <div class="btn btn-theme btn-theme-sm btn-file" ng-show="!originImage">
-                            Select photo<input type="file" nv-file-select uploader="uploader" />
-                        </div>
-
-                        <div ng-show="originImage">
-                            <button gt-action="upload()" class="btn btn-theme btn-theme-sm btn-file">
-                                Upload
-                            </button>
-                            <button ng-show="originImage" ng-click="cancel()" class="btn btn-theme btn-theme-sm btn-file">
-                                Cancel
-                            </button>
-                        </div>
-                    </div>
-                    <br/>
-                    <div>
-                        <img ng-src="{{croppedImageUri}}" gt-load="onCropped()" class="thumb" ng-show="originImage"/>
-                    </div>
-                </div>
+                <upload-photo tutor-image-url="{{tutorImageUrl}}" token="{{imageUploadToken}}"></upload-photo>
             </aside>
             <!-- /Sidebar -->
 

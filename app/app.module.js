@@ -6,7 +6,6 @@ require('angular-animate');
 require('angular-messages');
 require('angular-toastr');
 require('angular-sanitize');
-require('ng-file-upload');
 require('angular-bootstrap-select');
 require('ui-select');
 require('angular-bootstrap-checkbox');
@@ -24,12 +23,13 @@ var TutorApiService = require('./services/tutor'),
     AuthService = require('./services/auth'),
     TestService = require('./services/test');
 
-var SliderDirective = require('./directives/common/slider');
-var CompareToDirective = require('./directives/common/compareTo');
-var GtLoadDirective = require('./directives/common/gtLoad');
-var GtActionDirective = require('./directives/common/gtAction');
-var TutorShowPhoneNumber = require('./directives/tutor/showPhoneNumber');
-var TutorImage = require('./directives/common/tutorImage');
+var SliderDirective = require('./directives/common/slider'),
+    CompareToDirective = require('./directives/common/compareTo'),
+    GtLoadDirective = require('./directives/common/gtLoad'),
+    GtActionDirective = require('./directives/common/gtAction'),
+    TutorShowPhoneNumber = require('./directives/tutor/showPhoneNumber'),
+    TutorImage = require('./directives/common/tutorImage'),
+    UserUploadPhoto = require('./directives/user/uploadPhoto');
 
 var HighlightFilter = require('./shared/filters/highlight.filter'),
     Nl2brFilter = require('./shared/filters/nl2br.filter');
@@ -40,7 +40,6 @@ var app = angular.module('app', [
   'ngMessages',
   'toastr',
   'angularFileUpload',
-  'ngFileUpload',
   'angular-bootstrap-select',
   'ui.select',
   'ui.checkbox',
@@ -62,6 +61,7 @@ app.service('TutorApiService', TutorApiService)
     .directive('gtAction', GtActionDirective)
     .directive('showPhoneNumber', TutorShowPhoneNumber)
     .directive('tutorImage', TutorImage)
+    .directive('uploadPhoto', UserUploadPhoto)
     .filter('highlight', HighlightFilter)
     .filter('nl2br', Nl2brFilter);
 

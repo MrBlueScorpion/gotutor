@@ -1,8 +1,9 @@
 .cropArea {
     background: #E4E4E4;
     overflow: hidden;
-    width:250px;
-    height:250px;
+    width: 200px;
+    height: 200px;
+    margin-left: 25px;
 }
 
 .tutor-image:hover {
