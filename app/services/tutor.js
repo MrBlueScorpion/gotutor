@@ -7,15 +7,11 @@ var getTutorsCanceler;
 module.exports = ['$q', '$http', 'TestService', function ($q, $http, TestService) {
 
   var getRecommendedTutors = function () {
-
-    var deferred = $q.defer();
     var url = config.TUTOR_QUERY + 'recommend';
 
-    $http.get(url).then(function(response) {
-      deferred.resolve(response.data);
+    return $http.get(url).then(function(response) {
+      return response.data;
     });
-
-    return deferred.promise;
   };
 
   /**
@@ -23,25 +19,19 @@ module.exports = ['$q', '$http', 'TestService', function ($q, $http, TestService
    * @param location
    */
   var getLocations = function(location) {
-    var deferred = $q.defer();
     var url = config.TUTOR_QUERY + 'suggest/location?q=' + location;
 
-    $http.get(url).then(function(response) {
-      deferred.resolve(response.data);
+    return $http.get(url).then(function(response) {
+      return response.data;
     });
-
-    return deferred.promise;
   };
 
   var getSubjects = function(subject) {
-    var deferred = $q.defer();
     var url = config.TUTOR_QUERY + 'suggest/subject?q=' + subject;
 
-    $http.get(url).then(function(response) {
-      deferred.resolve(response.data);
+    return $http.get(url).then(function(response) {
+      return response.data;
     });
-
-    return deferred.promise;
   };
 
   var getTutorsByQuery = function (query) {
