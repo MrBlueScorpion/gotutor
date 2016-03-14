@@ -8,7 +8,6 @@ require('owl.carousel');
 
 require('angular');
 require('bootstrap-select');
-
 require('./app.module');
 
 angular.element().ready(function() {
