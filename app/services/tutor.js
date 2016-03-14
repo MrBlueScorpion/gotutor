@@ -38,34 +38,36 @@ module.exports = ['$q', '$http', 'TestService', function ($q, $http, TestService
     if (getTutorsCanceler) getTutorsCanceler.resolve();
     getTutorsCanceler = $q.defer();
     var deferred = $q.defer();
-    var url = config.TUTOR_QUERY + 'search';
+    var url = config.TUTOR_QUERY + 'search', queryParams = [];
     
-    if (query.subjectids && query.subjectids.length) {
-      if (typeof query.subjectids === 'string') {
-        url += '?subjectids=' + query.subjectids
-      } else {
-        url += ('?subjectids=' + _.map(query.subjectids, function(x) { return 'subjectids=' + x; }).join('&'))
-      }
-    } else {
-      url += '?keywords=' + query.keywords;
+    if (query.subjectids) {
+      queryParams.push('subjectids=' + query.subjectids);
+    }
+
+    if (query.keywords) {
+      queryParams.push('keywords=' + query.keywords);
     }
     
     if (query.locationid) {
-      url += '&locationid=' + query.locationid;
-    } else {
-      url += '&location=' + query.location;
+      queryParams.push('locationid=' + query.locationid);
+    }
+
+    if (query.location) {
+      queryParams.push('location=' + query.location);
     }
     
     if (query.gender) {
-      url += '&gender=' + query.gender
+      queryParams.push('gender=' + query.gender);
     }
     
     var test = TestService.getTest();
     if (test) {
-      url += '&test=' + test
+      queryParams.push('test=' + test);
     }
-    
-    url += '&page=' + query.page + '&pagesize=' + query.pageSize;
+
+    queryParams.push('page=' + query.page);
+
+    url = [url, queryParams.join('&')].join('?');
 
     $http({
       method: 'GET',

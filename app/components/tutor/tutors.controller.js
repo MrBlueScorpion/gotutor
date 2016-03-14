@@ -9,36 +9,6 @@ module.exports = ['$scope', '$stateParams', '$state', 'TutorApiService', 'toastr
       GENDER: 50
     };
 
-  //Init function
-  function init() {
-    //show loading mask
-    $scope.showLoader(true);
-    //show error
-    $scope.showError = false;
-    //Filter data source
-    //$scope.filters = null;
-    $scope.filtersAlt = [];
-    $scope.facet = null;
-    //Searching results
-    $scope.tutors = [];
-    $scope.totalCount = 0;
-    //This is the query from url
-    $scope.mainQuery = {};
-    //This is the query from filter
-    //$scope.filterQuery = {};
-    //pagination
-    $scope.pagination = {
-      pageSize: 20,
-      currentPage: 1,
-      totalPages: 0,
-      pagers: []
-    };
-    //generate main query
-    $scope.generateMainQuery();
-    //search and display
-    searchAndDisplay();
-  }
-
   //Depends one filter type and value, set check box checked or not
   $scope.filterChecked = function(filterType, value){
     var checked = false;
@@ -125,54 +95,56 @@ module.exports = ['$scope', '$stateParams', '$state', 'TutorApiService', 'toastr
     $state.go('tutors', currentStateParams);
   };
 
-  //Generate main query obj
-  $scope.generateMainQuery = function () {
-    if ($stateParams) {
-      $scope.mainQuery.keywords = $stateParams.keywords ? $stateParams.keywords : '';
-      $scope.mainQuery.location = $stateParams.location ? $stateParams.location : '';
-      $scope.mainQuery.subjectids = ($stateParams.subjectids && $stateParams.subjectids.length > 0) ? $stateParams.subjectids : [];
-      $scope.mainQuery.locationid = $stateParams.locationid ? $stateParams.locationid : '';
-      $scope.mainQuery.gender = $stateParams.gender ? $stateParams.gender : '';
-      var page = parseInt($stateParams.page);
-      $scope.mainQuery.page = (page && page > 0) ? page : 1;
-      $scope.mainQuery.pageSize = $scope.pagination.pageSize;
-    }
-  };
+  var subjectIdRegex = /-s(\d+)$/, keywordRegex = /^s-(.+)$/, locationRegex = /^l-(.+)$/, locationIdRegex = /-l(\d+)$/;
 
-    //search and display
-    function searchAndDisplay() {
-      TutorApiService.getTutorsByQuery($scope.mainQuery)
-      .then(function(data){
-        if (data && data.hits > 0 && data.results && data.results.length > 0) {
-          $scope.tutors = data.results;
-          $scope.totalCount = data.hits;
-          //display filter
-          // $scope.filters = data.facet;
-          // //add genders if not
-          // if ($scope.filters.gender && $scope.filters.gender.length == 0) {
-          //   $scope.filters.gender.push({ key: "female" });
-          //   $scope.filters.gender.push({ key: "male" });
-          // }
-          //get facet
-          //$scope.facet = data.facet;
-          //generate pagination
-          $scope.updatePagination($scope.mainQuery.page, $scope.totalCount);
-          //generate filters
-          $scope.generateFilterAlt();
-        } else {
-          //panic
-          //console.log(data);
-          //display error message
-          $scope.showError = true;
-        }
-      }).catch(function(e){
-        //console.log(e);
+  var parseQueryParams = function() {
+    var ret = {};
+    _.forEach(arguments, function(x) {
+      if (!x) return;
+      var match;
+      if (match = x.match(subjectIdRegex)) {
+        ret.subjectids = match[1];
+      } else if (match = x.match(locationIdRegex)) {
+        ret.locationid = match[1]
+      } else if (match = x.match(keywordRegex)) {
+        ret.keywords = match[1]
+      } else if (match = x.match(locationRegex)) {
+        ret.location = match[1]
+      }
+    });
+    return ret;
+  }
+
+  //search and display
+  function searchAndDisplay() {
+    TutorApiService.getTutorsByQuery($scope.mainQuery)
+    .then(function(data){
+      if (data && data.hits > 0 && data.results && data.results.length > 0) {
+        $scope.tutors = data.results;
+        $scope.totalCount = data.hits;
+        //display filter
+        // $scope.filters = data.facet;
+        // //add genders if not
+        // if ($scope.filters.gender && $scope.filters.gender.length == 0) {
+        //   $scope.filters.gender.push({ key: "female" });
+        //   $scope.filters.gender.push({ key: "male" });
+        // }
+        //get facet
+        //$scope.facet = data.facet;
+        //generate pagination
+        $scope.updatePagination($scope.mainQuery.page, $scope.totalCount);
+        //generate filters
+        $scope.generateFilterAlt();
+      } else {
+        //panic
+        //console.log(data);
+        //display error message
         $scope.showError = true;
-      }).finally(function(){
-        //hide loading mask
-        $scope.showLoader(false);
-      });
-    };
+      }
+    }).catch(function(e){
+      $scope.showError = true;
+    }).finally(showLoader);
+  };
 
     //generate alternative filters
     $scope.generateFilterAlt = function () {
@@ -342,16 +314,38 @@ module.exports = ['$scope', '$stateParams', '$state', 'TutorApiService', 'toastr
   };
 
   //show/hide loader
-  $scope.showLoader = function (show) {
+  var showLoader = function (show) {
     if (show) {
       $('#status').show();
       $('#preloader').show();
     } else {
-      $('#status').fadeOut();
-      $('#preloader').fadeOut(200);
+      $('#status').hide();
+      $('#preloader').hide();
     }
   };
 
-  //Start here
-  init();
+  showLoader(true);
+  //show error
+  $scope.showError = false;
+  //Filter data source
+  //$scope.filters = null;
+  $scope.filtersAlt = [];
+  $scope.facet = null;
+  //Searching results
+  $scope.tutors = [];
+  $scope.totalCount = 0;
+  //This is the query from filter
+  //$scope.filterQuery = {};
+  //pagination
+  $scope.pagination = {
+    pageSize: 20,
+    currentPage: 1,
+    totalPages: 0,
+    pagers: []
+  };
+  //generate main query
+  $scope.mainQuery = parseQueryParams($stateParams.param1, $stateParams.param2, $stateParams.param3);
+  $scope.mainQuery.page = $stateParams.page || 1;
+  //search and display
+  searchAndDisplay();
 }];

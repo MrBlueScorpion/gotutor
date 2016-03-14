@@ -93,7 +93,17 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
         controller : 'HomeController'
       })
       .state('tutors', {
-        url : '/tutors?keywords&subjectids&locationid&location&gender&page&test',
+        url : '/tutors?page&test',
+        templateUrl: 'components/tutor/tutors.html',
+        controller: 'TutorsListController'
+      })
+      .state('tutors-param1', {
+        url : '/tutors/:param1?page&test',
+        templateUrl: 'components/tutor/tutors.html',
+        controller: 'TutorsListController'
+      })
+      .state('tutors-param2', {
+        url : '/tutors/:param1/:param2?page&test',
         templateUrl: 'components/tutor/tutors.html',
         controller: 'TutorsListController'
       })
@@ -176,7 +186,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
         controller : 'ErrorController'
       });
 
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/404');
 
     // use the HTML5 History API
     $locationProvider.html5Mode(true).hashPrefix('!');
