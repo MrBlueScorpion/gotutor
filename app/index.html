@@ -54,26 +54,18 @@
 
         <div class="container">
             <div class="header-wrapper clearfix">
-
-                <!-- Logo -->
-                <div class="logo">
-                    <a href="/" class="scroll-to">
-                        <img src="assets/img/logo.png " alt="" >
-                    </a>
+                <div class="navbar-header">
+                    <a href="#" class="navbar-toggle menu-toggle collapsed btn" data-toggle="collapse" data-target="#navbar"><i class="fa fa-bars"></i></a>
+                    <div class="logo">
+                        <a href="/" class="scroll-to">
+                            <img src="assets/img/logo.png " alt="" >
+                        </a>
+                    </div>
                 </div>
-                <!-- /Logo -->
-
-                <!-- Logo -->
-                <div class="logo">
-                    <a href="#home" class="scroll-to"></a>
-                </div>
-                <!-- /Logo -->
 
                 <!-- Navigation -->
-                <div id="mobile-menu"></div>
-                <nav class="navigation closed clearfix">
-                    <a href="#" class="menu-toggle btn"><i class="fa fa-bars"></i></a>
-                    <ul class="sf-menu nav">
+                <div id="navbar" class="collapse navbar-collapse clearfix">
+                    <ul class="navbar-right nav navbar-nav">
                         <li ui-sref-active="active">
                             <a ui-sref="home">Home</a>
                         </li>
@@ -84,16 +76,16 @@
                         <li ui-sref-active="active">
                             <a ui-sref="about-us">About Us</a>
                         </li>
-                        <li ng-if="currentUser">
-                            <a href="#" class="sf-with-ul ng-cloak">My Account</a>
-                            <ul>
+                        <li class="dropdown" ng-if="currentUser">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
                                 <li><a ui-sref="user.profile"><i class="glyphicon glyphicon-user"></i> Profile</a></li>
                                 <li><a ui-sref="user.enquiries"><i class="glyphicon glyphicon-inbox"></i> Enquiries</a></li>
                                 <li><a ui-sref="user.account"><i class="glyphicon glyphicon-user"></i> Account</a></li>
                             </ul>
                         </li>
                     </ul>
-                </nav>
+                </div>
                 <!-- /Navigation -->
 
             </div>

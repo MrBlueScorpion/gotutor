@@ -3,21 +3,24 @@
     overflow: hidden;
     width: 200px;
     height: 200px;
-    margin-left: 25px;
+    margin: auto;
 }
 
 .tutor-image:hover {
     cursor: pointer;
 }
+
 .tutor-image .male {
     width: 160px;
     height: 160px;
+    margin: auto;
     background: #ffffff url("/assets/img/avatar-no-image.jpg") no-repeat 0 0;
 }
 
 .tutor-image .female {
     width: 160px;
     height: 160px;
+    margin: auto;
     background: #ffffff url("/assets/img/avatar-no-image.jpg") no-repeat -160px 0;
 }
 
@@ -40,4 +43,29 @@
     text-overflow: ellipsis;
     word-wrap: break-word;
     height: 60px;
+}
+
+#navbar .nav {
+    font-size: 14px;
+    font-weight: 300;
+    text-transform: uppercase;
+}
+
+#navbar .nav li a {
+    color: #435469;
+    padding: 15px;
+    font-weight: 700;
+    font-family: Roboto, sans-serif;
+}
+
+@media (min-width: 768px) {
+    #navbar .nav li a, #navbar .nav li:hover a {
+        border-radius: 6px;
+        line-height: 1;
+    }
+
+    #navbar .nav li.active a {
+        background-color: rgba(13, 29, 49, .3);
+        color: #fff;
+    }
 }

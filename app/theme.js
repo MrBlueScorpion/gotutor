@@ -30,32 +30,6 @@ window.theme = function () {
         );
     }
 
-    // superfish menu
-    // ---------------------------------------------------------------------------------------
-    function handleSuperFish() {
-        $('ul.sf-menu').superfish();
-        $('ul.sf-menu a').click(function () {
-            $('body').scrollspy('refresh');
-        });
-        // fixed menu toggle
-        $('.menu-toggle').on('click', function () {
-            if ($('.navigation').hasClass('opened')) {
-                $(this).find('.fa').removeClass('fa-times').addClass('fa-bars');
-                $('.navigation').removeClass('opened').addClass('closed');
-            } else {
-                $(this).find('.fa').removeClass('fa-bars').addClass('fa-times');
-                $('.navigation').removeClass('closed').addClass('opened');
-            }
-        });
-        // submenu fix
-        $('.mobile-submenu').click(function () {
-            $(this).parent().toggleClass('mobile-submenu-open');
-        });
-        $('ul.sf-menu a').click(function () {
-            $('ul.sf-menu li').removeClass('mobile-submenu-open');
-        });
-    }
-
     // Scroll totop button
     // ---------------------------------------------------------------------------------------
     function handleToTopButton() {
@@ -79,53 +53,6 @@ window.theme = function () {
 //        $('#preloader').delay(200).fadeOut(100);
 //    });
 
-    // Isotope
-    $(window).load(function () {
-        //if ($().isotope) {
-        // $('.isotope').isotope({ // initialize isotope
-        // itemSelector: '.isotope-item' // options...
-        // //,transitionDuration: 0 // disable transition
-        // });
-        // $('#filtrable a').click(function () { // filter items when filter link is clicked
-        // var selector = $(this).attr('data-filter');
-        // $('#filtrable a').parent().removeClass('current');
-        // $(this).parent().addClass('current');
-        // $('.isotope').isotope({filter: selector});
-        // return false;
-        // });
-        // $('.isotope').isotope('reLayout'); // layout/reLayout
-        // }
-        if ($().isotope) {
-            $('.isotope.events').isotope({// initialize isotope
-                filter: '.all',
-                itemSelector: '.isotope-item' // options...
-                        //,transitionDuration: 0 // disable transition
-            });
-            $('#filtrable-events a').click(function () { // filter items when filter link is clicked
-                var selector = $(this).attr('data-filter');
-                $('#filtrable-events a').parent().removeClass('current');
-                $(this).parent().addClass('current');
-                $('.isotope.events').isotope({filter: selector});
-                $('.isotope').isotope('reLayout', $.waypoints('refresh')); // layout/reLayout
-                return false;
-            });
-        }
-        if ($().isotope) {
-            $('.isotope.gallery').isotope({// initialize isotope
-                itemSelector: '.isotope-item' // options...
-                        //,transitionDuration: 0 // disable transition
-            });
-            $('#filtrable-gallery a').click(function () { // filter items when filter link is clicked
-                var selector = $(this).attr('data-filter');
-                $('#filtrable-gallery a').parent().removeClass('current');
-                $(this).parent().addClass('current');
-                $('.isotope.gallery').isotope({filter: selector});
-                $('.isotope').isotope('reLayout', $.waypoints('refresh')); // layout/reLayout
-                return false;
-            });
-        }
-    });
-
     // handleTabsFAQ
     // ---------------------------------------------------------------------------------------
     function handleTabsFAQ() {
@@ -145,7 +72,6 @@ window.theme = function () {
             handlePreventEmptyLinks();
             handleBootstrapSelect();
             handleHoverClass();
-            handleSuperFish();
             handleToTopButton();
             handleTabsFAQ();
         },

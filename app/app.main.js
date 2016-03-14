@@ -6,8 +6,6 @@ require('jquery-ui');
 require('jquery.easing');
 require('owl.carousel');
 
-require('./vendor/superfish/dist/js/superfish.min.js');
-require('./vendor/superfish/dist/js/hoverIntent.js');
 require('angular');
 require('bootstrap-select');
 

@@ -213,14 +213,13 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
 }]);
 
 
-app.run(['$rootScope', '$state', 'AuthService', 'toastr', 'AUTH_EVENTS',
-  function($rootScope, $state, AuthService, toastr, AUTH_EVENTS) {
+app.run(['$rootScope', '$state', '$document', 'AuthService', 'toastr', 'AUTH_EVENTS',
+  function($rootScope, $state, $document, AuthService, toastr, AUTH_EVENTS) {
 
     $rootScope.$on(AUTH_EVENTS.notAuthorized, function(ev) {
       $state.go('login');
       ev.preventDefault();
     });
-
 
     $rootScope.$on(AUTH_EVENTS.loginSuccess, function(ev, user) {
       $rootScope.currentUser = user;
@@ -233,6 +232,10 @@ app.run(['$rootScope', '$state', 'AuthService', 'toastr', 'AUTH_EVENTS',
         ($state.current.data && $state.current.data.authorizedRoles)) {
         $rootScope.$broadcast(AUTH_EVENTS.notAuthorized)
       }
+    });
+
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options){
+      $document.find('#navbar').removeClass('in');
     });
 
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
