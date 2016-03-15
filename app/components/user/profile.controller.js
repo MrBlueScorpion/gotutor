@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
-  function ($scope, toastr, $http, TutorApiService, AuthService) {
+module.exports = ['$scope', 'toastr', '$http', "$q", 'TutorApiService', 'AuthService',
+  function ($scope, toastr, $http, $q, TutorApiService, AuthService) {
     $scope.tutor = {
       name: null,
       gender: null,
@@ -23,6 +23,8 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
     };
 
     showLoader(true);
+    var imageUploadToken = $q.defer();
+    $scope.imageUploadToken = imageUploadToken.promise;
     AuthService.isAuthenticated().then(function () {
       TutorApiService.getTutorProfile().then(function (data) {
         $scope.tutor = data;
@@ -32,7 +34,7 @@ module.exports = ['$scope', 'toastr', '$http', 'TutorApiService', 'AuthService',
         }
       }, toastr.info.bind(toastr))
       .finally(function() {
-        $scope.imageUploadToken = AuthService.getCurrentUser().token;
+        imageUploadToken.resolve(AuthService.getCurrentUser().token);
         showLoader(false);
       });
   });

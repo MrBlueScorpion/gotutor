@@ -34,6 +34,10 @@ module.exports = ['AuthService', 'TutorApiService', 'toastr', "$q", 'FileUploade
                 item._file = scope.croppedImage;
             };
 
+            scope.token().then(function(token) {
+                uploader.url = 'https://api.gotute.com/users/me/tutor/image?token=' + token;
+            });
+
             var deferred;
             uploader.onErrorItem = function(item, resp) {
                 toastr.error('Upload failed. Please try again');
@@ -58,7 +62,6 @@ module.exports = ['AuthService', 'TutorApiService', 'toastr', "$q", 'FileUploade
             }
 
             scope.upload = function () {
-                uploader.url = 'https://api.gotute.com/users/me/tutor/image?token=' + scope.token();
                 deferred = $q.defer()
                 uploader.uploadItem(0);
                 return deferred.promise;
