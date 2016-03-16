@@ -40,18 +40,18 @@ module.exports = ['$scope', 'toastr', '$http', "$q", 'TutorApiService', 'AuthSer
   });
 
   $scope.updateProfile = function (tutor) {
-    tutor.locationIds = _.map(tutor.locations, function (location) {
-      return location.id;
-    });
-
-    tutor.subjectIds = _.map(tutor.subjects, function (s) {
-      return s.id;
-    });
-
-    tutor.rate.min = $scope.rate[0];
-    tutor.rate.max = $scope.rate[1];
-
-    return TutorApiService.updateTutorProfile(tutor).then(function (response) {
+    return TutorApiService.updateTutorProfile({
+      name: tutor.name,
+      locations: _.map(tutor.locations, function (location) {
+        return location.id;
+      }),
+      subjects: _.map(tutor.subjects, function (s) {
+        return s.text.trim();
+      }),
+      rate: { min: $scope.rate[0], max: $scope.rate[1] },
+      gender: tutor.gender,
+      phone: tutor.phone
+    }).then(function (response) {
       toastr.success(response.success);
       AuthService.setDisplayName(tutor.name)
     });
