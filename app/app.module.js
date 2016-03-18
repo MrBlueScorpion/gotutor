@@ -32,8 +32,7 @@ var SliderDirective = require('./directives/common/slider'),
     TutorImage = require('./directives/common/tutorImage'),
     UserUploadPhoto = require('./directives/user/uploadPhoto');
 
-var HighlightFilter = require('./shared/filters/highlight.filter'),
-    Nl2brFilter = require('./shared/filters/nl2br.filter');
+var HighlightFilter = require('./shared/filters/highlight.filter');
 
 var app = angular.module('app', [
   'ui.router',
@@ -64,8 +63,7 @@ app.service('TutorApiService', TutorApiService)
     .directive('tutorDetail', TutorDetail)
     .directive('tutorImage', TutorImage)
     .directive('uploadPhoto', UserUploadPhoto)
-    .filter('highlight', HighlightFilter)
-    .filter('nl2br', Nl2brFilter);
+    .filter('highlight', HighlightFilter);
 
 app.constant('AUTH_EVENTS', {
   loginSuccess : 'auth-login-success',
