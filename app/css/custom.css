@@ -70,21 +70,12 @@
     }
 }
 
-dl.dl-horizontal dd {
-    display: inline-block;
+.dl-horizontal dt.text-left {
+    text-align: left
 }
-
-/*#BrowseAllTutors dd {
-    border-left: 1px solid #acacac;
-    padding: 0 6px 0 8px;
-}
-
-#BrowseAllTutors dt+dd {
-    border-left-width: 0;
-    padding-left: 0;
-}*/
 
 .dl-horizontal dd {
-     margin-left: 20px;
-     font-size: 15px;
+    display: inline-block;
+    margin-left: 20px;
+    font-size: 15px;
 }
