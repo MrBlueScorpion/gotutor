@@ -249,6 +249,8 @@ app.run(['$rootScope', '$state', '$document', 'AuthService', 'toastr', 'AUTH_EVE
     });
 
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+      $rootScope.showClassification = $state.is('home');
+
       if (toParams.test) toastr.warning('Test mode!');
       
       AuthService.isAuthenticated().then(function(user) {

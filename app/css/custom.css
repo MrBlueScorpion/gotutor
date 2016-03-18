@@ -69,3 +69,13 @@
         color: #fff;
     }
 }
+
+.dl-horizontal dt.text-left {
+    text-align: left
+}
+
+.dl-horizontal dd {
+    display: inline-block;
+    margin-left: 20px;
+    font-size: 15px;
+}
