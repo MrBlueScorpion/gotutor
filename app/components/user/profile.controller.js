@@ -28,6 +28,8 @@ module.exports = ['$scope', 'toastr', '$http', "$q", 'TutorApiService', 'AuthSer
     AuthService.isAuthenticated().then(function () {
       TutorApiService.getTutorProfile().then(function (data) {
         $scope.tutor = data;
+        $scope.tutor.locations = $scope.tutor.locations || [];
+        $scope.tutor.subjects = $scope.tutor.subjects || [];
         if (data.image) $scope.tutorImageUrl = "http://www.gotute.com/images/" + data.image;
         if (data) {
           $scope.rate = [data.rate.min || 15, data.rate.max || 200];
@@ -104,7 +106,7 @@ module.exports = ['$scope', 'toastr', '$http', "$q", 'TutorApiService', 'AuthSer
         duplicate = true;
       }
     });
-
+    
     if (!duplicate) {
       $scope.tutor[modal].push(option);
     }

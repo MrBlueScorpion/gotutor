@@ -1,7 +1,7 @@
 var gulp = require('gulp'),
     connect = require('gulp-connect'),
     del = require("del"),
-    minifyHTML = require('gulp-minify-html'),
+    minifyHTML = require('gulp-htmlmin'),
     templateCache = require('gulp-angular-templatecache'),
     sort = require('gulp-sort'),
     source = require('vinyl-source-stream'),
@@ -29,7 +29,11 @@ gulp.task('build:template', function () {
   var stream = gulp.src(['./app/components/**/*.html', './app/directives/**/*.html']).pipe(sort())
              
   if (!debug)
-    stream = stream.pipe(minifyHTML())
+    stream = stream.pipe(minifyHTML({
+      removeComments: true,
+      removeCommentsFromCDATA: true,
+      removeCDATASectionsFromCDATA: true
+    }));
     
   return stream.pipe(templateCache('angular-templates.js', {
     module: 'templateCache',
@@ -37,7 +41,7 @@ gulp.task('build:template', function () {
     root: '',
     standalone: true
   })).pipe(gulp.dest('app/'))
-})
+});
 
 gulp.task('build:html', function () {
   var stream = gulp.src('./app/index.html').pipe(htmlreplace({
@@ -71,7 +75,7 @@ gulp.task('build:js', ['build:template'], function () {
   var stream = browserify().add("app/app.main.js")
     .transform(debowerify)
     .bundle()
-    .pipe(source('app.main.js'))
+    .pipe(source('app.main.js'));
   
   if (!debug)
     stream = stream.pipe(buffer()).pipe(ngAnnotate()).pipe(uglify())
@@ -86,7 +90,7 @@ gulp.task('connect', function() {
   connect.server({
     root: 'dist',
     port: 80,
-    //livereload: true,
+    livereload: true,
     fallback: 'dist/index.html'
   });
 });

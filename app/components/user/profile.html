@@ -12,14 +12,16 @@
             <span class="title-inner">Update my profile</span>
         </h1>
         <section id="content" class="content col-sm-12 col-md-8 col-lg-9">
-            <form class="form-horizontal" name="profileForm">
+            <form class="form-horizontal" name="profileForm" novalidate>
                 <div class="form-group" ng-class="{'has-error': profileForm.name.$invalid && profileForm.name.$dirty}">
                     <label for="name" class="col-md-2 col-lg-2 control-label">Name: </label>
                     <div class="col-md-9 col-lg-9">
                         <input type="text" name="name" id="name" placeholder="Your Name"
-                               title="Your name is required"
                                ng-model="tutor.name" required
                                class="form-control placeholder"/>
+                        <div ng-messages="profileForm.name.$error" ng-show="profileForm.name.$touched" class="text-danger" role="alert">
+                            <small ng-message="required">Name is required</small>
+                        </div>
                     </div>
                 </div>
 
@@ -27,7 +29,6 @@
                     <label for="phone" class="col-md-2 col-lg-2 control-label">Phone: </label>
                     <div class="col-md-9 col-lg-9">
                         <input type="text" name="phone" id="phone" placeholder="Your Phone"
-                               title="Your Phone is required"
                                ng-model="tutor.phone" required
                                class="form-control placeholder"/>
                     </div>
