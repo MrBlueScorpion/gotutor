@@ -79,7 +79,7 @@
                                    autocomplete="off"/>
                             <span class="btn btn-danger btn-sm pull-right fa fa-times" ng-click="location.editing = false"> </span>
                         </div>
-                        <button ng-if="!location.editing" ng-click="location.editing = true"
+                        <button type="button" ng-if="!location.editing" ng-click="location.editing = true"
                                 class="btn btn-theme btn-theme-sm btn-theme-transparent">Add another location</button>
                     </div>
                 </div>
@@ -104,14 +104,15 @@
                                    uib-typeahead="subject as subject.text for subject in getSubjects($viewValue)"
                                    typeahead-on-select="addSubject($item)"
                                    autocomplete="off"/>
+                            <div class="pull-right">
+                                <span class="btn btn-danger btn-sm fa fa-check" ng-click="addSubject(subject.text)"></span>
+                                <span class="btn btn-danger btn-sm fa fa-times" ng-click="subject.editing = false"> </span>
+                            </div>
 
-                            <span class="btn btn-danger btn-sm pull-right fa fa-times" ng-click="subject.editing = false"> </span>
-                            <span class="btn btn-danger btn-sm pull-right fa fa-check" ng-click="addSubject(subject.text)"></span>
                         </div>
 
-                        <button ng-if="!subject.editing" ng-click="subject.editing = true"
+                        <button type="button" ng-if="!subject.editing" ng-click="subject.editing = true"
                                 class="btn btn-theme btn-theme-sm btn-theme-transparent">Add another Subject</button>
-
                     </div>
                 </div>
 
