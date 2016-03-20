@@ -79,3 +79,10 @@
     margin-left: 20px;
     font-size: 15px;
 }
+
+@media (max-width: 767px) {
+    .about img {
+        width: 100%;
+        height: auto;
+    }
+}
