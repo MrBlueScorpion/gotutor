@@ -70,7 +70,7 @@
                         </p>
 
                         <div ng-if="location.editing">
-                            <input type="text" class="col-md-10"
+                            <input type="text" class="col-sm-10 col-xs-9"
                                    placeholder="Search locations..."
                                    id="location"
                                    ng-model="location.text"
@@ -97,10 +97,10 @@
                         </p>
 
                         <div ng-if="subject.editing">
-                            <input type="text" class="col-md-10"
+                            <input type="text" class="col-sm-10 col-xs-9"
                                    placeholder="Search subjects..."
                                    id="subject"
-                                   ng-model="subject.text"
+                                   ng-model="subject.text" ng-keypress="subjectKeyPressed($event)"
                                    uib-typeahead="subject as subject.text for subject in getSubjects($viewValue)"
                                    typeahead-on-select="addSubject($item)"
                                    autocomplete="off"/>

@@ -95,6 +95,13 @@ module.exports = ['$scope', 'toastr', '$http', "$q", '$timeout', 'TutorApiServic
     $scope.location.text = '';
   };
 
+  $scope.subjectKeyPressed = function(ev) {
+    var keyCode = ev.which || ev.keyCode;
+    if (keyCode === 13) {
+      $scope.addSubject($scope.subject.text)
+    }
+  };
+
   $scope.addSubject = function (option) {
     option = (option.text || option).trim();
     if (!_.some($scope.tutor.subjects, function(x) { x == option })) {
