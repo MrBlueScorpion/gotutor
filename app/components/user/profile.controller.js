@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports = ['$scope', 'toastr', '$http', "$q", 'TutorApiService', 'AuthService',
-  function ($scope, toastr, $http, $q, TutorApiService, AuthService) {
+module.exports = ['$scope', 'toastr', '$http', "$q", '$timeout', 'TutorApiService', 'AuthService',
+  function ($scope, toastr, $http, $q, $timeout, TutorApiService, AuthService) {
     $scope.tutor = {
       name: null,
       gender: null,
@@ -9,8 +9,8 @@ module.exports = ['$scope', 'toastr', '$http', "$q", 'TutorApiService', 'AuthSer
       locations: [],
       subjects: []
     };
-    $scope.locationEditable = false;
-    $scope.subjectEditable = false;
+    $scope.location = {};
+    $scope.subject = {};
 
     var showLoader = function (show) {
       if (show) {
@@ -29,7 +29,7 @@ module.exports = ['$scope', 'toastr', '$http', "$q", 'TutorApiService', 'AuthSer
       TutorApiService.getTutorProfile().then(function (data) {
         $scope.tutor = data;
         $scope.tutor.locations = $scope.tutor.locations || [];
-        $scope.tutor.subjects = $scope.tutor.subjects || [];
+        $scope.tutor.subjects = ($scope.tutor.subjects || []).map(function(x) {return x.text});
         if (data.image) $scope.tutorImageUrl = "http://www.gotute.com/images/" + data.image;
         if (data) {
           $scope.rate = [data.rate.min || 15, data.rate.max || 200];
@@ -47,20 +47,15 @@ module.exports = ['$scope', 'toastr', '$http', "$q", 'TutorApiService', 'AuthSer
       locations: _.map(tutor.locations, function (location) {
         return location.id;
       }),
-      subjects: _.map(tutor.subjects, function (s) {
-        return s.text.trim();
-      }),
+      subjects: tutor.subjects,
       rate: { min: $scope.rate[0], max: $scope.rate[1] },
       gender: tutor.gender,
-      phone: tutor.phone
+      phone: tutor.phone,
+      description: tutor.description
     }).then(function (response) {
       toastr.success(response.success);
       AuthService.setDisplayName(tutor.name)
     });
-  };
-
-  $scope.removeOption = function (index, modal) {
-    $scope.tutor[modal].splice(index, 1);
   };
 
   $scope.getLocations = function (location) {
@@ -74,11 +69,6 @@ module.exports = ['$scope', 'toastr', '$http', "$q", 'TutorApiService', 'AuthSer
       return subjects;
     })
   };
-
-  $scope.format = function ($model) {
-    return '';
-  };
-
 
   $scope.tutorImageUrl = "assets/img/default-avatar.jpg";
   $scope.genderOptions = ['Male', 'Female'];
@@ -94,21 +84,22 @@ module.exports = ['$scope', 'toastr', '$http', "$q", 'TutorApiService', 'AuthSer
       return '$' + value[0] + '/hr  to  $' + value[1] + '/hr';
   };
 
-  $scope.toggleEditable = function (modal) {
-    $scope[modal] = $scope[modal] == false;
+  $scope.removeOption = function (index, modal) {
+    $scope.tutor[modal].splice(index, 1);
   };
 
-  $scope.addOption = function (option, modal) {
-    var duplicate = false;
-    _.each($scope.tutor[modal], function (location) {
-      if (location.id == option.id) {
-        toastr.error(option.text + ' already exits in the your ' + modal + ' list');
-        duplicate = true;
-      }
-    });
-    
-    if (!duplicate) {
-      $scope.tutor[modal].push(option);
+  $scope.addLocation = function (option) {
+    if (!_.some($scope.tutor.locations, function(x) { x.id == option.id })) {
+      $scope.tutor.locations.push(option);
     }
+    $scope.location.text = '';
+  };
+
+  $scope.addSubject = function (option) {
+    option = (option.text || option).trim();
+    if (!_.some($scope.tutor.subjects, function(x) { x == option })) {
+      $scope.tutor.subjects.push(option);
+    }
+    $scope.subject.text = '';
   };
 }];

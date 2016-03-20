@@ -69,20 +69,18 @@
                             </span>
                         </p>
 
-                        <div ng-if="locationEditable">
-                            <input type="text" class="form-control"
+                        <div ng-if="location.editing">
+                            <input type="text" class="col-md-10"
                                    placeholder="Search locations..."
                                    id="location"
-                                   ng-model="location"
+                                   ng-model="location.text"
                                    uib-typeahead="location as location.text for location in getLocations($viewValue)"
-                                   typeahead-on-select="addOption($item, 'locations')"
-                                   typeahead-input-formatter="format($model)"
+                                   typeahead-on-select="addLocation($item)"
                                    autocomplete="off"/>
+                            <span class="btn btn-danger btn-sm pull-right fa fa-times" ng-click="location.editing = false"> </span>
                         </div>
-                        <button ng-click="toggleEditable('locationEditable')"
-                                class="btn btn-theme btn-theme-sm btn-theme-transparent">{{locationEditable ? "Cancel" :
-                            "Add another location"}}
-                        </button>
+                        <button ng-if="!location.editing" ng-click="location.editing = true"
+                                class="btn btn-theme btn-theme-sm btn-theme-transparent">Add another location</button>
                     </div>
                 </div>
 
@@ -91,28 +89,28 @@
                     <div class="col-md-9">
 
                         <p ng-model="tutor.subjects[$index]"
-                           ng-repeat="subject in tutor.subjects track by subject.id">
-                            <label>{{subject.text}}</label>
+                           ng-repeat="subject in tutor.subjects">
+                            <label>{{subject}}</label>
                             <span class="btn btn-danger btn-sm pull-right fa fa-times"
                                   ng-click="removeOption($index, 'subjects')">
                             </span>
                         </p>
 
-                        <div ng-if="subjectEditable">
-                            <input type="text" class="form-control"
+                        <div ng-if="subject.editing">
+                            <input type="text" class="col-md-10"
                                    placeholder="Search subjects..."
                                    id="subject"
-                                   ng-model="subject"
+                                   ng-model="subject.text"
                                    uib-typeahead="subject as subject.text for subject in getSubjects($viewValue)"
-                                   typeahead-on-select="addOption($item, 'subjects')"
-                                   typeahead-input-formatter="format($model)"
+                                   typeahead-on-select="addSubject($item)"
                                    autocomplete="off"/>
+
+                            <span class="btn btn-danger btn-sm pull-right fa fa-times" ng-click="subject.editing = false"> </span>
+                            <span class="btn btn-danger btn-sm pull-right fa fa-check" ng-click="addSubject(subject.text)"></span>
                         </div>
 
-                        <button ng-click="toggleEditable('subjectEditable')"
-                                class="btn btn-theme btn-theme-sm btn-theme-transparent">{{subjectEditable ? "Cancel" :
-                            "Add another Subject"}}
-                        </button>
+                        <button ng-if="!subject.editing" ng-click="subject.editing = true"
+                                class="btn btn-theme btn-theme-sm btn-theme-transparent">Add another Subject</button>
 
                     </div>
                 </div>
