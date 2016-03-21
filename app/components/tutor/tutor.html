@@ -17,11 +17,9 @@
               <div class="col-lg-10">
                 <table class="table">
                     <tbody>
-                      <tr ng-if="tutor.gender"><td>Gender:</td><td>{{tutor.gender}}</td></tr>
-                      <tr ng-if="tutor.rate.length"><td>Rate:</td><td>${{tutor.rate.min}} - ${{tutor.rate.max}} per hour</td></tr>
-                      <tr ng-if="tutor.contact.email.length > 0"><td>Email:</td><td>{{tutor.contact.email.join(', ')}}</td></tr>
                       <tr ng-if="tutor.locations"><td>Location:</td><td>{{tutor.locations}}</td></tr>
                       <tr ng-if="tutor.subjects"><td>Subjects:</td><td>{{tutor.subjects}}</td></tr>
+                      <tr ng-if="tutor.rate"><td>Rate:</td><td>${{tutor.rate.min}} - ${{tutor.rate.max}} per hour</td></tr>
                       <tr ng-if="tutor.isRegistered && tutor.hasPhone"><td>Phone:</td><td>
                           <show-phone-number tutor-id="{{tutor.id}}"></show-phone-number>
                       </td></tr>
