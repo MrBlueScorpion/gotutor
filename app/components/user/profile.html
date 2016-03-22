@@ -116,6 +116,31 @@
                     </div>
                 </div>
 
+                <div class="form-group" ng-class="{'has-error': profileForm.policeCheck.$invalid && profileForm.policeCheck.$dirty}">
+                    <label for="policeCheck" class="col-md-2 col-lg-2 control-label">Do you have valid police check? </label>
+                    <div class="col-md-9 col-lg-9">
+                        <label class="radio-inline">
+                          <input type="radio" name="policeCheck" ng-model="policeCheck" id="policeCheck" value="yes"> Yes
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="policeCheck" ng-model="policeCheck" id="policeCheck" value="no"> No
+                        </label>
+                    </div>
+                </div>
+
+
+                <div class="form-group" ng-class="{'has-error': profileForm.workwithchildren.$invalid && profileForm.workwithchildren.$dirty}">
+                    <label for="workwithchildren" class="col-md-2 col-lg-2 control-label">Do you have valid work with children check? </label>
+                    <div class="col-md-9 col-lg-9">
+                        <label class="radio-inline">
+                          <input type="radio" name="workwithchildren" ng-model="workwithchildren" id="workwithchildren" value="yes"> Yes
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="workwithchildren" ng-model="workwithchildren" id="workwithchildren" value="no"> No
+                        </label>
+                    </div>
+                </div>
+
                 <div class="form-group" ng-class="{'has-error': profileForm.description.$invalid && profileForm.description.$dirty}">
                     <label for="description" class="col-md-2 control-label">Description: </label>
                     <div class="col-md-9">
@@ -135,9 +160,9 @@
             </form>
         </section>
 
-        <aside class="sidebar col-sm-4 col-md-3">
-            <upload-photo tutor-image-url="{{tutorImageUrl}}" token="imageUploadToken"></upload-photo>
-        </aside>
+        <!--<aside class="sidebar col-sm-4 col-md-3">-->
+            <!--<upload-photo tutor-image-url="{{tutorImageUrl}}" token="imageUploadToken"></upload-photo>-->
+        <!--</aside>-->
 
     </div>
 </section>

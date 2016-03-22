@@ -30,6 +30,8 @@ module.exports = ['$scope', 'toastr', '$http', "$q", '$timeout', 'TutorApiServic
         $scope.tutor = data;
         $scope.tutor.locations = $scope.tutor.locations || [];
         $scope.tutor.subjects = ($scope.tutor.subjects || []).map(function(x) {return x.text});
+        $scope.policeCheck = data.cert && data.cert.indexOf('policeCheck') > -1 ? 'yes' : 'no';
+        $scope.workwithchildren = data.cert && data.cert.indexOf('workwithchildren') > -1 ? 'yes' : 'no';
         if (data.image) $scope.tutorImageUrl = "http://www.gotute.com/images/" + data.image;
         if (data) {
           $scope.rate = [data.rate.min || 15, data.rate.max || 200];
@@ -42,6 +44,15 @@ module.exports = ['$scope', 'toastr', '$http', "$q", '$timeout', 'TutorApiServic
   });
 
   $scope.updateProfile = function (tutor) {
+    var cert = [];
+    if ($scope.policeCheck == 'yes') {
+      cert.push('policeCheck');
+    }
+
+    if ($scope.workwithchildren == 'yes') {
+      cert.push('workwithchildren');
+    }
+
     return TutorApiService.updateTutorProfile({
       name: tutor.name,
       locations: _.map(tutor.locations, function (location) {
@@ -51,7 +62,8 @@ module.exports = ['$scope', 'toastr', '$http', "$q", '$timeout', 'TutorApiServic
       rate: { min: $scope.rate[0], max: $scope.rate[1] },
       gender: tutor.gender,
       phone: tutor.phone,
-      description: tutor.description
+      description: tutor.description,
+      cert: cert
     }).then(function (response) {
       toastr.success(response.success);
       AuthService.setDisplayName(tutor.name)
