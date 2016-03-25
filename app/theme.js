@@ -10,12 +10,6 @@ window.theme = function () {
         });
     }
 
-    // BootstrapSelect
-    // ---------------------------------------------------------------------------------------
-    function handleBootstrapSelect() {
-        $('.selectpicker').selectpicker();
-    }
-
     // add hover class for correct view on mobile devices
     // ---------------------------------------------------------------------------------------
     function handleHoverClass() {
@@ -70,7 +64,6 @@ window.theme = function () {
     return {
         init: function () {
             handlePreventEmptyLinks();
-            handleBootstrapSelect();
             handleHoverClass();
             handleToTopButton();
             handleTabsFAQ();

@@ -16,7 +16,6 @@
     "underscore": "~1.8.3",
     "angular-animate": "~1.4.7",
     "angular-toastr": "~1.6.0",
-    "angular-bootstrap-select": "~0.0.5",
     "angular-file-upload": "~2.2.0",
     "waypoints": "~4.0.0",
     "ui-select": "angular-ui-select#~0.13.2",

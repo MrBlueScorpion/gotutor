@@ -7,10 +7,9 @@ module.exports = ['$scope', 'toastr', '$http', "$q", '$timeout', 'TutorApiServic
       gender: null,
       rate: [15, 100],
       locations: [],
-      subjects: []
+      subjects: [],
+      cert: []
     };
-    $scope.location = {};
-    $scope.subject = {};
 
     var showLoader = function (show) {
       if (show) {
@@ -30,8 +29,6 @@ module.exports = ['$scope', 'toastr', '$http', "$q", '$timeout', 'TutorApiServic
         $scope.tutor = data;
         $scope.tutor.locations = $scope.tutor.locations || [];
         $scope.tutor.subjects = ($scope.tutor.subjects || []).map(function(x) {return x.text});
-        $scope.policeCheck = data.cert && data.cert.indexOf('policeCheck') > -1 ? 'yes' : 'no';
-        $scope.workwithchildren = data.cert && data.cert.indexOf('workwithchildren') > -1 ? 'yes' : 'no';
         if (data.image) $scope.tutorImageUrl = "http://www.gotute.com/images/" + data.image;
         if (data) {
           $scope.rate = [data.rate.min || 15, data.rate.max || 200];
@@ -44,15 +41,6 @@ module.exports = ['$scope', 'toastr', '$http', "$q", '$timeout', 'TutorApiServic
   });
 
   $scope.updateProfile = function (tutor) {
-    var cert = [];
-    if ($scope.policeCheck == 'yes') {
-      cert.push('policeCheck');
-    }
-
-    if ($scope.workwithchildren == 'yes') {
-      cert.push('workwithchildren');
-    }
-
     return TutorApiService.updateTutorProfile({
       name: tutor.name,
       locations: _.map(tutor.locations, function (location) {
@@ -63,7 +51,7 @@ module.exports = ['$scope', 'toastr', '$http', "$q", '$timeout', 'TutorApiServic
       gender: tutor.gender,
       phone: tutor.phone,
       description: tutor.description,
-      cert: cert
+      cert: tutor.cert
     }).then(function (response) {
       toastr.success(response.success);
       AuthService.setDisplayName(tutor.name)
@@ -84,12 +72,15 @@ module.exports = ['$scope', 'toastr', '$http', "$q", '$timeout', 'TutorApiServic
 
   $scope.tutorImageUrl = "assets/img/default-avatar.jpg";
   $scope.genderOptions = ['Male', 'Female'];
-
+  $scope.location = {};
+  $scope.subject = {};
   $scope.rateOptions = {
     min: 10,
     max: 200,
     step: 1
   };
+
+  $scope.clearanceOptions = ["Police check", "Working with children"];
 
   $scope.formatRate = function (value) {
     if (!_.isUndefined(value))

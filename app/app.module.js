@@ -6,7 +6,6 @@ require('angular-animate');
 require('angular-messages');
 require('angular-toastr');
 require('angular-sanitize');
-require('angular-bootstrap-select');
 require('ui-select');
 require('angular-bootstrap-checkbox');
 require('angular-cookies');
@@ -40,7 +39,6 @@ var app = angular.module('app', [
   'ngMessages',
   'toastr',
   'angularFileUpload',
-  'angular-bootstrap-select',
   'ui.select',
   'ui.checkbox',
   'ui.bootstrap',
