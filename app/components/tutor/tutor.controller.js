@@ -13,6 +13,8 @@ module.exports = ['$scope', '$stateParams', 'tutorId', 'TutorApiService', 'toast
     showLoader(true);
     TutorApiService.getTutorById(tutorId).then(function (tutor) {
       tutor.description = (tutor.description || '').replace(/\n/g, '<br>');
+      tutor.policeCheck = (tutor.cert || []).some(function(x) { return x == 'Police check' });
+      tutor.workingWithChildren = (tutor.cert || []).some(function(x) { return x == 'Working with children' });
       $scope.tutor = tutor;
       $scope.enquiry = {};
     }, function() {

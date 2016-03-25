@@ -19,12 +19,18 @@
                     <tbody>
                       <tr ng-if="tutor.locations"><td>Location:</td><td>{{tutor.locations}}</td></tr>
                       <tr ng-if="tutor.subjects"><td>Subjects:</td><td>{{tutor.subjects}}</td></tr>
-                      <tr ng-if="tutor.rate"><td>Rate:</td><td>${{tutor.rate.min}} - ${{tutor.rate.max}} per hour</td></tr>
+                      <tr ng-if="tutor.rate && (tutor.rate.min || tutor.rate.max)"><td>Rate:</td><td>${{tutor.rate.min}} - ${{tutor.rate.max}} per hour</td></tr>
                       <tr ng-if="tutor.isRegistered && tutor.hasPhone"><td>Phone:</td><td>
                           <show-phone-number tutor-id="{{tutor.id}}"></show-phone-number>
                       </td></tr>
                     </tbody>
                 </table>
+                <p class="" ng-if="tutor.policeCheck">
+                    <i class="fa fa-check"></i> Clearance - Police check
+                </p>
+                <p class="" ng-if="tutor.workingWithChildren">
+                    <i class="fa fa-check"></i> Clearance - Working with children
+                </p>
               </div>
             </div>
             <div class="row">

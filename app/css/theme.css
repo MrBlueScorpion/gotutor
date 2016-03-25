@@ -866,38 +866,12 @@ textarea {
     resize: none;
 }
 
-.bootstrap-select {}
-.bootstrap-select > .selectpicker {
-    height: 60px;
-    border: 1px solid #c8cdd2;
-    border-radius: 10px;
-    font-size: 18px;
-    color: #6d7a83 !important;
-    -webkit-appearance: none; /* ios */
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    padding-left: 20px;
-    padding-right: 20px;
-    background-color: #ffffff !important;
-    box-shadow: none !important;
-}
-.bootstrap-select > .selectpicker:focus {border-color: #ea032d;}
 .bootstrap-select-searchbox .form-control {
     height: 40px;
     font-size: 14px;
     border-radius: 0;
     padding-left: inherit;
     padding-right: inherit;
-}
-.selectpicker-wrapper .bootstrap-select.btn-group .btn .caret {
-    border: none;
-}
-.selectpicker-wrapper .bootstrap-select.btn-group .btn .caret:before {
-    font-family: 'FontAwesome';
-    content: '\f0dc';
-    position: absolute;
-    top: -10px;
-    right: 0;
 }
 
 .registration-form {margin-top: -15px;}

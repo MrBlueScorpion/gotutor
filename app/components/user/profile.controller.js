@@ -7,10 +7,9 @@ module.exports = ['$scope', 'toastr', '$http', "$q", '$timeout', 'TutorApiServic
       gender: null,
       rate: [15, 100],
       locations: [],
-      subjects: []
+      subjects: [],
+      cert: []
     };
-    $scope.location = {};
-    $scope.subject = {};
 
     var showLoader = function (show) {
       if (show) {
@@ -51,7 +50,8 @@ module.exports = ['$scope', 'toastr', '$http', "$q", '$timeout', 'TutorApiServic
       rate: { min: $scope.rate[0], max: $scope.rate[1] },
       gender: tutor.gender,
       phone: tutor.phone,
-      description: tutor.description
+      description: tutor.description,
+      cert: tutor.cert
     }).then(function (response) {
       toastr.success(response.success);
       AuthService.setDisplayName(tutor.name)
@@ -72,12 +72,15 @@ module.exports = ['$scope', 'toastr', '$http', "$q", '$timeout', 'TutorApiServic
 
   $scope.tutorImageUrl = "assets/img/default-avatar.jpg";
   $scope.genderOptions = ['Male', 'Female'];
-
+  $scope.location = {};
+  $scope.subject = {};
   $scope.rateOptions = {
     min: 10,
     max: 200,
     step: 1
   };
+
+  $scope.clearanceOptions = ["Police check", "Working with children"];
 
   $scope.formatRate = function (value) {
     if (!_.isUndefined(value))
