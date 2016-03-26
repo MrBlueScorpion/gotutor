@@ -25,6 +25,7 @@ module.exports = ['$q', '$http', '$rootScope', '$cookies', 'AUTH_EVENTS', 'TestS
       return { user: currentUser };
     }, function (res) {
       currentUser = null;
+      $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
       return $q.reject(res.data && res.data.displayMessage || 'Server error, please try again')
     });
   };
@@ -39,6 +40,7 @@ module.exports = ['$q', '$http', '$rootScope', '$cookies', 'AUTH_EVENTS', 'TestS
       password: password
     }).catch(function (res) {
       currentUser = null;
+      $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
       return $q.reject(res.data && res.data.displayMessage || 'Server error, please try again')
     });
   };
@@ -107,7 +109,7 @@ module.exports = ['$q', '$http', '$rootScope', '$cookies', 'AUTH_EVENTS', 'TestS
       return currentUser;
     }, function(res) {
       currentUser = null;
-      $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+      $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
       if (res.status == 401) return $q.reject('Invalid username or password. Please try again.');
       return $q.reject('Server error, please try again later.');
     });
@@ -119,11 +121,10 @@ module.exports = ['$q', '$http', '$rootScope', '$cookies', 'AUTH_EVENTS', 'TestS
    */
   var logoutUser = function() {
     var url = config.TUTOR_API + 'users/logout';
+    currentUser = null;
+    $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
 
-    $http.get(url).then(function(response) {
-      currentUser = null;
-      $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
-    });
+    $http.get(url).then(function() {});
   };
 
   var setDisplayName = function(name) {

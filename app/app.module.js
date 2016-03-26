@@ -219,8 +219,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastr
 }]);
 
 
-app.run(['$rootScope', '$state', '$document', 'AuthService', 'toastr', 'AUTH_EVENTS',
-  function($rootScope, $state, $document, AuthService, toastr, AUTH_EVENTS) {
+app.run(['$rootScope', '$state', '$document', '$cookies', 'AuthService', 'toastr', 'AUTH_EVENTS',
+  function($rootScope, $state, $document, $cookies, AuthService, toastr, AUTH_EVENTS) {
 
     $rootScope.$on(AUTH_EVENTS.notAuthorized, function(ev) {
       $state.go('login');
@@ -228,11 +228,20 @@ app.run(['$rootScope', '$state', '$document', 'AuthService', 'toastr', 'AUTH_EVE
     });
 
     $rootScope.$on(AUTH_EVENTS.loginSuccess, function(ev, user) {
+      $cookies.put('GT_USER', user.id, {
+        path: '/',
+        domain: '.gotute.com',
+        expires: '9999-12-31T23:59:59.000Z'
+      });
       $rootScope.currentUser = user;
     });
 
     $rootScope.$on(AUTH_EVENTS.notAuthenticated, function(ev, toState) {
       $rootScope.currentUser = null;
+      $cookies.remove('GT_USER', {
+        path: '/',
+        domain: '.gotute.com'
+      });
       if (
         (toState && toState.data && toState.data.authorizedRoles) ||
         ($state.current.data && $state.current.data.authorizedRoles)) {
