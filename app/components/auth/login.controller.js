@@ -4,7 +4,7 @@ module.exports = ['$scope', '$state', '$stateParams', 'AuthService', 'toastr',
   function($scope, $state, $stateParams, AuthService, toastr) {
   $scope.login = function(user) {
     return AuthService.loginUser(user.email, user.password).then(function() {
-      $state.go('user.profile');
+      $state.go('user.enquiries');
     }, function(e) {
       toastr.error(e);
     });
